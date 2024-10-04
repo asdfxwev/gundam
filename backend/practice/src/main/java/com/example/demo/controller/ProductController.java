@@ -38,17 +38,14 @@ public class ProductController {
 	public ResponseEntity<?> productList(@RequestParam int itemsPerPage,
 			@RequestParam int currentPage, @RequestParam String inputValue,
 			@RequestParam(required = false, value = "proCate[]") List<String> proCate,
-			@RequestParam(required = false, value = "cateBrand[]") List<String> cateBrand
+			@RequestParam(required = false, value = "cateBrand[]") List<String> cateBrand,
+			@RequestParam(required = false, value = "catePiece[]") List<String> catePiece,
+			@RequestParam(required = false, value = "proStateCd[]") List<String> proStateCd,
+			@RequestParam(required = false) int price
 			) {
-		System.out.println("proCate1: " + currentPage);  // 이 부분을 확인
 
-		System.out.println("************: " + proCate);  // 이 부분을 확인
-		System.out.println("*****catebrand******: " + cateBrand);  // 이 부분을 확인
 		Map<String, Object> list = new HashMap< >();
-		//list.put("productdslList", pservice.joinDSLpage(dto.getItemsPerPage()));
-		//System.out.println("proCate2 = "+proCate);
-		list.put("productList", pservice.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand));
-		System.out.println("query real what i wnat"+pservice.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand));
+		list.put("productList", pservice.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price));
 		list.put("allproduct", poservice.countAllProduct(inputValue));
 		list.put("maxpage", poservice.countPerPage(itemsPerPage, inputValue));
 		list.put("brandList", coservice.codeBrandOne());

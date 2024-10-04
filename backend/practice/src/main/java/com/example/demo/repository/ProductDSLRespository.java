@@ -13,7 +13,7 @@ public interface ProductDSLRespository {
 //	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate);
 //	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue);
 //	List<ImgDTO> joinDSLpage1(int itemsPerPage, int currentPage, String inputValue, List<String> cateBrand);
-	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> cateBrand, List<String> proCate);
+	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price);
 	
 	
 	

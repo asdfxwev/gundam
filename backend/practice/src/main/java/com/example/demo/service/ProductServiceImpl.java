@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand) {
+	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
 		
 		
 //		if (proCate == null || proCate.isEmpty()) {
@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
 //			return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate);
 //		}
 		
-		return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand);
+		return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price);
 	}
 	
 	// 전체 데이터 숫자 가져오기

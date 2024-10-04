@@ -16,6 +16,7 @@ import com.example.demo.entity.Product;
 import com.example.demo.entity.QCode;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -64,7 +65,7 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 	
 
 	@Override
-    public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> cateBrand, List<String> proCate) {
+    public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
         QCode code1 = new QCode("code1");  
         QCode code2 = new QCode("code2");  
         QCode code3 = new QCode("code3");  
@@ -87,6 +88,31 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
             builder.and(code2.code_name.in(cateBrand));
         }
 
+        // cateBrand 조건 추가
+        if (catePiece != null && !catePiece.isEmpty()) {
+        	builder.and(code3.code_name.in(catePiece));
+        }
+        
+        if (proStateCd != null && !proStateCd.isEmpty()) {
+			builder.and(code4.code_name.notIn(proStateCd));
+		}
+        
+        if (price == 2) {
+			builder.and(product.pro_price.lt(10000));
+        }
+        
+        if (price == 3) {
+			builder.and(product.pro_price.lt(50000).and(product.pro_price.goe(10000)));
+		}
+        
+        if (price == 4) {
+			builder.and(product.pro_price.lt(100000).and(product.pro_price.goe(50000)));
+		}
+        
+        if (price == 5) {
+			builder.and(product.pro_price.goe(100000));
+		}
+        
         return jpaQueryFactory.select(Projections.bean(
                 ImgDTO.class, 
                 product.pro_id, 

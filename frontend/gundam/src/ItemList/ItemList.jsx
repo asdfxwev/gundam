@@ -48,6 +48,9 @@ const ItemList = () => {
     });
     const [proCate, setProCate] = useState([]);
     const [cateBrand, setcateBrand] = useState([]);
+    const [catePiece, setcatePiece] = useState([]);
+    const [proStateCd, setProStateCd] = useState([]);
+    const [price, setPrice] = useState(0);
 
 
     useEffect(() => {
@@ -67,21 +70,6 @@ const ItemList = () => {
     const toggleFiltersVisible = () => {
         setFiltersVisible(!filtersVisible);
         setItemListClass(filtersVisible ? 'item-list-hidden' : 'item-list');
-    };
-
-    const handleCheckboxChange = (name) => {
-        // setFilterState(prevState => ({
-        //     ...prevState,
-        //     [name]: !prevState[name]
-        // }));
-        // setCheckbox(prevCheckbox => {
-        //     // 이미 체크된 항목이라면 배열에서 제거하고, 체크되지 않은 항목이라면 배열에 추가
-        //     if (prevCheckbox.includes(name)) {
-        //         return prevCheckbox.filter(item => item !== name);
-        //     } else {
-        //         return [...prevCheckbox, name];
-        //     }
-        // });
     };
 
     const handleProCateChange = (name) => {
@@ -104,6 +92,32 @@ const ItemList = () => {
                 return [...prevCheckbox, name];
             }
         });
+    }
+
+    const handleCatePieceChange = (name) => {
+        setcatePiece(prevCheckbox => {
+            // 이미 체크된 항목이라면 배열에서 제거하고, 체크되지 않은 항목이라면 배열에 추가
+            if (prevCheckbox.includes(name)) {
+                return prevCheckbox.filter(item => item !== name);
+            } else {
+                return [...prevCheckbox, name];
+            }
+        });
+    }
+
+    const handleProStateCdChange  = (name) => {
+        setProStateCd(prevCheckbox => {
+            // 이미 체크된 항목이라면 배열에서 제거하고, 체크되지 않은 항목이라면 배열에 추가
+            if (prevCheckbox.includes(name)) {
+                return prevCheckbox.filter(item => item !== name);
+            } else {
+                return [...prevCheckbox, name];
+            }
+        });
+    }
+
+    const handlePriceChange = (name) => {
+        setPrice(name);
     }
 
 
@@ -133,6 +147,9 @@ const ItemList = () => {
                     //data : proCate
                     proCate: proCate.length > 0 ? proCate : undefined,
                     cateBrand: cateBrand.length > 0 ? cateBrand : undefined,
+                    catePiece: catePiece.length > 0 ? catePiece : undefined,
+                    proStateCd: proStateCd.length > 0 ? proStateCd : undefined,
+                    price
 
                 };
                 console.log("Request URL: ", `/product/productList`, { params }); // URL과 params 로그 출력
@@ -165,7 +182,7 @@ const ItemList = () => {
         };
         // 2.4) 비동기 함수 호출
         fetchData();
-    }, [currentPage, itemsPerPage, proCate, inputValue, cateBrand]);  // 빈 배열을 넣어 첫 렌더링 시에만 호출되도록 설정
+    }, [currentPage, itemsPerPage, proCate, inputValue, cateBrand, catePiece, proStateCd, price]);  // 빈 배열을 넣어 첫 렌더링 시에만 호출되도록 설정
 
     // inputValue에 따른 검색
     const onSearchItem = (e) => {
@@ -186,7 +203,8 @@ const ItemList = () => {
     };
 
 
-    console.log("proCate = " + proCate);
+    console.log("price = " + price);
+
 
 
     return (
@@ -231,7 +249,7 @@ const ItemList = () => {
                                             <label>
                                                 <input
                                                     type='checkbox'
-                                                    onChange={() => handleCheckboxChange(item.code_name + "제외")}
+                                                    onChange={() => handleProStateCdChange(item.code_name)}
                                                 />
                                                 {item.code_name} 제외
                                             </label>
@@ -246,27 +264,27 @@ const ItemList = () => {
                                 </h3>
                                 <div>
                                     <label>
-                                        <input type='radio' name='price' /> 전체
+                                        <input type='radio' name='price' onChange={() => handlePriceChange(1)} /> 전체
                                     </label>
                                 </div>
                                 <div>
                                     <label>
-                                        <input type='radio' name='price' /> 10,000원 미만
+                                        <input type='radio' name='price' onChange={() => handlePriceChange(2)}/> 10,000원 미만
                                     </label>
                                 </div>
                                 <div>
                                     <label>
-                                        <input type='radio' name='price' /> 10,000원 이상 ~ 50,000원 미만
+                                        <input type='radio' name='price' onChange={() => handlePriceChange(3)}/> 10,000원 이상 ~ 50,000원 미만
                                     </label>
                                 </div>
                                 <div>
                                     <label>
-                                        <input type='radio' name='price' /> 50,000원 이상 ~ 100,000원 미만
+                                        <input type='radio' name='price' onChange={() => handlePriceChange(4)}/> 50,000원 이상 ~ 100,000원 미만
                                     </label>
                                 </div>
                                 <div>
                                     <label>
-                                        <input type='radio' name='price' /> 100,000원 이상
+                                        <input type='radio' name='price' onChange={() => handlePriceChange(5)}/> 100,000원 이상
                                     </label>
                                 </div>
 
@@ -292,7 +310,7 @@ const ItemList = () => {
                                 {pieceList && pieceList.map((item, i) => (
                                     <div key={item.code_id}>
                                         <label>
-                                            <input type='checkbox' onChange={() => handleCheckboxChange(item.code_name)} />
+                                            <input type='checkbox' onChange={() => handleCatePieceChange(item.code_name)} />
                                             {item.code_name}
                                         </label>
                                     </div>
