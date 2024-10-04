@@ -11,6 +11,7 @@ import { apiCall, getStorageData } from '../service/apiService';
 import { API_BASE_URL } from "../service/app-config";
 import axios from 'axios';
 import { Pagination, checkboxClasses } from '@mui/material';
+import qs from 'qs';
 
 
 const ItemList = () => {
@@ -45,7 +46,8 @@ const ItemList = () => {
 
         }
     });
-    const [proCate, setProCate] = useState({});
+    const [proCate, setProCate] = useState([]);
+    const [cateBrand, setcateBrand] = useState([]);
 
 
     useEffect(() => {
@@ -93,6 +95,17 @@ const ItemList = () => {
         });
     }
 
+    const handleCateBrandChange = (name) => {
+        setcateBrand(prevCheckbox => {
+            // 이미 체크된 항목이라면 배열에서 제거하고, 체크되지 않은 항목이라면 배열에 추가
+            if (prevCheckbox.includes(name)) {
+                return prevCheckbox.filter(item => item !== name);
+            } else {
+                return [...prevCheckbox, name];
+            }
+        });
+    }
+
 
     // h1창 이름 변경
     const handleSearchChange = (event) => {
@@ -107,6 +120,7 @@ const ItemList = () => {
         }
     }
 
+
     useEffect(() => {
         // 비동기 함수 정의
         const fetchData = async () => {
@@ -116,9 +130,25 @@ const ItemList = () => {
                     itemsPerPage,
                     currentPage,
                     inputValue,
-                    checkbox
+                    //data : proCate
+                    proCate: proCate.length > 0 ? proCate : undefined,
+                    cateBrand: cateBrand.length > 0 ? cateBrand : undefined,
+
                 };
-                const response = await axios.get(`/product/productList`, { params });
+                console.log("Request URL: ", `/product/productList`, { params }); // URL과 params 로그 출력
+
+                // Axios 인스턴스를 생성하여 paramsSerializer 설정
+                const axiosInstance = axios.create({
+                    paramsSerializer: (params) => {
+                        return qs.stringify(params, { arrayFormat: 'brackets' });
+                    },
+                });
+
+
+                const response = await axiosInstance.get(`/product/productList`, { params });
+                //const response = await axios.post(`/product/productList`, params );
+                //const response = await apiCall(`/product/productList`,'POST', params ,null);
+
 
                 // 2.2) 응답 데이터를 상태 변수에 저장
                 setProductList(response.data.productList);
@@ -127,8 +157,6 @@ const ItemList = () => {
                 setPieceList(response.data.pieceList);
                 setStateList(response.data.stateList);
                 setPageProduct(response.data.maxpage);
-                console.log(response);
-
 
             } catch (error) {
                 console.error("데이터를 가져오는 중 에러가 발생했습니다: ", error);
@@ -137,7 +165,7 @@ const ItemList = () => {
         };
         // 2.4) 비동기 함수 호출
         fetchData();
-    }, [currentPage, itemsPerPage, checkbox, inputValue]);  // 빈 배열을 넣어 첫 렌더링 시에만 호출되도록 설정
+    }, [currentPage, itemsPerPage, proCate, inputValue, cateBrand]);  // 빈 배열을 넣어 첫 렌더링 시에만 호출되도록 설정
 
     // inputValue에 따른 검색
     const onSearchItem = (e) => {
@@ -250,7 +278,7 @@ const ItemList = () => {
                                 {brandList && brandList.map((item, i) => (
                                     <div key={item.code_id}>
                                         <label>
-                                            <input type='checkbox' onChange={() => handleCheckboxChange(item.code_name)} />
+                                            <input type='checkbox' onChange={() => handleCateBrandChange(item.code_name)} />
                                             {item.code_name}
                                         </label>
                                     </div>
