@@ -212,7 +212,9 @@ export default function ItemDetail() {
         }
     }
 
-
+    const toCart = () => {
+        
+    }
 
 
 
@@ -310,7 +312,8 @@ export default function ItemDetail() {
             <div className='detail_right_box'>
                 <div className='right_inner'>
                     <div className='detail_top'>
-                        {/* <FontAwesomeIcon icon={faCartShopping} onClick={toCart} className='detail_cart' style={{ color: isAdded ? 'red' : 'inherit' }} /> */}
+                        <FontAwesomeIcon icon={faCartShopping} onClick={toCart} className='detail_cart' style={{ color: isAdded ? 'red' : 'inherit' }} />
+                        {/* toCart 에 data 넘기는 역활 해야함 */}
                     </div>
                     {productList &&
                         <div className='item_name'><h2>{productList.pro_name}</h2></div>

@@ -15,10 +15,12 @@ const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
             <div>
                 <input type="checkbox" checked={isChecked} onChange={() => onCheckboxChange(item.id)} />
             </div>
-            <div><a href={`ItemList/ItemDetail/${item.id}`}>
-                <img src={item.image} alt={item.name} /></a>
+            <div>
+                <a href={`ItemList/ItemDetail/${item.id}`}>
+                    <img src={item.image} alt={item.name} />
+                </a>
             </div>
-            <div> {item.name}</div>
+            <div>{item.name}</div>
             <div className="quantity-controls">
                 <button onClick={() => handleQuantityChange(item.quantity - 1)}>-</button>
                 {item.quantity}
@@ -34,6 +36,7 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState([]);
     const [isAllChecked, setIsAllChecked] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const existingInquiries = JSON.parse(localStorage.getItem('loginInfo'));
     const userId = existingInquiries.id;
@@ -44,37 +47,29 @@ const Cart = () => {
                 const userResponse = await axios.get(`http://localhost:3001/users/${userId}`);
                 const userData = userResponse.data;
 
-                if (!userData.cart) {
-                    userData.cart = [];
-                }
-                setCartItems(userData.cart.reverse());
-                setCheckedItems(userData.cart.map(item => item.id));
-                setIsAllChecked(true);
+                // 사용자의 카트가 없을 경우 초기화
+                const initialCart = userData.cart || [];
+                setCartItems(initialCart.reverse());
+                setCheckedItems(initialCart.map(item => item.id));
+                setIsAllChecked(initialCart.length > 0);
             } catch (error) {
                 console.error('데이터를 가져오는 중 오류 발생:', error);
+                setErrorMessage('카트 데이터를 가져오는 데 실패했습니다. 나중에 다시 시도해주세요.');
             }
         };
         fetchData();
     }, [userId]);
 
     const handleQuantityChange = async (id, quantity) => {
-        const updatedItems = cartItems.map(item =>
-            item.id === id ? { ...item, quantity } : item
-        );
+        const updatedItems = cartItems.map(item => (item.id === id ? { ...item, quantity } : item));
         setCartItems(updatedItems);
 
         // 서버에 수량 업데이트 요청
         try {
-            const userResponse = await axios.get(`http://localhost:3001/users/${userId}`);
-            const userData = userResponse.data;
-
-            const updatedCart = userData.cart.map(item =>
-                item.id === id ? { ...item, quantity } : item
-            );
-
-            await axios.put(`http://localhost:3001/users/${userId}`, { ...userData, cart: updatedCart });
+            await axios.put(`http://localhost:3001/users/${userId}`, { ...existingInquiries, cart: updatedItems });
         } catch (error) {
-            console.error('Error updating quantity:', error.response ? error.response.data : error.message);
+            console.error('Error updating quantity:', error);
+            setErrorMessage('수량 업데이트 중 오류가 발생했습니다.');
         }
     };
 
@@ -88,45 +83,35 @@ const Cart = () => {
     };
 
     const handleAllCheckboxChange = () => {
-        if (isAllChecked) {
-            setCheckedItems([]);
-        } else {
-            setCheckedItems(cartItems.map(item => item.id));
-        }
+        const newCheckedItems = isAllChecked ? [] : cartItems.map(item => item.id);
+        setCheckedItems(newCheckedItems);
         setIsAllChecked(!isAllChecked);
     };
 
     const handleRemoveCheckedItems = async () => {
         try {
-            const userResponse = await axios.get(`http://localhost:3001/users/${userId}`);
-            const userData = userResponse.data;
+            const updatedItems = cartItems.filter(item => !checkedItems.includes(item.id));
 
-            const updatedItems = userData.cart.filter(item => !checkedItems.includes(item.id));
-
-            await axios.put(`http://localhost:3001/users/${userId}`, { ...userData, cart: updatedItems });
+            await axios.put(`http://localhost:3001/users/${userId}`, { ...existingInquiries, cart: updatedItems });
 
             setCartItems(updatedItems);
             setCheckedItems([]);
             setIsAllChecked(false);
         } catch (error) {
-            console.error('Error deleting items:', error.response ? error.response.data : error.message);
+            console.error('Error deleting items:', error);
+            setErrorMessage('선택한 상품을 삭제하는 중 오류가 발생했습니다.');
         }
     };
 
     const handleRemoveAllItems = async () => {
         try {
-            const userResponse = await axios.get(`http://localhost:3001/users/${userId}`);
-            const userData = userResponse.data;
-
-            userData.cart = [];
-
-            await axios.put(`http://localhost:3001/users/${userId}`, userData);
-
+            await axios.put(`http://localhost:3001/users/${userId}`, { ...existingInquiries, cart: [] });
             setCartItems([]);
             setCheckedItems([]);
             setIsAllChecked(false);
         } catch (error) {
-            console.error('Error clearing cart:', error.response ? error.response.data : error.message);
+            console.error('Error clearing cart:', error);
+            setErrorMessage('장바구니를 비우는 중 오류가 발생했습니다.');
         }
     };
 
@@ -147,6 +132,7 @@ const Cart = () => {
             <MypageLeft />
             <div className="cartWrapper">
                 <h1 className='h1-names'>장바구니</h1>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <div className="cart-containers">
                     <div className="cart-header">
                         <div>
@@ -163,7 +149,7 @@ const Cart = () => {
                         <div>가격</div>
                         <div>총 가격</div>
                     </div>
-                    {cartItems.map((item) => (
+                    {cartItems && cartItems.map((item) => (
                         <CartItem
                             key={item.id}
                             item={item}
