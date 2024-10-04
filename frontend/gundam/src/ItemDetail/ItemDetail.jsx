@@ -212,8 +212,13 @@ export default function ItemDetail() {
         }
     }
 
-    const toCart = () => {
-        
+    const toCart = (e) => {
+        if (existingInquiries) {
+            e.preventDefault();
+            navigate('/Cart');
+        }else {
+            navigate('/Login')
+        }
     }
 
 
