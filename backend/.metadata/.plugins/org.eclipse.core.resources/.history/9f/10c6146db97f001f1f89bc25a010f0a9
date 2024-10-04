@@ -1,0 +1,22 @@
+package com.example.demo.repository;
+
+import java.util.List;
+
+import com.example.demo.domain.ImgDTO;
+import com.example.demo.domain.ProductDTO;
+import com.example.demo.entity.Product;
+
+public interface ProductDSLRespository {
+	
+	List<ImgDTO> joinDSL();
+	
+	List<ImgDTO> joinDSLpage(int itemsPerPage);
+	
+	Product selectOneDSL(String proId);
+	
+	Long update(Product productEntity, String proId);
+	
+	List<ImgDTO> searchList(String productname);
+	
+	Long countAllProduct();
+}

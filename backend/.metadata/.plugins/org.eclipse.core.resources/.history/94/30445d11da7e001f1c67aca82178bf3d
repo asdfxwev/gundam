@@ -1,0 +1,43 @@
+package com.example.demo.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.domain.ImgDTO;
+import com.example.demo.entity.Code;
+import com.example.demo.service.CodeService;
+import com.example.demo.service.ImgService;
+import com.example.demo.service.ProductService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@RestController
+@RequestMapping("/product")
+@Log4j2
+@AllArgsConstructor
+public class ProductController {
+	
+	private final ProductService pservice;
+	private final ImgService iservice;
+	private final CodeService coservice;
+	
+	@GetMapping("/productList")
+	public ResponseEntity<Map<String, Object>> productList() {
+		Map<String, Object> list = new HashMap< >();
+		list.put("list", pservice.joinDSL());
+		list.put("brandList", coservice.codeBrandOne());
+		list.put("cateList", coservice.codeCateOne());
+		list.put("pieceList", coservice.codePieceOne());
+		list.put("stateList", coservice.codeStateOne());
+			return ResponseEntity.ok(list);
+	}
+
+}
