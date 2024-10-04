@@ -1,0 +1,192 @@
+.mypage_container {
+    display: flex;
+    flex-direction: row;
+    /* width: calc(100vw - 17px); */
+    margin-top: 100px;
+    margin-left: 100px;
+    height: 55.8vh;
+
+}
+
+.mypage_menu {
+
+    width: 15%;
+    text-align: left;
+    font-family: "Noto Sans KR", sans-serif;
+    /* margin-top: -50px; */
+    font-family: 'GmarketSansMedium';
+
+}
+
+.mypage_menu .MyPage_h2 {
+
+    font-size: 2em;
+    font-style: normal;
+    /* margin-bottom: 15px; */
+    
+    /* 폰트 설정 */
+    }
+    
+.MyPage_h2 a{
+    color: black;        
+}
+
+.mypage_menu .MyPage_h3 {
+
+    font-size: 2em;
+    font-style: normal;
+    margin-top: 20px;
+
+    /* 폰트 설정 */
+}
+
+
+
+.mypage_menu ul li {
+    margin-top: 20px;
+    text-align: left;
+    font-weight: bold;
+    font-family: 'LINESeedKR-Bd';
+
+
+}
+
+
+.mypage_menu ul li a {
+    display: flex;
+    color: black;
+
+
+}
+
+.MyPage_h4 {
+    border-bottom: 4px solid black;
+    /* 검은색 굵은 선 추가 */
+    padding-bottom: 10px;
+    /*선 아래 여백 추가 */
+
+}
+
+.user_info {
+    /* margin-left: 50px; */
+    font-family: "Noto Sans KR", sans-serif;
+    text-align: left;
+    width: 70%;
+    font-family: 'LINESeedKR-Bd';
+
+
+}
+
+
+.user_info .row {
+    display: flex;
+    margin-bottom: 10px;
+    /* 각 행 사이의 간격 */
+    margin-bottom: 50px;
+   
+
+}
+
+.name,
+.Value {
+    font-size: 1.5em;
+    margin-right: 10px;
+    /* 이름과 값 사이의 간격 */
+    
+}
+
+.name {
+    font-weight: bold;
+    width: 100px;
+    /* 이름의 너비 고정 */
+    font-size: 20px;
+}
+
+.Value {
+    flex-grow: 1;
+    /* 남은 공간을 Value가 채우도록 함 */
+    font-size: 15px;
+
+}
+
+.user_info .MyPage_h4 {
+    font-size: 2em;
+    margin-bottom: 20px;
+
+}
+
+.user_info p {
+    font-size: 1.5em;
+    margin-bottom: 60px;
+}
+
+
+
+
+/* font-family: 'GmarketSansMedium'; */
+/* font-family: 'SEBANG_Gothic_Bold'; */
+/* font-family: 'IBMPlexSansKR-Regular'; */
+
+
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SEBANG_Gothic_Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media (max-width: 768px) {
+    .mypage_container {
+        padding: 10px; /* 모바일 화면에서 컨테이너의 패딩 조정 */
+        margin-left: inherit;
+    }
+
+    .mypage_menu {
+        font-size: 14px; /* 모바일 화면에서 메뉴의 폰트 크기 조정 */
+        width: 30%;
+    }
+
+    .mypage_menu ul li {
+        margin-bottom: 10px; /* 모바일 화면에서 메뉴 항목 간격 조정 */
+    }
+
+    .user_info {
+        font-size: 14px; /* 모바일 화면에서 사용자 정보의 폰트 크기 조정 */
+    }
+
+    .user_info .row {
+        display: flex;
+        flex-direction: column; /* 모바일 화면에서 행을 세로로 배열 */
+        margin-bottom: 10px; /* 모바일 화면에서 행 간격 조정 */
+        border-bottom: 2px solid black;
+    /* 검은색 굵은 선 추가 */
+    padding-bottom: 5px;
+    }
+
+    .user_info .name, .user_info .Value {
+        width: 100%; /* 모바일 화면에서 이름과 값의 너비를 100%로 조정 */
+        text-align: left; /* 모바일 화면에서 텍스트를 왼쪽 정렬 */
+    }
+}

@@ -1,0 +1,108 @@
+.footer_top {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1px 0;
+    width: 100%; /* Updated to use full width */
+    height: 10vh;
+}
+
+.footer_top a {
+    font-size: 3vh;
+}
+
+.footer_bottom {
+    width: 100%; 
+    background-color: #222;
+    color: #666565;
+    display: flex;
+    flex-wrap: wrap; 
+    height: auto; 
+    padding: 13.5px; 
+    justify-content: space-between;
+    overflow: hidden; 
+    box-sizing: border-box; 
+}
+
+.footer_bottom .footer_p {
+    box-sizing: border-box;
+    font: inherit;
+    text-align: left;
+    font-size: 1vw;
+    flex: 1 1 30%;
+    margin: 0; 
+    word-break: break-word;
+}
+
+.footer_bottom p {
+    text-align: right;
+    margin: 0; 
+    flex: 1 1 30%; 
+    font-size: 1vw;
+    word-break: break-word; 
+}
+
+.footer_bottom .img {
+    height: 5vw;
+    margin: 1vw 3vw; 
+    flex: 0 1 auto; 
+}
+
+.footer div a {
+    /* color: rgb(253, 252, 252); */
+    /* background-color: #333; */
+    color: black;
+    margin: 1vh 1vh;
+}
+
+.footer div a:hover {
+    text-decoration: underline;
+}
+
+.CustomerService {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 6px 18px;
+    background: #d6d6d6;
+    color: #fff;
+}
+
+   
+    
+@media (max-width: 768px) {
+    .footer_top {
+        height: auto; /* 높이를 자동으로 조정하여 내용에 맞춤 */
+        padding: 10px 0; /* 모바일 화면에 맞게 패딩 조정 */
+    }
+
+    .footer_top a {
+        font-size: 2vh; /* 모바일 화면에서 폰트 크기 조정 */
+    }
+
+    .footer_bottom {
+        flex-direction: column; /* 항목들을 세로로 정렬 */
+        padding: 20px; /* 모바일 화면에 맞게 패딩 조정 */
+    }
+
+    .footer_bottom .footer_p,
+    .footer_bottom p {
+        text-align: center; /* 텍스트를 중앙 정렬 */
+        flex: 0 0 auto; /* flex 항목 크기 조정 */
+        font-size: 2.5vw; /* 모바일 화면에서 폰트 크기 조정 */
+        margin-bottom: 10px; /* 항목 간 간격 추가 */
+    }
+
+    .footer_bottom .img {
+        height: 10vw; /* 이미지 크기 조정 */
+        margin: 2vw auto; /* 이미지 마진 조정 */
+    }
+
+    .footer div a {
+        margin: 2vh 0; /* 링크 간 간격 조정 */
+    }
+
+    .CustomerService {
+        margin-top: 10px; /* 고객 서비스 버튼 마진 조정 */
+        padding: 8px 20px; /* 버튼 패딩 조정 */
+    }
+}

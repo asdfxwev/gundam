@@ -1,0 +1,123 @@
+
+.join_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #f2f2f2;
+    font-family: 'Noto Sans KR', sans-serif;
+    
+}
+
+.signup-form {
+    background-color: white;
+    padding: .5%;
+    height: 90%;
+    border-radius: 50px;
+    box-shadow: 0 0 80px rgba(255, 4, 4, 0.1);
+    width: 25%;
+    padding: 5%;
+    width: 50%;
+    margin-top: 5%;
+    margin-left: 25%;
+    margin-right: 25%;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1.5em;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+
+
+    
+}
+
+.form-group {
+    margin-bottom: 40px;
+    text-align: left;
+}
+.logo2 img{
+    width: 30%;
+    margin-bottom: 15px;
+    text-align: center;
+    margin-left: 35%;
+    
+}
+
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 1%;
+    border: none; /* 모든 테두리를 제거합니다. */
+    border-bottom: 3px solid #ccc; /* 아래쪽 테두리만 추가합니다. */
+    border-radius: 0; /* 원래의 둥근 모서리를 제거합니다. */
+    box-sizing: border-box;
+    background-color: transparent; /* 배경색을 투명하게 설정합니다. */
+}
+
+.error {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 5px;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5% 5%;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+@media (width < 86rem) {
+    .signup-form {
+        width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .signup-form {
+        width: 90%;
+        padding: 2%;
+        height: auto;
+    }
+
+    .logo2 img {
+        width: 50%;
+        margin-left: 25%;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .submit-button {
+        width: 80%;
+        padding: 10px;
+        margin-left: 10%;
+    }
+}
+
+@media (max-width: 480px) {
+    .signup-form {
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .logo2 img {
+        margin-left: 10%;
+    }
+
+    .submit-button {
+        width: 90%;
+        margin-left: 5%;
+    }
+}

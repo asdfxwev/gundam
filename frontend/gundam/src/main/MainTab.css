@@ -1,0 +1,114 @@
+.tabButtonContainer {
+    margin: 3rem;
+}
+
+.tabButtonList {
+    display: flex;
+    justify-content: center;
+}
+
+.tabButton {
+    margin: 0px 20px;
+    font-size: 1.5rem;
+}
+
+.tabButton a {
+    color: black;
+}
+
+.tabButtonList .as a{
+    color: red;
+}
+
+/* .tabImageContainer {
+    height: 70vh;
+} */
+
+.tabImageList {
+    display: flex;
+    width: calc(100vw - 16px);
+}
+
+.tagImageFlex {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabImg {
+    width: calc(25vw - 22px);
+}
+
+.reservationBuy {
+    text-align: left;
+}
+
+.revBuy {
+    color: white;
+    background-color: skyblue;
+}
+
+.productExplanation {
+    text-align: left;
+    color: gray;
+}
+
+.productName {
+    text-align: left;
+}
+
+.productPrice {
+    text-align: left;
+    font-weight: bold;
+}
+
+.tabImageFlex p {
+    margin-top: 10px;
+}
+
+.tabImage a {
+    color: black;
+}
+
+.tabImage {
+    margin: 0px 10px;
+}
+
+@media (width < 104rem){
+    .tabButton {
+        font-size: 1.2rem;
+    }
+}
+
+@media (width < 87rem){
+    .tabButton {
+        font-size: 1rem;
+        margin: 0px 5px;
+    }
+}
+
+@media (width < 67rem){
+    .tabButtonList {
+        flex-direction: column;
+        align-items: center;
+    }
+    .tabButton {
+        font-size: 1.5rem;
+    }
+}
+
+@media (width < 50rem) {
+    .tabImageList {
+        display: grid;
+        grid-template: 1fr 1fr / 1fr 1fr;
+    }
+    .tabImg{
+        width: calc(50vw - 14px);
+    }
+}
+
+@media (height < 39rem) {
+    .mainTab{
+        height: auto;
+    }
+
+}

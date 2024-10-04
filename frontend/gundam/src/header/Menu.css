@@ -1,0 +1,208 @@
+.h_main_container {
+    display: flex;
+    color: white;
+    z-index: 1;
+    position: fixed;
+    top: 4rem;
+    width: 100%;
+    /* transition-duration: 1s; */
+    /* min-width: 125rem; */
+}
+
+.h_menu_container {
+    display: flex;
+    font-size: 2rem;
+    /* transition-duration: 1s; */
+}
+
+.h_right_container {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* transition-duration: .5s; */
+}
+
+.h_menu_container div {
+    display: grid;
+    transition-duration: .5s;
+    place-content: center;
+}
+
+.h_right {
+    margin-right: 30px;
+    transition-duration: .5s;
+}
+
+.h_main_container a {
+    color: white;
+}
+
+.smallHeadMenu a {
+    color: black;
+}
+
+.h_menu {
+    cursor: pointer;
+    margin-left: 50px;
+    padding: 10px;
+}
+
+.detailMenu {
+    display: none;
+    background-color: #f9f9f9;
+    /* padding: 10px; */
+    display: grid;
+    grid-template: repeat(9, 1fr) / repeat(6, 1fr) .5fr 1fr .5fr;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    top: 8rem;
+    background-color: #fff;
+    transition-duration: .5s ease-in-out;
+    z-index: 2;
+    width: calc(100vw - 17px);
+}
+
+.smallMenu {
+    top: 6rem;
+    transition-duration: .5s ease-in-out;
+}
+
+.detailMenu a {
+    padding: 5px 0;
+}
+
+.detailMenu.show {
+    display: flex;
+}
+
+.h_right a {
+    margin: 0 10px;
+}
+
+.h_search {
+    cursor: pointer;
+}
+
+.isLoginPage {
+    display: none;
+}
+
+.h_menu_container .h_menu.blackText,
+.h_right_container .h_right.blackText {
+    color: black;
+}
+
+
+.noPosition {
+    position: inherit !important;
+    color: black !important;
+}
+
+.smallHeadMenu {
+    background-color: white;
+    color: black;
+    position: fixed;
+    top: 3rem;
+    width: 100%;
+    z-index: 1;
+}
+
+.smallHeadMenu .h_menu {
+    font-size: 1rem;
+}
+
+.smallHeadMenu .h_right {
+    font-size: 0.8rem;
+}
+
+.smallHeadMenu .h_menu_container {
+    padding: 5px 0;
+}
+
+.smallHeadMenu .h_right_container {
+    margin-left: auto;
+    padding: 5px 0;
+    justify-content: flex-end;
+}
+
+
+.menuAnimation {
+    animation: menuFontSize 0.5s ease-in-out forwards;
+}
+
+.menuClosing {
+    animation: menuFontSizeShrink 0.5s ease-in-out forwards;
+}
+
+@keyframes menuFontSize {
+    from {
+        height: 0px;
+    }
+    to {
+        height: 414px;
+    }
+}
+
+@keyframes menuFontSizeShrink {
+    from {
+        height: 414px;
+    }
+    to {
+        height: 0px;
+
+    }
+}
+
+/* @media (width < 87rem)  {
+    .h_main_container {
+        font-size: 1rem!important;
+    }
+}
+    
+*/
+
+@media screen and (width < 87rem) {
+    .h_main_container {
+        font-size: 1rem!important ;
+    }
+    
+    .h_menu {
+        margin-left: 10px;
+        padding: 5px;
+    }
+    
+    .h_right {
+        margin-right: 15px;
+    }
+    
+    /* .smallHeadMenu .h_menu {
+        font-size: 0.8rem;
+    }
+    
+    .smallHeadMenu .h_right {
+        font-size: 0.6rem;
+    } */
+}
+
+@media (width < 55rem) {
+    .h_main_container {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .h_menu_container {
+        justify-content: center;
+
+    }
+    .h_right_container {
+        margin-left: 10px;
+        justify-content: center;
+    }
+    .smallHeadMenu .h_right_container{
+        justify-content: center;
+        margin-left: inherit;
+        
+    }
+    
+}

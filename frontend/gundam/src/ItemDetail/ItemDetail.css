@@ -1,0 +1,965 @@
+.item_detail_main {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.detail_visible {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.iconsize {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.detail_cart {
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    /* color: black; */
+}
+
+.detail_cart .fontRed {
+    color: red;
+}
+
+/* ============== Left Box Start ============= */
+.detail_left_box {
+    float: left;
+    height: 100%;
+    width: 800px;
+    margin: 0 10px;
+}
+
+.item_detail_img {
+    width: 100%;
+    height: 550px;
+}
+
+.detail_img {
+    margin: 10px 0;
+    border-bottom: solid 1px rgb(200, 200, 200);
+}
+
+.detail_img_list {
+    display: flex;
+    margin: 10px 0;
+}
+
+.detail_slide_img {
+    width: 90px;
+    height: 90px;
+    margin: 0 5px;
+    border: solid 1px rgb(200, 200, 200);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.detail_slide_img:hover {
+    transform: scale(1.2);
+    border: solid 1px skyblue;
+}
+
+/* ==================== tab =================== */
+.tab {
+    width: 100%;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    text-align: center;
+    background-color: white;
+}
+
+.tab_inner {
+    display: flex;
+    justify-content: space-between;
+    border: solid 1px rgb(200, 200, 200);
+}
+
+.tab_inner a {
+    color: black;
+    font-size: 18px;
+    width: 130px;
+    height: 60px;
+    font-weight: 700;
+    align-content: center;
+}
+
+.tab_inner a:hover {
+    border-bottom: solid 2px red;
+}
+
+#DETAIL {
+    font-size: 0;
+}
+
+.media_show_hide {
+    display: none;
+}
+
+/* ================= tab End ================== */
+/* =============== section img ================ */
+.detail_item_name {
+    font-size: 40px;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 100px;
+    margin-left: 10px;
+}
+
+.detail_item_subname {
+    font: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 20px 10px;
+}
+
+.sectionimg {
+    width: 100%;
+    /* padding: 10px; */
+    margin: 10px 0;
+}
+
+@media (max-width: 1160px) {
+
+    .detail_img {
+        margin: 0;
+    }
+
+    .detail_img_list {
+        flex-wrap: wrap;
+        justify-content: left;
+        /* 왼쪽 정렬 */
+        margin: 0;
+    }
+
+    .detail_slide_img {
+        width: 80px;
+        /* 슬라이드 이미지 너비 축소 */
+        height: 80px;
+        /* 슬라이드 이미지 높이 축소 */
+        margin: 5px;
+    }
+
+}
+
+@media (max-width: 800px) {
+    .item_detail_main {
+        /* flex-direction: column; 아이템을 세로로 정렬 */
+        align-items: center;
+        margin: 10px;
+    }
+
+    .detail_left_box {
+        float: none;
+        /* 플로팅 제거 */
+        width: 100%;
+        /* 너비를 100%로 조정 */
+        margin: 0;
+        /* 마진 제거 */
+    }
+
+    .detail_right_box {
+        display: none !important;
+    }
+
+    .item_detail_img {
+        height: 400px;
+        /* 이미지 높이를 자동으로 조정 */
+    }
+
+    .detail_img {
+        margin: 0;
+    }
+
+    .detail_img_list {
+        flex-wrap: wrap;
+        justify-content: left;
+        /* 왼쪽 정렬 */
+        margin: 0;
+    }
+
+    .detail_slide_img {
+        width: 80px;
+        /* 슬라이드 이미지 너비 축소 */
+        height: 80px;
+        /* 슬라이드 이미지 높이 축소 */
+        margin: 5px;
+    }
+
+    .tab_inner {
+        border: none;
+        border-top: solid 1px rgb(200, 200, 200);
+        margin-top: 5px;
+    }
+
+    .tab_inner a {
+        font-size: 16px;
+        /* 탭 내부 링크 폰트 크기 축소 */
+        width: 100px;
+        /* 탭 내부 링크 너비 축소 */
+        height: 50px;
+        /* 탭 내부 링크 높이 축소 */
+    }
+
+    .media_show_hide {
+        display: flex;
+        height: 60px;
+        text-align: center;
+        justify-content: space-between;
+        background-color: white;
+        position: sticky;
+        top: 60px;
+        border: solid 1px rgb(200, 200, 200);
+        align-items: center;
+    }
+
+    .count_right_box {
+        /* width: 80px !important; */
+        width: 15% !important;
+        justify-content: center !important;
+    }
+
+    .total_price {
+        text-align: center !important;
+        /* width: 160px !important; */
+        width: 25% !important;
+    }
+
+    .submit_btn {
+        /* width: 80px !important; */
+        width: 25% !important;
+        margin: 0 5px;
+    }
+
+    .detail_item_name {
+        font-size: 30px;
+        /* 제품 이름 폰트 크기 축소 */
+        margin-top: 50px;
+        /* 상단 마진 축소 */
+    }
+
+    .detail_item_subname {
+        font-size: 16px;
+        /* 부제목 폰트 크기 축소 */
+        /* width: 140px; */
+        width: 35% !important;
+        margin: 0;
+    }
+}
+
+/* ============= section img End ============== */
+/* ================== review ================== */
+.review-details {
+    max-height: 0;
+    /* 기본적으로 내용이 보이지 않도록 설정 */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 1rem;
+    /* 기본 패딩을 줄여서 제목 크기만큼만 보이도록 함 */
+    margin-top: 0;
+    /* 초기 여백 제거 */
+}
+
+.review-details.show {
+    max-height: 500px;
+    /* 충분히 큰 값으로 설정하여 내용이 모두 보이게 함 */
+    padding: 1rem;
+    /* 내용이 표시될 때 패딩 추가 */
+    margin-top: 0.5rem;
+    /* 제목과 내용 사이의 여백 */
+
+}
+
+/* 리뷰 항목이 확장되었을 때 스타일 */
+.re_list_row.expanded {
+    background-color: #f9f9f9;
+    margin-bottom: 1rem;
+    /* 아코디언이 펼쳐질 때 아래 공간 추가 */
+}
+
+/* 제목만 보이게 할 스타일 */
+.re_list_row {
+    display: grid;
+    grid-template: repeat(1, 1fr) / 1fr 3fr;
+    border-bottom: 1px solid #ddd;
+    margin: 0.5rem 0;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+    position: relative;
+    /* 자식 요소의 위치를 조정하기 위해 relative 설정 */
+    overflow: hidden;
+    /* 제목만 보이게 하기 위해 overflow 설정 */
+}
+
+.review_list,
+.qna_list {
+    width: 100%;
+    text-align: center;
+    min-height: 304px;
+}
+
+.re_list_top {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    border-bottom: solid 2px black;
+}
+
+.re_list_top div:nth-of-type(odd) {
+    width: 25%;
+    height: 100%;
+    background-color: rgb(240, 238, 238);
+}
+
+.re_list_top div:nth-of-type(even) {
+    width: 75%;
+    height: 100%;
+}
+
+.re_list_row div:nth-of-type(odd) {
+    background-color: rgb(240, 238, 238);
+}
+
+.re_list_row div:nth-of-type(even) {
+    text-align: left;
+}
+
+.re_list_row div p:nth-of-type(odd) {
+    font-weight: 600;
+    margin: 5px;
+}
+
+.re_list_row div p:nth-of-type(even) {
+    font-size: 14px;
+    margin: 5px;
+}
+
+.review_pop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.re_title {
+    width: 70%;
+    height: 30px;
+    margin: 5px;
+}
+
+.re_comment {
+    width: 70%;
+    height: 60px;
+    /* 내용 입력을 위해 높이 조정 */
+    margin: 5px;
+}
+
+.re_button_box {
+    width: 100%;
+    text-align: center;
+}
+
+.re_button {
+    width: 60px;
+    height: 30px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.re_button:hover {
+    color: white;
+    background-color: blue;
+}
+
+/* 별점 아이콘 기본 스타일 */
+.star-rating {
+    display: flex;
+    cursor: pointer;
+}
+
+.star-icon {
+    font-size: 24px;
+    color: #ccc;
+}
+
+.star-icon.filled {
+    color: #f39c12;
+}
+
+/* ================ review End ================ */
+/* =================== qna ==================== */
+.qna_list_row {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #ddd;
+    margin: 0.5rem 0;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+    position: relative;
+    overflow: hidden; /* 내용이 넘어가지 않도록 설정 */
+}
+
+.qna_list_row .qna_state {
+    color: red;
+    font-weight: 600;
+    width: 200px; /* 적절한 크기 설정 */
+}
+
+.qna_list_row div:last-of-type {
+    flex-grow: 1; /* 확장될 수 있는 공간 */
+}
+
+.qna_details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 1rem;
+    margin-top: 0;
+}
+
+.qna_details.show {
+    max-height: 1000px; /* 충분히 큰 값으로 설정, 내용에 맞게 조정 */
+    padding: 1rem;
+    margin-top: 0.5rem;
+}
+
+.no_qna,
+.qna_list_row div {
+    border-bottom: solid 1px rgb(200, 200, 200);
+}
+
+.qna_list_row div:nth-of-type(odd) {
+    width: 200px;
+}
+
+.qna_list_row div:nth-of-type(even) {
+    width: 400px;
+    text-align: left;
+}
+
+.qna_state {
+    color: red;
+    font-weight: 600;
+}
+
+/* ================= qna End ================== */
+/* ================= service ================== */
+.service_delivery_list {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template: repeat(3, 1fr) / 1fr 3fr;
+    font-size: 12px;
+    text-align: center;
+}
+
+.service_delivery_list div {
+    width: 100%;
+    height: 100%;
+    border-bottom: solid 1px rgb(200, 200, 200);
+    align-content: center;
+    margin: 5px 0;
+}
+
+.service_delivery_list div:nth-of-type(even) {
+    text-align: left;
+}
+
+.service_return_list {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template: repeat(4, 1fr) / 1fr 3fr;
+    font-size: 12px;
+    text-align: center;
+}
+
+.service_return_list div {
+    width: 100%;
+    height: 100%;
+    border-bottom: solid 1px rgb(200, 200, 200);
+    align-content: center;
+    margin: 5px 0;
+}
+
+.service_return_list div:nth-of-type(even) {
+    text-align: left;
+}
+
+/* =============== service End ================ */
+
+
+/* ============== Left Box End ================ */
+
+
+
+
+/* ============== Right Box Start ============= */
+.detail_right_box {
+    float: right;
+    display: flex;
+    height: 100%;
+    width: 400px;
+    min-width: 300px;
+    position: sticky;
+    top: 0;
+}
+
+.right_inner {
+    margin: 10px;
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+    justify-items: center;
+    text-align: left;
+}
+
+.underline {
+    border-bottom: solid 1px rgb(200, 200, 200);
+    margin: 10px;
+    padding: 10px;
+}
+
+.font_medium {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.detail_top {
+    display: flex;
+    height: 50px;
+    justify-content: right;
+    align-items: center;
+    margin: 5px;
+}
+
+.item_info {
+    display: flex;
+    height: 150px;
+}
+
+.info_left_box {
+    width: 30%;
+    text-align: left;
+}
+
+.info_right_box {
+    width: 70%;
+    font-size: 14px;
+    text-align: left;
+}
+
+.info_right_box p {
+    line-height: normal;
+}
+
+.info_comment {
+    font-weight: 600;
+    margin: 5px;
+}
+
+.item_count {
+    display: flex;
+    /* width: 100%; */
+    text-align: center;
+}
+
+.item_price {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.count_left_box {
+    width: 30%;
+    text-align: left;
+}
+
+.count_right_box {
+    display: flex;
+    width: 70%;
+    justify-content: right;
+    align-items: center;
+}
+
+.item_count .count_right_box .count_num {
+    width: 40px;
+    height: 40px;
+}
+
+.count_right_box button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+}
+
+.count_right_box button:hover {
+    background-color: blue;
+    color: white;
+}
+
+.right_inner .item_total_price {
+    display: flex;
+    margin: 10px;
+}
+
+.total_price_title {
+    width: 30%;
+    text-align: left;
+}
+
+.total_price {
+    /* display: flex; */
+    width: 70%;
+    text-align: right;
+}
+
+.total_price .t_price {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.item_btn {
+    margin: 5px;
+}
+
+.submit_btn {
+    width: 100%;
+    height: 40px;
+    bottom: 0%;
+    border: none;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* ============== Right Box End ================ */
+
+
+
+/* ============== ItemDetailInfo =============== */
+.info_top_box {
+    display: flex;
+    margin-top: 20px;
+    padding-top: 60px;
+    height: 60px;
+    align-items: center;
+    border-bottom: solid 2px black;
+}
+
+.info_top_box .info_top_left {
+    width: 50%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info_top_box .info_top_right {
+    width: 50%;
+    font-size: 30px;
+    text-align: right;
+}
+
+.info_bottom_box {
+    display: grid;
+    grid-template: repeat(8, 1fr) / repeat(4, 1fr);
+    height: 600px;
+    font-size: 12px;
+    transition: 1s;
+}
+
+.info_bottom_box div {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    border-bottom: solid 1px gray;
+    background-color: rgb(240, 238, 238);
+}
+
+.info_bottom_box div:nth-of-type(even) {
+    width: 200px;
+    background-color: white;
+}
+
+.info_bottom_box div:nth-of-type(odd) {
+    text-align: center;
+}
+
+.company {
+    grid-area: 4/2/5/5;
+    width: 100% !important;
+}
+
+.kc_check {
+    grid-area: 8/2/9/5;
+    width: 100% !important;
+}
+
+/* ============ ItemDetailInfo end ============= */
+
+
+
+
+
+/* ----------------- 주문결제 화면 ----------------- */
+
+/* =============== ItemBuy Start =============== */
+.buy_main_box {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.buy_titlebar {
+    /* width: 80%; */
+    width: 1200px;
+
+}
+
+.buy_titlebar h1 {
+    margin: 0 20px;
+}
+
+.buy_left_subtitle {
+    display: flex;
+    margin-top: 20px;
+    height: 60px;
+    align-items: center;
+    border-bottom: solid 2px black;
+}
+
+.buy_left_subtitle .subtitle_left {
+    width: 50%;
+}
+
+.buy_left_subtitle .subtitle_right {
+    width: 50%;
+    font-size: 30px;
+    text-align: right;
+}
+
+.item_detail_main detail_left_box {
+    height: 100%;
+    width: 800px;
+}
+
+.item_detail_main detail_right_box {
+    display: flex;
+    height: 100%;
+    width: 400px;
+    position: sticky;
+    top: 0;
+}
+
+.detail_right_box .right_inner {
+    border: solid 1px rgb(240, 238, 238);
+}
+
+.buy_item_info {
+    display: flex;
+    height: 240px;
+}
+
+.buy_right_subtitle {
+    display: flex;
+    justify-content: space-between;
+    /* background-color: rgb(240, 238, 238); */
+    border-bottom: solid 1px rgb(240, 238, 238);
+    ;
+    align-items: center;
+}
+
+.buy_right_subtitle h3 {
+    width: 100%;
+    margin: 10px;
+    padding: 14px;
+}
+
+.buy_right_subtitle button {
+    width: 120px;
+    height: 30px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(240, 238, 238);
+}
+
+.buy_right_subtitle button:hover {
+    color: white;
+    background-color: blue;
+}
+
+.buy_item_img {
+    width: 120px;
+    height: 150px;
+}
+
+.buy_item_name {
+    font-weight: 600;
+}
+
+.buy_left_box {
+    width: 30%;
+    text-align: left;
+}
+
+.buy_right_box {
+    width: 70%;
+    font-size: 14px;
+    text-align: left;
+}
+
+
+/* 주문화면 상품목록css 장바구니 참조 */
+.item_list_container {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* margin-top: 20px; */
+}
+
+.item_list_header {
+    display: flex;
+    height: 30px;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.item_list_header div {
+    flex: 1;
+    text-align: center;
+}
+
+
+.buy_item_box {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+}
+
+.buy_item_box div {
+    flex: 1;
+    text-align: center;
+    align-content: center;
+}
+
+.buy_item_box img {
+    max-width: 80%;
+}
+
+.item_list_header input[type="checkbox"],
+.buy_item_box input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+}
+
+.buy_count_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buy_count_box button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.buy_count_box button:hover {
+    background-color: blue;
+    color: white;
+}
+
+.userinfo {
+    display: grid;
+    grid-template: repeat(4, .5fr) / .5fr 1fr;
+    width: 100%;
+    align-items: center;
+    height: 100%;
+}
+
+.userinfo p {
+    padding: 0 5px;
+}
+
+.buy_user_address_box {
+    height: 80px;
+    grid-area: 5/1/6/3;
+}
+
+.delivery_info {
+    display: grid;
+    grid-template: repeat(3, .5fr) / .5fr 1fr;
+    width: 100%;
+    align-items: center;
+    height: 100%;
+}
+
+.delivery_info p {
+    padding: 0 5px;
+}
+
+.delivery_info input {
+    height: 30px;
+    padding: 0 5px;
+    border-radius: 10px;
+}
+
+.buy_address_search {
+    text-align: right;
+}
+
+.address_search_btn {
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+}
+
+.address_search_btn:hover {
+    color: white;
+    background-color: blue;
+}
+
+.buy_deliyvery_address_box {
+    height: 80px;
+    grid-area: 4/1/5/3;
+}
+
+
+/* ================ ItemBuy end ================ */
+
+
+.test {
+    height: 1000px;
+}
+
+#comment {
+    /* width: 100; */
+    height: 100px;
+    resize: none;
+}
+
+.qnaBox,
+.reviewBox {
+    display: flex;
+    align-items: center;
+}

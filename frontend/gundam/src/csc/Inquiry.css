@@ -1,0 +1,25 @@
+.CscInquiryListTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    text-align: center;
+    border-bottom: 2px solid gray;
+}
+
+.InquiryWriteBtn {
+    font-size: 2rem;
+    text-align: center;
+    margin: 20px 0px;
+}
+
+.InquiryWriteBtn>a {
+    border: 1px solid aqua;
+    border-radius: 5px;
+    color: #b3ffff;
+    background-color: aqua;
+}
+
+.inquiryListContainer {
+min-height: 260px;
+}

@@ -1,0 +1,92 @@
+.BrandFigure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.FigureContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.FigureList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.Figures {
+    overflow: hidden;
+    transition: width .5s ease-in-out;
+    height: 80vh;
+    /* height: 100%; */
+}
+
+.category {
+    transition: width .5s ease-in-out!important ;
+    height: 80vh;
+    width: 20vw;
+    transform: translateY(0px);
+}
+
+.category1 {
+    transition: all .5s;
+}
+
+.category2 {
+    transition: all 1s;
+}
+
+.category3 {
+    transition: all 1.5s;
+}
+
+.category4 {
+    transition: all 2s;
+}
+
+.category5 {
+    transition: all 2.5s;
+}
+
+.hovered {
+    width: 40vw;
+}
+
+.shrink {
+    width: calc((100vw - 40vw) / 4); 
+    opacity: .5;
+}
+
+.FigureList img {
+    display: block;
+    /* height: 80vh; */
+    height: 100%;
+    object-fit: none;
+}
+
+
+.category.shows {
+    transform: translateY(200px);
+}
+
+@media (width < 96.25rem){
+    .FigureList {
+        width: 100vw;
+    }
+}
+
+@media (width < 87.5rem){
+    .Figures>a>li {
+        width: 80%;
+        height: 80%;
+    }
+}

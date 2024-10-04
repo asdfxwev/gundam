@@ -1,0 +1,73 @@
+.isc {
+    height: 50vh;
+    display: flex;
+    /* min-height: 50vh; */
+    min-height: 450px;
+    white-space: nowrap;
+    overflow-x: auto;
+    margin: 0px 300px;
+    position: relative;
+    overflow-y: hidden
+}
+
+.intersectionImageContainer {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    height: 450px;
+}
+
+.intersectionImageList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 420px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.verticalImage {
+    transition: all 1s;
+    width: 330px;
+    height: 330px;
+    opacity: 0;
+    transform: translateY(20px);
+    margin: 33px;
+}
+
+
+
+.scaleUp {
+    scale: 1.1;
+}
+
+.verticalImage.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.intersectionImageContainer::-webkit-scrollbar {
+    height: 10px;
+    /* background-color: #F90; */
+    background: rgba(33, 122, 244, .1); 
+}
+
+.intersectionImageContainer::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #217af4; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+@media (width < 87rem){
+    .isc {
+        /* font-size: 1rem; */
+        margin: 0px 100px;
+    }
+}
+@media (width < 57.5rem){
+    .isc {
+        /* font-size: 1rem; */
+        margin: 0px;
+    }
+}

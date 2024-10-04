@@ -1,0 +1,859 @@
+{
+  "users": [
+    {
+      "hosting": {
+        "public": "build",
+        "ignore": [
+          "firebase.json",
+          "**/.*",
+          "**/node_modules/**"
+        ],
+        "rewrites": [
+          {
+            "source": "**",
+            "destination": "/index.html"
+          }
+        ]
+      },
+      "id": "445e"
+    },
+    {
+      "name": "ㅁㄴㅇㄹ",
+      "email": "asdf@asdf",
+      "phoneNumber": "1234567891",
+      "address": "부산 연제구 미남로 1 asdf",
+      "id": "28d8",
+      "cart": [],
+      "inquiryCounter": 126,
+      "buy": [],
+      "inquries": [
+        {
+          "id": 124,
+          "inquiryType": "배송",
+          "subject": "ㅂa",
+          "message": "ㅂ",
+          "formData": {}
+        },
+        {
+          "id": 125,
+          "inquiryType": "배송",
+          "subject": "ㅁ",
+          "message": "ㅁ",
+          "formData": {}
+        }
+      ]
+    },
+    {
+      "id": "070c",
+      "email": "dydejr852@naver.com",
+      "address": "부산 해운대구 APEC로 30 asdf",
+      "name": "전용덕",
+      "password": "123456789",
+      "confirmPassword": "123456789",
+      "phoneNumber": "1234567890",
+      "inquries": [
+        {
+          "id": 1,
+          "inquiryType": "배송",
+          "subject": "a",
+          "message": "a"
+        }
+      ],
+      "inquiryCounter": 2,
+      "cart": [],
+      "buy": [
+        {
+          "id": 1,
+          "tag": "건프라",
+          "name": "RG 윙 건담",
+          "price": 38400,
+          "comment": "건담 무사",
+          "detail": "건담 최초로 오리지널 스토리 극장판으로써 제작된 작품. 아무로와 샤아 두 캐릭터에 초점을 두어 기동전사 건담에서 이어지는 스토리의 완결을 그린 작품이다.",
+          "brand": "1/100",
+          "src": [
+            "/image/gundam01.jpg"
+          ],
+          "image": "/image/gundam01.jpg",
+          "isChecked": true,
+          "quantity": 1,
+          "date": "2024-09-12",
+          "deliveryuser": "전용덕",
+          "deliveryphone": "1234567890",
+          "deliveryaddress": "부산 해운대구 APEC로 30 asdf"
+        },
+        {
+          "id": 3,
+          "tag": "건프라",
+          "name": "SD 건담월드 히어로즈 오공 임펄스 건담",
+          "price": 7200,
+          "comment": "기동전사 건담 수성의 마녀",
+          "detail": "건담 시리즈의 기념비적인 첫 번째 작품. 스페이스 콜로니와 같이 최첨단 과학기술을 배경으로, 치밀하면서도 리얼한 세계관을 구축하여 인기를 얻었다",
+          "brand": "FIGURE-RISE MECHANICS",
+          "src": [
+            "/image/gundam02.jpg",
+            "/image/gundam08.jpg",
+            "/image/gundam09.jpg"
+          ],
+          "image": "/image/gundam03.jpg",
+          "isChecked": true,
+          "quantity": 1,
+          "date": "2024-09-16",
+          "deliveryuser": "전용덕",
+          "deliveryphone": "1234567890",
+          "deliveryaddress": "부산 해운대구 APEC로 30 asdf"
+        }
+      ]
+    },
+    {
+      "name": "vaundy",
+      "email": "vaundy@naver.com",
+      "phoneNumber": "01000000000",
+      "address": "dfasdf ",
+      "id": "bd65",
+      "cart": [],
+      "buy": [
+        {
+          "id": 1,
+          "tag": "건프라",
+          "name": "RG 윙 건담",
+          "price": 38400,
+          "comment": "건담 무사",
+          "detail": "건담 최초로 오리지널 스토리 극장판으로써 제작된 작품. 아무로와 샤아 두 캐릭터에 초점을 두어 기동전사 건담에서 이어지는 스토리의 완결을 그린 작품이다.",
+          "brand": "1/100",
+          "src": [
+            "/image/gundam01.jpg"
+          ],
+          "image": "/image/gundam01.jpg",
+          "quantity": 1,
+          "isChecked": true,
+          "date": "2024-07-10",
+          "deliveryuser": "vaundy",
+          "deliveryphone": "01000000000",
+          "deliveryaddress": "dfasdf "
+        }
+      ]
+    },
+    {
+      "name": "tmdqja",
+      "email": "asdf@asdfg",
+      "phoneNumber": "1234567890",
+      "address": "asdf asdf",
+      "id": "f17b",
+      "cart": [
+        {
+          "id": 3,
+          "tag": "건프라",
+          "name": "SD 건담월드 히어로즈 오공 임펄스 건담",
+          "price": 7200,
+          "comment": "기동전사 건담 수성의 마녀",
+          "detail": "건담 시리즈의 기념비적인 첫 번째 작품. 스페이스 콜로니와 같이 최첨단 과학기술을 배경으로, 치밀하면서도 리얼한 세계관을 구축하여 인기를 얻었다",
+          "brand": "FIGURE-RISE MECHANICS",
+          "src": [
+            "/image/gundam02.jpg",
+            "/image/gundam08.jpg",
+            "/image/gundam09.jpg"
+          ],
+          "image": "/image/gundam03.jpg",
+          "isChecked": false,
+          "quantity": 1
+        },
+        {
+          "id": 3,
+          "tag": "건프라",
+          "name": "SD 건담월드 히어로즈 오공 임펄스 건담",
+          "price": 7200,
+          "comment": "기동전사 건담 수성의 마녀",
+          "detail": "건담 시리즈의 기념비적인 첫 번째 작품. 스페이스 콜로니와 같이 최첨단 과학기술을 배경으로, 치밀하면서도 리얼한 세계관을 구축하여 인기를 얻었다",
+          "brand": "FIGURE-RISE MECHANICS",
+          "src": [
+            "/image/gundam02.jpg",
+            "/image/gundam08.jpg",
+            "/image/gundam09.jpg"
+          ],
+          "image": "/image/gundam03.jpg",
+          "isChecked": false,
+          "quantity": 1
+        }
+      ],
+      "inquries": [
+        {
+          "id": 1,
+          "inquiryType": "배송",
+          "subject": "a",
+          "message": "a",
+          "formData": {}
+        },
+        {
+          "id": 2,
+          "inquiryType": "완구A/S",
+          "subject": "aa",
+          "message": "aa",
+          "formData": {}
+        }
+      ],
+      "inquiryCounter": 3
+    },
+    {
+      "id": "79c7",
+      "email": "dydejr852@naver.cov",
+      "address": "경기 수원시 장안구 대평로 27 1234",
+      "name": "전용덕",
+      "password": "12345678",
+      "confirmPassword": "12345678",
+      "phoneNumber": "01072815061",
+      "cart": []
+    },
+    {
+      "id": "c533",
+      "email": "dydejr852@naver.cod",
+      "address": "울산 북구 정자1길 7 123",
+      "name": "전용덕",
+      "password": "12345678",
+      "confirmPassword": "12345678",
+      "phoneNumber": "01072815063",
+      "cart": [
+        {
+          "id": 1,
+          "tag": "건프라",
+          "name": "RG 윙 건담",
+          "price": 38400,
+          "comment": "건담 무사",
+          "detail": "건담 최초로 오리지널 스토리 극장판으로써 제작된 작품. 아무로와 샤아 두 캐릭터에 초점을 두어 기동전사 건담에서 이어지는 스토리의 완결을 그린 작품이다.",
+          "brand": "1/100",
+          "src": [
+            "/image/gundam01.jpg"
+          ],
+          "image": "/image/gundam01.jpg",
+          "quantity": 1,
+          "isChecked": true
+        },
+        {
+          "id": 2,
+          "tag": "건프라",
+          "name": "MG 윙 건담 제로(EW) Ver.Ka",
+          "price": 66000,
+          "comment": "건담 브레이커 배틀로그",
+          "detail": "비우주세기의 건담 시리즈 2탄으로 등장한 TV 작품. 건담 5기가 돌연 거대 세력을 급습하는 다이나믹한 장면으로부터 숨막히는 전개가 이어지는 작품이다.",
+          "brand": "FG",
+          "src": [
+            "/image/gundam02.jpg",
+            "/image/gundam02_1.jpg",
+            "/image/gundam02_2.jpg",
+            "/image/gundam02_3.jpg",
+            "/image/gundam02_4.jpg",
+            "/image/gundam02_5.jpg",
+            "/image/gundam02_6.jpg",
+            "/image/gundam02_7.jpg"
+          ],
+          "image": "/image/gundam02.jpg",
+          "quantity": 1,
+          "isChecked": true
+        }
+      ],
+      "inquries": [],
+      "inquiryCounter": 2,
+      "buy": [
+        {
+          "id": 1,
+          "tag": "건프라",
+          "name": "RG 윙 건담",
+          "price": 38400,
+          "comment": "건담 무사",
+          "detail": "건담 최초로 오리지널 스토리 극장판으로써 제작된 작품. 아무로와 샤아 두 캐릭터에 초점을 두어 기동전사 건담에서 이어지는 스토리의 완결을 그린 작품이다.",
+          "brand": "1/100",
+          "src": [
+            "/image/gundam01.jpg"
+          ],
+          "image": "/image/gundam01.jpg",
+          "quantity": 1,
+          "isChecked": true,
+          "date": "2024-07-10",
+          "deliveryuser": "전용덕",
+          "deliveryphone": "01072815063",
+          "deliveryaddress": "울산 북구 정자1길 7 123"
+        }
+      ]
+    },
+    {
+      "name": "호",
+      "email": "test@naver.com",
+      "phoneNumber": "01012345678",
+      "address": "경기 성남시 분당구 판교역로 지하 160",
+      "id": "607d"
+    },
+    {
+      "id": "0930",
+      "email": "dydejr852@naver.cox",
+      "address": "경기 수원시 장안구 대평로 27 1234",
+      "name": "전용덕",
+      "password": "12345678",
+      "confirmPassword": "12345678",
+      "phoneNumber": "01056564141"
+    },
+    {
+      "id": "2167",
+      "email": "asdf@asdf333",
+      "address": "대전 동구 판교1길 3 123123",
+      "name": "asdsadsad",
+      "password": "123123123",
+      "confirmPassword": "123123123",
+      "phoneNumber": "01033333333"
+    },
+    {
+      "id": "525a",
+      "email": "aaaaaa@aaaaaa",
+      "address": "서울 종로구 삼청로 59 123123123",
+      "name": "123123123",
+      "password": "123123123",
+      "confirmPassword": "123123123",
+      "phoneNumber": "1231231444"
+    },
+    {
+      "id": "ef16",
+      "email": "025731kk@naver.com",
+      "address": "광주 남구 판촌길 23-4 ㅇㅁㄴㅇㅁㄴㅇㄴㅁㅇ",
+      "name": "이거왜안됌?",
+      "password": "rlarudfo123",
+      "confirmPassword": "rlarudfo123",
+      "phoneNumber": "3332221111"
+    },
+    {
+      "name": "rlarudfo",
+      "email": "asdf@asdf33",
+      "phoneNumber": "01080334919",
+      "address": "세종특별자치시 연동면 내송길 5 123",
+      "id": "afbd",
+      "cart": [],
+      "buy": [
+        {
+          "id": 6,
+          "inquiryType": "배송",
+          "subject": "배송이 안와요",
+          "message": "배송이 안와요",
+          "formData": {}
+        },
+        {
+          "id": 7,
+          "inquiryType": "상품",
+          "subject": "상품이 이상해요",
+          "message": "상품이 이상해요",
+          "formData": {}
+        },
+        {
+          "id": 8,
+          "inquiryType": "반품",
+          "subject": "반품시켜주세요",
+          "message": "반품시켜주세요",
+          "formData": {}
+        },
+        {
+          "id": 9,
+          "inquiryType": "이벤트",
+          "subject": "이벤트 당첨 발표는 언제하나요?",
+          "message": "빨리 나왔으면 좋겠어요",
+          "formData": {}
+        },
+        {
+          "id": 10,
+          "inquiryType": "시스템장애",
+          "subject": "시스템이 이상해요",
+          "message": "시스템이 이상해요",
+          "formData": {}
+        },
+        {
+          "id": 11,
+          "inquiryType": "완구A/S",
+          "subject": "a/s가 되나요?",
+          "message": "a/s가 되나요?",
+          "formData": {}
+        }
+      ],
+      "inquiryCounter": 12
+    },
+    {
+      "id": "6b8e",
+      "email": "ghkdwlgh93@naver.com",
+      "address": "경기 성남시 분당구 성남대로 지하 163 ",
+      "name": "ho",
+      "password": "asdfasdf",
+      "confirmPassword": "asdfasdf",
+      "phoneNumber": "01022222222"
+    },
+    {
+      "name": "hhhh",
+      "email": "hh@naver.com",
+      "password": "asdfasdf",
+      "confirmPassword": "asdfasdf",
+      "phoneNumber": "01011111111",
+      "address": "경기 성남시 분당구 성남대로 지하 163 ",
+      "id": "23c3",
+      "cart": [
+        {
+          "id": 8,
+          "tag": "건프라",
+          "name": "SD 건담월드 히어로즈 조조 윙 건담 의성의 장",
+          "price": 9600,
+          "comment": "기동전사 건담 수성의 마녀",
+          "detail": "건담 시리즈의 기념비적인 첫 번째 작품. 스페이스 콜로니와 같이 최첨단 과학기술을 배경으로, 치밀하면서도 리얼한 세계관을 구축하여 인기를 얻었다",
+          "brand": "FIGURE-RISE MECHANICS",
+          "src": [
+            "/image/gundam08.jpg",
+            "/image/gundam9.jpg",
+            "/image/gundam10.jpg"
+          ],
+          "image": "/image/gundam08.jpg",
+          "quantity": 1,
+          "isChecked": false
+        }
+      ],
+      "buy": [
+        {
+          "id": 9,
+          "tag": "건프라",
+          "name": "RG 뉴 건담",
+          "price": 50400,
+          "comment": "기동전사 건담 복수의 레퀴엠",
+          "detail": "21세기의 첫 TV 시리즈 작품. 자프트와 지구 연합군의 전쟁에, 친구들을 구하기 위해 지구군으로서 참전한 코디네이터 키라의 고뇌와 성장을 그렸다.",
+          "brand": "FIGURE-RISE STANDARD",
+          "src": [
+            "/image/gundam09.jpg",
+            "/image/gundam10.jpg",
+            "/image/gundam11.jpg"
+          ],
+          "image": "/image/gundam09.jpg",
+          "isChecked": true,
+          "quantity": 1,
+          "date": "2024-07-09",
+          "deliveryuser": "hhhh",
+          "deliveryphone": "01011111111",
+          "deliveryaddress": "경기 성남시 분당구 성남대로 지하 163 "
+        },
+        {
+          "id": 9,
+          "tag": "건프라",
+          "name": "RG 뉴 건담",
+          "price": 50400,
+          "comment": "기동전사 건담 복수의 레퀴엠",
+          "detail": "21세기의 첫 TV 시리즈 작품. 자프트와 지구 연합군의 전쟁에, 친구들을 구하기 위해 지구군으로서 참전한 코디네이터 키라의 고뇌와 성장을 그렸다.",
+          "brand": "FIGURE-RISE STANDARD",
+          "src": [
+            "/image/gundam09.jpg",
+            "/image/gundam10.jpg",
+            "/image/gundam11.jpg"
+          ],
+          "image": "/image/gundam09.jpg",
+          "isChecked": true,
+          "quantity": 1,
+          "date": "2024-07-09",
+          "deliveryuser": "hhhh",
+          "deliveryphone": "01011111111",
+          "deliveryaddress": "경기 성남시 분당구 성남대로 지하 163 "
+        },
+        {
+          "id": 2,
+          "tag": "건프라",
+          "name": "MG 윙 건담 제로(EW) Ver.Ka",
+          "price": 66000,
+          "comment": "건담 브레이커 배틀로그",
+          "detail": "비우주세기의 건담 시리즈 2탄으로 등장한 TV 작품. 건담 5기가 돌연 거대 세력을 급습하는 다이나믹한 장면으로부터 숨막히는 전개가 이어지는 작품이다.",
+          "brand": "FG",
+          "src": [
+            "/image/gundam02.jpg",
+            "/image/gundam02_1.jpg",
+            "/image/gundam02_2.jpg",
+            "/image/gundam02_3.jpg",
+            "/image/gundam02_4.jpg",
+            "/image/gundam02_5.jpg",
+            "/image/gundam02_6.jpg",
+            "/image/gundam02_7.jpg"
+          ],
+          "image": "/image/gundam02.jpg",
+          "isChecked": true,
+          "quantity": 1,
+          "date": "2024-07-09",
+          "deliveryuser": "hhhh",
+          "deliveryphone": "01011111111",
+          "deliveryaddress": "경기 성남시 분당구 성남대로 지하 163 "
+        }
+      ]
+    },
+    {
+      "id": "d199",
+      "email": "kdddddddt@naver.com",
+      "address": "경기 성남시 분당구 대왕판교로 477 asdfsdd",
+      "name": "케이디",
+      "password": "11111111",
+      "confirmPassword": "11111111",
+      "phoneNumber": "01000000002"
+    },
+    {
+      "id": "vaundy",
+      "email": "tlatjddyd08@naver.com",
+      "phoneNumber": "01026404914",
+      "address": "경기 성남시 분당구 장미로 198 아델파크324호",
+      "password": "qaz13524",
+      "confirmPassword": "qaz13524",
+      "birthdate": "1992-08-24",
+      "gender": "male"
+    }
+  ],
+  "review": [
+    {
+      "id": "43e5",
+      "reviewId": 1,
+      "productId": 2,
+      "userId": "28d8",
+      "title": "퀄리티 ㅅㅌㅊ",
+      "comment": "어릴때 비싸서 못샀던거 원없이 사는중~",
+      "date": "2024. 7. 3."
+    },
+    {
+      "id": "ded1",
+      "reviewId": 2,
+      "productId": 2,
+      "userId": "28d8",
+      "title": "컬렉터",
+      "comment": "소장용 조립용 두개구매",
+      "date": "2024. 7. 3."
+    },
+    {
+      "id": "529d",
+      "reviewId": 3,
+      "productId": 3,
+      "userId": "28d8",
+      "title": "ㅁㄴ",
+      "comment": "ㅍㅊ",
+      "date": "2024. 7. 3."
+    },
+    {
+      "id": "663c",
+      "reviewId": 4,
+      "productId": 1,
+      "userId": "28d8",
+      "title": "ㅋ",
+      "comment": "ㅌㅊ",
+      "date": "2024. 7. 3."
+    },
+    {
+      "id": "2658",
+      "reviewId": 6,
+      "productId": 3,
+      "userId": "607d",
+      "title": "리뷰제목",
+      "comment": "리뷰내용",
+      "date": "2024. 7. 4."
+    },
+    {
+      "id": "1e19",
+      "reviewId": 7,
+      "productId": 2,
+      "userId": "87f3",
+      "title": "as",
+      "comment": "as",
+      "date": "2024. 7. 5."
+    },
+    {
+      "id": "2296",
+      "reviewId": 8,
+      "productId": 7,
+      "userId": "28d8",
+      "title": "루루루루",
+      "comment": "ㅎ라하하리",
+      "date": "2024. 7. 5."
+    },
+    {
+      "id": "a17b",
+      "reviewId": 9,
+      "productId": 3,
+      "userId": "23c3",
+      "title": "ㅁ",
+      "comment": "ㅁ",
+      "date": "2024. 7. 8."
+    },
+    {
+      "id": "6507",
+      "reviewId": 10,
+      "productId": 12,
+      "userId": "bb79",
+      "title": "",
+      "comment": "",
+      "date": "2024. 7. 8."
+    },
+    {
+      "id": "bf23",
+      "reviewId": 11,
+      "productId": 1,
+      "userId": "28d8",
+      "title": "ㅁ",
+      "comment": "ㅁ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "a0c7",
+      "reviewId": 12,
+      "productId": 1,
+      "userId": "28d8",
+      "title": "ㅁ",
+      "comment": "ㅁㅁ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "5bbc",
+      "reviewId": 13,
+      "productId": 1,
+      "userId": "28d8",
+      "title": "ㅁㅁ",
+      "comment": "ㅁㅁ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "6a79",
+      "reviewId": 14,
+      "productId": 1,
+      "userId": "28d8",
+      "title": "ㅁㅁㅁ",
+      "comment": "ㅁㅁㅁ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "6be2",
+      "reviewId": 15,
+      "productId": 1,
+      "userId": "28d8",
+      "title": "ㅁㅁㅁㅁ",
+      "comment": "ㅁㅁㅁㅁ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "2727",
+      "reviewId": 16,
+      "productId": 1,
+      "userId": "28d8",
+      "title": "ㅁㅁㅁㅁㅁ",
+      "comment": "ㅁㅁㅁㅁㅁ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "de5e",
+      "reviewId": 17,
+      "productId": 2,
+      "userId": "23c3",
+      "title": "????",
+      "comment": "!!!!",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "f6d8",
+      "reviewId": 18,
+      "productId": 2,
+      "userId": "23c3",
+      "title": "제목",
+      "comment": "내용리뷰",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "7f74",
+      "reviewId": 19,
+      "productId": 1,
+      "userId": "070c",
+      "title": "djfldkfjdk",
+      "comment": "dfasfasdfasdfsdf",
+      "date": "2024. 9. 19.",
+      "rating": 5
+    }
+  ],
+  "qna": [
+    {
+      "id": "dad5",
+      "qna_Id": 1,
+      "productId": 1,
+      "userId": "28d8",
+      "comment": "ㅁㄴㅇㄹ",
+      "date": "2024. 7. 3."
+    },
+    {
+      "id": "4721",
+      "qna_Id": 2,
+      "productId": 1,
+      "userId": "28d8",
+      "comment": "ㅋㅌㅊㅍ",
+      "date": "2024. 7. 3."
+    },
+    {
+      "id": "09c0",
+      "qna_Id": 3,
+      "productId": 2,
+      "userId": "28d8",
+      "comment": "당일배송 가능?",
+      "date": "2024. 7. 3."
+    },
+    {
+      "id": "dc94",
+      "qna_Id": 4,
+      "productId": 3,
+      "userId": "607d",
+      "comment": "퀄리티 쿳?",
+      "date": "2024. 7. 4."
+    },
+    {
+      "id": "b19f",
+      "qna_Id": 5,
+      "productId": 2,
+      "userId": "607d",
+      "comment": "직구인가요?",
+      "date": "2024. 7. 4."
+    },
+    {
+      "id": "4702",
+      "qna_Id": 6,
+      "productId": 1,
+      "userId": "28d8",
+      "comment": "ㅁ",
+      "date": "2024. 7. 5."
+    },
+    {
+      "id": "2cfd",
+      "qna_Id": 7,
+      "productId": 1,
+      "userId": "28d8",
+      "comment": "ㅁ",
+      "date": "2024. 7. 5."
+    },
+    {
+      "id": "9634",
+      "qna_Id": 8,
+      "productId": 1,
+      "userId": "28d8",
+      "comment": "ㅁ",
+      "date": "2024. 7. 5."
+    },
+    {
+      "id": "8e17",
+      "qna_Id": 9,
+      "productId": 1,
+      "userId": "28d8",
+      "comment": "ㅁ",
+      "date": "2024. 7. 5."
+    },
+    {
+      "id": "2be7",
+      "qna_Id": 10,
+      "productId": 1,
+      "userId": "28d8",
+      "comment": "ㅁㄴ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "c7a9",
+      "qna_Id": 11,
+      "productId": 2,
+      "userId": "23c3",
+      "comment": "?",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "614b",
+      "qna_Id": 12,
+      "productId": 2,
+      "userId": "23c3",
+      "comment": "asdfasdf",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "843c",
+      "qna_Id": 13,
+      "productId": 2,
+      "userId": "23c3",
+      "comment": "asdf",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "38e4",
+      "qna_Id": 14,
+      "productId": 2,
+      "userId": "23c3",
+      "comment": "ad",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "a5c6",
+      "qna_Id": 15,
+      "productId": 1,
+      "userId": "bd65",
+      "comment": "ㄴㅇㅇㄹ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "68a4",
+      "qna_Id": 16,
+      "productId": 1,
+      "userId": "bd65",
+      "comment": "ㅇㄹㅇㄹ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "f8fd",
+      "qna_Id": 17,
+      "productId": 1,
+      "userId": "bd65",
+      "comment": "ㅇㅇㅇㄹ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "d129",
+      "qna_Id": 18,
+      "productId": 1,
+      "userId": "bd65",
+      "comment": "ㅇㄹㅇㄹ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "092e",
+      "qna_Id": 19,
+      "productId": 2,
+      "userId": "23c3",
+      "comment": "ㄹㄹ",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "573d",
+      "qna_Id": 20,
+      "productId": 2,
+      "userId": "23c3",
+      "comment": "배송언제되나요?",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "1201",
+      "qna_Id": 21,
+      "productId": 2,
+      "userId": "23c3",
+      "comment": "직구인가요?",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "cc8f",
+      "qna_Id": 22,
+      "productId": 2,
+      "userId": "23c3",
+      "comment": "보증기간이 있나요?",
+      "date": "2024. 7. 9."
+    },
+    {
+      "id": "8da9",
+      "qna_Id": 23,
+      "productId": 2,
+      "userId": "afbd",
+      "comment": "ㅗㄹ하ㅗ",
+      "date": "2024. 7. 10."
+    },
+    {
+      "id": "ea37",
+      "qna_Id": 24,
+      "productId": 3,
+      "userId": "070c",
+      "comment": "가나다라ㅏ망라ㅣ먼ㅇ리ㅏ;멍ㄴ라ㅓㄴㅇ리마널;ㅣㅁ넝라;민얼;ㅏㅣ멀;먼ㅇㄹ;ㅣㅁ넝라ㅣㅁ;넝ㄹ;ㅏㅣㅁ널미;ㄴ얼;",
+      "date": "2024. 9. 16."
+    }
+  ]
+}

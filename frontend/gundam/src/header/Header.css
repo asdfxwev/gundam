@@ -1,0 +1,23 @@
+header {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 16px);
+    transition: all .5s;
+    z-index: 2;
+}
+
+.detailMenu div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+.menuItem a {
+    text-decoration: none;
+    transition: font-size 0.5s;
+}

@@ -1,0 +1,21 @@
+.slideScrollContainers {
+    margin-top: 200px;
+    height: 800px;
+}
+
+.slide{
+    width: 400px;
+    border: 10px solid white;
+}
+
+.gundamPerson {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+@media (width < 50rem) {
+    .gundamPerson {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,125 @@
+.productImg {
+    width: calc(100vw - 16px);
+    margin-bottom: 20px;
+}
+
+.bestChoice {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.mainGridArea {
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    gap: 30px;
+    min-width: 605px;
+}
+
+.gridTemplate {
+    width: auto;
+    height: auto;
+    position: relative;
+}
+
+.gridTemplate>div{
+    width: 100%;
+    height: 100%;
+}
+
+.gridTemplates {
+    width: 100%;
+    height: 100%;
+}
+
+.classAbsolute {
+    position: absolute;
+    width: 100%;
+    height: 600px;
+    /* bottom: 650px; */
+    bottom: 0;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.classes {
+    position: relative;
+    width: 100%;
+    bottom: -700px;
+    left: 10px;
+    transform: translateY(20px);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    color: black;
+    text-align: left;
+}
+
+.upperBox {
+    border: 1px solid rgba(224, 224, 224, .5);
+    border-radius: 5px;
+    background-color: white;
+    font-weight: bold;
+    box-shadow: 5px 5px 5px gray;
+    padding: 20px;
+    position: absolute;
+    bottom: 50%;
+    left: 40%;
+    transform: translateY(20px);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    color: black;
+}
+
+.disNone {
+    transform: translateY(0px);
+    opacity: 1;
+    background-color: rgba(224, 224, 224, .5);
+}
+
+.disNones {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* .classAbsolute.disNone .upperBox,
+.classAbsolute.disNone .classes {
+    transform: translateY(0);
+    opacity: 1;
+} */
+
+.gridTemplate9 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.productInfo {
+    text-align: center;
+    margin-top: 10px;
+}
+
+@media (width < 50rem) {
+    .bestChoice {
+        font-size: 2rem;
+    }
+}
+
+@media (width < 103rem) {
+    .mainGridArea {
+        display: grid;
+        grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+        gap: 30px;
+        padding: 10px;
+    }
+}
+
+@media (width < 70.125rem) {
+    .mainGridArea {
+        display: grid;
+        grid-template: repeat(9, 1fr) / 1fr;
+        gap: 30px;
+        padding: 10px;
+    }
+}

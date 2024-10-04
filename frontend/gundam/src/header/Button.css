@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'LINESeedKR-Bd';
+    /* overflow-x: hidden; */
+}
+
+/* a { */
+    /* font-family: 'GmarketSansMedium'; */
+    /* font-family: 'SEBANG_Gothic_Bold'; */
+    /* font-family: 'IBMPlexSansKR-Regular'; */
+
+/* } */
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SEBANG_Gothic_Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Knewave&family=Nunito:wght@400;600;700&display=swap');
+
+.Every {
+    position: fixed;
+    width: calc(100vw - 17px);
+    height: 4rem;
+    text-align: center;
+    z-index: 3;
+}
+
+.topBtn {
+    position: fixed!important;
+    right: 50px!important;
+    /* bottom: 50px!important; */
+    width: 80px;
+    height: 80px;
+    z-index: 20!important;
+}
+
+.logo {
+    display: inline-block;
+    background: url(../../public/image/logo.png) center/100% 100% no-repeat;
+    text-indent: -9999em;
+    width: 10rem;
+    align-content: center;
+    height: 7rem;
+    z-index: 3;
+}
+
+.noPosition {
+    color: black !important;
+    position: inherit !important;
+}
+
+.noPosition .logo {
+    position: absolute;
+    left: calc(50% - 80px);
+}
+
+.smallThing {
+    background-color: white;
+    transition-duration: .5s;
+    height: 3rem;
+}
+
+.smallThing .logo {
+    width: 8rem;
+    height: 5rem;
+    transition-duration: .5s;
+}
+
+.isLoginPage {
+    display: none;
+}
+
+.nonVisible {
+    display: none;
+}
+
+/* body{
+    overflow-x: hidden;
+} */
+
+
+@media (width < 62.5rem) {
+    .logo {
+        width: 5rem;
+        height: 4rem;
+        left: calc(50% - 40px)!important;
+    }
+    .smallThing .logo {
+        width: 5rem;
+        height: 4rem;
+        
+    }
+}

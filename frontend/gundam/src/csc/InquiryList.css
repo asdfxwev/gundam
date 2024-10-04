@@ -1,0 +1,82 @@
+.CscInquiryList {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid gray;
+}
+
+.inquiryDelete {
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 100px;
+    padding: 10px 0px;
+    background-color: aqua;
+}
+
+.inquiryDataContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+    transition-duration: 1s;
+    max-height: 0;
+    display: none;
+    opacity: 0;
+}
+
+
+.inquiryData {
+    /* display: none; */
+    width: 500px;
+}
+
+.inquiryDataContainer .inquiryBlock {
+    /* transition-duration: 1s; */
+    /* height: 200px; */
+    max-height: 200px;
+    opacity: 1;
+    /* align-items: center;
+    display: flex; */
+    /* justify-content: center; */
+}
+
+.CscInquiryList {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid gray;
+}
+
+.inquiryDataContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid gray;
+    max-height: 0;
+    height: 0px;
+    opacity: 0;
+    transition-duration: .5s;
+}
+
+.inquiryData {
+    width: 500px;
+}
+
+.inquiryDataContainer.active {
+    max-height: 200px;
+    height: 200px;
+    opacity: 1;
+}
+
+.inquiryEdit {
+    border: 1px solid white;
+    border-radius: 100px;
+    padding: 10px 0px;
+    background-color: aqua;
+    cursor: pointer;
+    text-align: center;
+}

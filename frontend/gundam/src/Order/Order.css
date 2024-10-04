@@ -1,0 +1,139 @@
+.h1-names{
+    /* width: 80%; */
+    font-size: 3em;
+    /* margin: auto; */
+    /* padding-top: 112px; */
+    font-family: 'LINESeedKR-Bd';
+}
+
+.cart-containers {
+    /* width: 80%; */
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    font-family: 'LINESeedKR-Bd';
+    min-height: 350px;
+}
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.cart-header div {
+    flex: 1;
+    text-align: center;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+    font-family: 'LINESeedKR-Bd';
+}
+.cart-item div {
+    flex: 1;
+    text-align: center;
+    align-content: center;
+}
+.cart-item img {
+    max-width: 80%;
+}
+
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.quantity-controls button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.cart-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+.cart-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: skyblue;
+    color: white;
+    font-family: 'LINESeedKR-Bd';
+}
+.cart-actions button:hover {
+    background-color: skyblue;
+}
+
+.button-size {
+    background-color: inherit;
+    width: 150px;
+    border: 0;
+    font-size: 1em;
+    margin-top: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-family: 'LINESeedKR-Bd';
+}
+
+.cart-header input[type="checkbox"] {
+    width: 16px;
+    height: 16px; 
+    margin-right: 10px;
+}
+
+@media screen and (width < 85rem) {
+    .quantity-controls button {
+        width: 15px;
+        height: 15px;
+        border: none;
+        border-radius: 50%;
+        margin: 0 5px;
+    }
+    .cart-item input[type="checkbox"] {
+        width: 16px;
+        height: 16px; 
+        margin-right: 10px;
+    }
+    .cart-item div {
+        flex: 1;
+        text-align: center;
+        align-content: center;
+        font-size: 14px;
+    }
+    .button-size {
+        background-color: inherit;
+        width: 100px;
+        border: 0;
+        font-size: .8em;
+        margin-top: 20px;
+        cursor: pointer;
+        margin-right: 10px;
+        font-family: 'LINESeedKR-Bd';
+    }
+    .cart-header {
+        font-size: .7em;
+    }
+    .cart-header input[type="checkbox"] {
+        width: 10px;
+        height: 10px; 
+        margin-right: 10px;
+    }
+}
+

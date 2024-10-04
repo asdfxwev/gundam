@@ -1,0 +1,134 @@
+.cscNoticeContiner {
+    display: flex;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
+.cscNoticeMain {
+    width: 70%;
+}
+
+.h2Notice {
+    /* margin-top: 100px; */
+    margin-bottom: 50px;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.titleData li {
+    margin-right: 10px;
+}
+
+.noticeData {
+    transition-duration: 1s;
+    max-height: 0;
+    height: 50px;
+    display: none;
+    opacity: 0;
+    border-bottom: 1px solid gray;
+    display: none;
+}
+
+.noticeBlockData {
+    transition-duration: 1s;
+    height: 200px;
+    max-height: 200px;
+    opacity: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.noticeTitleGrid,
+.noticeGrid,
+.noticeDeliveryGrid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.noticeGrid>div,
+.noticeTitleGrid>div,
+.noticeDeliveryGrid>div,
+.noticeData {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.noticeTitleGrid {
+    border-bottom: 1px solid gray;
+    border-top: 2px solid;
+}
+
+.noticeGrid,
+.noticeDeliveryGrid {
+    border-bottom: 1px solid gray;
+}
+
+.noticeNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+.noticeNumber li {
+    margin: 0px 10px;
+    font-size: 1.2rem;
+}
+
+.noticeNumber a {
+    color: black;
+}
+
+.selected {
+    font-weight: bold;
+    /* border: 1px solid aqua; */
+    /* border-radius: 10%; */
+    /* background-color: rgba(0, 255, 255, 0.233); */
+    background-color: #b3ffff;
+    /* margin: 10px; */
+}
+
+.noticeForm {
+    text-align: right;
+    /* width: 100px; */
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-bottom: 20px;
+}
+
+.noticeForm input {
+    width: 200px;
+    height: 23px;
+}
+
+.noticeForm button {
+    height: 28px;
+}
+
+.noticeDeliveryContainer {
+    min-height: 518px;
+}
+
+@media (width < 90rem) {
+    .cscNoticeContiner {
+        display: flex;
+        flex-direction: column;
+        margin: inherit;
+    }
+
+    .cscNoticeMain {
+        width: 100%;
+    }
+}
+
+@media (width < 41rem) {
+    .noticeDeliveryGrid {
+        font-size: .8rem;
+    }
+
+}
