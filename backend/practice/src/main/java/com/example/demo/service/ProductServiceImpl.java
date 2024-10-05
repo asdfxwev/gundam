@@ -50,18 +50,18 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	// 전체 데이터 숫자 가져오기
-	public Integer countAllProduct(String inputValue) {
+	public Integer countAllProduct(String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
 		
-		int maxproduct =  pdslRepository.countAllProduct(inputValue).intValue();
+		int maxproduct =  pdslRepository.countAllProduct(inputValue, proCate, cateBrand, catePiece, proStateCd, price).intValue();
 		
 		return maxproduct;
 		
 	}
 	
 	// 상품에서 얼마나 많은 데이터를 가져올지에 대한 값
-	public Integer countPerPage(int itemsPerPage, String inputValue) {
+	public Integer countPerPage(int itemsPerPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
 		
-		int maxproduct = countAllProduct(inputValue);
+		int maxproduct = countAllProduct(inputValue, proCate, cateBrand, catePiece, proStateCd, price);
 		
 		int maxpage = (int)Math.ceil((double)maxproduct / itemsPerPage);
 		

@@ -73,28 +73,28 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 
         BooleanBuilder builder = new BooleanBuilder();
         
-        // 검색어 조건 추가
+        
         if (inputValue != null && !inputValue.isEmpty()) {
             builder.and(product.pro_name.contains(inputValue));
         }
         
         // proCate 조건 추가
         if (proCate != null && !proCate.isEmpty()) {
-            builder.and(code1.code_name.in(proCate));
+            builder.and(product.pro_cate.in(proCate));
         }
 
         // cateBrand 조건 추가
         if (cateBrand != null && !cateBrand.isEmpty()) {
-            builder.and(code2.code_name.in(cateBrand));
+            builder.and(product.cate_brand.in(cateBrand));
         }
 
         // cateBrand 조건 추가
         if (catePiece != null && !catePiece.isEmpty()) {
-        	builder.and(code3.code_name.in(catePiece));
+        	builder.and(product.cate_piece.in(catePiece));
         }
         
         if (proStateCd != null && !proStateCd.isEmpty()) {
-			builder.and(code4.code_name.notIn(proStateCd));
+			builder.and(product.pro_state_cd.notIn(proStateCd));
 		}
         
         if (price == 2) {
@@ -350,11 +350,54 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 	
 	
 	@Override
-	public Long countAllProduct(String inputValue) {
+	public Long countAllProduct(String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
+		
+BooleanBuilder builder = new BooleanBuilder();
+        
+        // 검색어 조건 추가
+        if (inputValue != null && !inputValue.isEmpty()) {
+            builder.and(product.pro_name.contains(inputValue));
+        }
+        
+        // proCate 조건 추가
+        if (proCate != null && !proCate.isEmpty()) {
+            builder.and(product.pro_cate.in(proCate));
+        }
+
+        // cateBrand 조건 추가
+        if (cateBrand != null && !cateBrand.isEmpty()) {
+            builder.and(product.cate_brand.in(cateBrand));
+        }
+
+        // cateBrand 조건 추가
+        if (catePiece != null && !catePiece.isEmpty()) {
+        	builder.and(product.cate_piece.in(catePiece));
+        }
+        
+        if (proStateCd != null && !proStateCd.isEmpty()) {
+			builder.and(product.pro_state_cd.notIn(proStateCd));
+		}
+        
+        if (price == 2) {
+			builder.and(product.pro_price.lt(10000));
+        }
+        
+        if (price == 3) {
+			builder.and(product.pro_price.lt(50000).and(product.pro_price.goe(10000)));
+		}
+        
+        if (price == 4) {
+			builder.and(product.pro_price.lt(100000).and(product.pro_price.goe(50000)));
+		}
+        
+        if (price == 5) {
+			builder.and(product.pro_price.goe(100000));
+		}
+		
 	    return jpaQueryFactory
 	            .select(product.count()) 
 	            .from(product)
-				 .where(product.pro_name.contains(inputValue).and(product.pro_name.contains(inputValue)))
+	            .where(builder)
 	            .fetchOne();
 	}
 

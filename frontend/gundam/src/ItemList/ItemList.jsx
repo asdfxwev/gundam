@@ -231,7 +231,7 @@ const ItemList = () => {
                                 {cateList && cateList.map((item, i) => (
                                     <div key={item.code_id}>
                                         <label>
-                                            <input type='checkbox' onChange={() => handleProCateChange(item.code_name)} />
+                                            <input type='checkbox' onChange={() => handleProCateChange(item.code_id)} />
                                             {item.code_name}
                                         </label>
                                     </div>
@@ -249,7 +249,7 @@ const ItemList = () => {
                                             <label>
                                                 <input
                                                     type='checkbox'
-                                                    onChange={() => handleProStateCdChange(item.code_name)}
+                                                    onChange={() => handleProStateCdChange(item.code_id)}
                                                 />
                                                 {item.code_name} 제외
                                             </label>
@@ -296,7 +296,7 @@ const ItemList = () => {
                                 {brandList && brandList.map((item, i) => (
                                     <div key={item.code_id}>
                                         <label>
-                                            <input type='checkbox' onChange={() => handleCateBrandChange(item.code_name)} />
+                                            <input type='checkbox' onChange={() => handleCateBrandChange(item.code_id)} />
                                             {item.code_name}
                                         </label>
                                     </div>
@@ -310,7 +310,7 @@ const ItemList = () => {
                                 {pieceList && pieceList.map((item, i) => (
                                     <div key={item.code_id}>
                                         <label>
-                                            <input type='checkbox' onChange={() => handleCatePieceChange(item.code_name)} />
+                                            <input type='checkbox' onChange={() => handleCatePieceChange(item.code_id)} />
                                             {item.code_name}
                                         </label>
                                     </div>
