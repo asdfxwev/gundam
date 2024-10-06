@@ -22,20 +22,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @IdClass(CartId.class)
 public class Cart implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+    
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)  // 외래 키로 'user' 테이블의 'user_id' 참조
+    @JoinColumn(name = "user_id", nullable = false)  // 'user' 테이블의 'user_id'를 참조
     private User user_id;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "pro_id", nullable = false)  // 외래 키로 'product' 테이블의 'pro_id' 참조
+    @JoinColumn(name = "pro_id", nullable = false)  // 'product' 테이블의 'pro_id'를 참조
     private Product pro_id;
 
     @Column(name = "cart_quantity", nullable = false)
     private int cart_quantity;
-	
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './cart.css';
 import axios from 'axios';
 import MypageLeft from '../MyPage/MypageLeft';
+import { API_BASE_URL } from '../service/app-config';
 
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
     const handleQuantityChange = (newQuantity) => {
@@ -16,8 +17,8 @@ const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
                 <input type="checkbox" checked={isChecked} onChange={() => onCheckboxChange(item.id)} />
             </div>
             <div>
-                <a href={`ItemList/ItemDetail/${item.id}`}>
-                    <img src={item.image} alt={item.name} />
+                <a href={`${API_BASE_URL}/product/${item.pro_id.pro_id}`}>
+                    <img src={`${API_BASE_URL}/product/${item.pro_id.pro_id}`} alt={item.name} />
                 </a>
             </div>
             <div>{item.name}</div>
@@ -39,12 +40,12 @@ const Cart = () => {
     const [errorMessage, setErrorMessage] = useState(null);
 
     const existingInquiries = JSON.parse(localStorage.getItem('loginInfo'));
-    const userId = existingInquiries.id;
+    const userId = existingInquiries.user_id;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userResponse = await axios.get(`http://localhost:3001/users/${userId}`);
+                const userResponse = await axios.get(`http://localhost:3000/logininfo/${userId}`);
                 const userData = userResponse.data;
 
                 // 사용자의 카트가 없을 경우 초기화
@@ -66,7 +67,7 @@ const Cart = () => {
 
         // 서버에 수량 업데이트 요청
         try {
-            await axios.put(`http://localhost:3001/users/${userId}`, { ...existingInquiries, cart: updatedItems });
+            await axios.put(`http://localhost:3000/logininfo/${userId}`, { ...existingInquiries, cart: updatedItems });
         } catch (error) {
             console.error('Error updating quantity:', error);
             setErrorMessage('수량 업데이트 중 오류가 발생했습니다.');
@@ -92,7 +93,7 @@ const Cart = () => {
         try {
             const updatedItems = cartItems.filter(item => !checkedItems.includes(item.id));
 
-            await axios.put(`http://localhost:3001/users/${userId}`, { ...existingInquiries, cart: updatedItems });
+            await axios.put(`http://localhost:3000/logininfo/${userId}`, { ...existingInquiries, cart: updatedItems });
 
             setCartItems(updatedItems);
             setCheckedItems([]);
@@ -105,7 +106,7 @@ const Cart = () => {
 
     const handleRemoveAllItems = async () => {
         try {
-            await axios.put(`http://localhost:3001/users/${userId}`, { ...existingInquiries, cart: [] });
+            await axios.put(`http://localhost:3000/logininfo/${userId}`, { ...existingInquiries, cart: [] });
             setCartItems([]);
             setCheckedItems([]);
             setIsAllChecked(false);

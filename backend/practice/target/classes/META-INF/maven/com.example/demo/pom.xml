@@ -139,6 +139,28 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
         </dependency>
+    <!-- Other existing dependencies -->
+
+    <!-- Jakarta Validation API -->
+    <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>3.0.0</version> <!-- 적절한 최신 버전으로 업데이트 -->
+    </dependency>
+
+    <!-- Hibernate Validator (구현체) -->
+    <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>6.2.0.Final</version> <!-- 적절한 최신 버전으로 업데이트 -->
+    </dependency>
+
+    <!-- JBoss Logging (Hibernate Validator에서 사용하는 로깅 라이브러리) -->
+    <dependency>
+        <groupId>org.jboss.logging</groupId>
+        <artifactId>jboss-logging</artifactId>
+        <version>3.4.1.Final</version> <!-- 적절한 최신 버전으로 업데이트 -->
+    </dependency>
 
 	</dependencies>
 
