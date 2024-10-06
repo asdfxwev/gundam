@@ -39,7 +39,7 @@ public class User {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Column(name = "birth", nullable = false, length = 6)
+    @Column(name = "birth", nullable = false, length = 20)
     private String birth;
 
     @Column(name = "gender", nullable = false, length = 1)

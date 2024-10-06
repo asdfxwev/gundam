@@ -14,6 +14,8 @@ public interface UserService {
 
 	// ** insert, update
 	User save(User entity);
+	
+	List<String> findAllUserId();
 
 	// ** delete
 	void deleteById (String id);

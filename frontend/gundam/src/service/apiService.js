@@ -14,7 +14,8 @@ export async function apiCall(url, method, requestData, token) {
   //    없으면 -1 을 return
   let headers = '';
   if (url.indexOf('join') >= 0 && token == null) {
-    headers = { 'Content-Type': 'multipart/form-data' };
+    //headers = { 'Content-Type': 'multipart/form-data' };
+    headers = { 'Content-Type': 'application/json' };
   } else if (token !== null) {
     headers = {
       'Content-Type': 'application/json',
