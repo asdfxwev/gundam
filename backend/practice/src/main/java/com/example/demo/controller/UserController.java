@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import java.io.Console;
+import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -107,42 +111,46 @@ public class UserController {
  	
  	// ** 회원가입
  	@PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody User entity, HttpSession session, Model model) {
-    	// 1) 요청 분석
-    	//String password = entity.getPassword();
+    public ResponseEntity<?> join(@RequestBody User entity) {
     	
-    	// 2) Service 처리 & 결과 전송
-//    	entity = service.selectOne(entity.getLogin_id());
-//    	
-//    	if( entity!=null && passwordEncoder.matches(password, entity.getPassword()) ) {
-//    		// => 성공 : token 생성 & 로그인 정보 session 에 보관 & Front로 전송
-//    		session.setAttribute("login_Id", entity.getLogin_id());
-//    		session.setAttribute("login_Name", entity.getUser_name());
-//    		
-//    		// => token 생성
-//    		final String token = tokenProvider.create(entity.getLogin_id());
-//    		
-//    		// => token parser 확인
-//    		log.info("Login: token parser 확인 => "+tokenProvider.validateAndGetUserId(token));
-//    		
-//    		// => 전송할 UserDTO 객체생성
-//    		//	  빌더패턴, 값변경을 예방을위해 final
-//    		final UserDTO userDTO = UserDTO.builder()
-//    				.token(token)
-//		    		.user_id(entity.getUser_id())
-//					.login_id(entity.getLogin_id())
-//					.user_name(entity.getUser_name())
-//					.user_cd(entity.getUser_cd())
-//					.build();
-//    		log.info("로그인 성공 => "+HttpStatus.OK);
-//    		return ResponseEntity.ok(userDTO);
-//    	} else {
-//    		log.error("로그인 실패 => "+HttpStatus.BAD_GATEWAY);
-//    		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("** id 또는 password 오류!!");
-//    	}
+ 		// p.k 설정
+		List<String> UserId = service.findAllUserId();
+		String proIdsString = UserId.stream().map(id -> id.substring(2)) // 각 항목에서 "UC" 두 글자를 제거
+				.map(Integer::parseInt) // 문자열을 int로 변환
+				.max(Comparator.naturalOrder()) // 최대값 찾기
+				.map(String::valueOf) // int 값을 다시 String으로 변환
+				.orElse("NoData"); // 값이 없을 때 처리
+
+		if (proIdsString != "NoData") {
+
+			int nextId = Integer.parseInt(proIdsString) + 1;
+
+			String formattedId = String.format("%08d", nextId);
+
+			entity.setUser_id("UC" + formattedId);
+
+		} else {
+
+			entity.setUser_id("UC" + String.format("%08d", '1'));
+			
+		}
+		
+		// passwordEncoder 적용
+		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+ 		
+ 		// 2) Service 처리 & 결과 전송
+ 		log.info(entity);
+    	entity = service.save(entity);
+    	log.info(entity);
+    	if( entity!=null ) {
+    		log.info("회원가입 성공 => "+HttpStatus.OK);
+    		return ResponseEntity.ok(entity);
+    	} else {
+    		log.error("회원가입 실패 => "+HttpStatus.BAD_GATEWAY);
+    		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("** 회원가입 중 오류!!");
+    	}
     	
-    	return ResponseEntity.ok("연결~!~~!!~!!!");
-    } //login
+    } //join
  	
 //  ** User Detail
 // 	@GetMapping("/userDetail")

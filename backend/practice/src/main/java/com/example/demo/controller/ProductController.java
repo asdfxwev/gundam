@@ -1,16 +1,20 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.ImgDTO;
+import com.example.demo.domain.pageListDTO;
 import com.example.demo.service.CodeService;
 import com.example.demo.service.ImgService;
 import com.example.demo.service.ProductService;
@@ -31,16 +35,19 @@ public class ProductController {
 	private final ProductServiceImpl poservice;
 	
 	@GetMapping("/productList")
-	public ResponseEntity<Map<String, Object>> productList(@RequestParam int itemsPerPage, 
+	public ResponseEntity<?> productList(@RequestParam int itemsPerPage,
 			@RequestParam int currentPage, @RequestParam String inputValue,
-			@RequestParam(required = false) List<String> checkbox) {
+			@RequestParam(required = false, value = "proCate[]") List<String> proCate,
+			@RequestParam(required = false, value = "cateBrand[]") List<String> cateBrand,
+			@RequestParam(required = false, value = "catePiece[]") List<String> catePiece,
+			@RequestParam(required = false, value = "proStateCd[]") List<String> proStateCd,
+			@RequestParam(required = false) int price
+			) {
+
 		Map<String, Object> list = new HashMap< >();
-		//list.put("productdslList", pservice.joinDSLpage(itemsPerPage));
-		System.out.println("checkbox = "+checkbox);
-		list.put("productList", pservice.joinDSLpage(itemsPerPage, currentPage, inputValue));
-		System.out.println("productList = "+pservice.joinDSLpage(itemsPerPage, currentPage, inputValue));
-		list.put("allproduct", poservice.countAllProduct());
-		list.put("maxpage", poservice.countPerPage(itemsPerPage));
+		list.put("productList", pservice.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price));
+		list.put("allproduct", poservice.countAllProduct(inputValue));
+		list.put("maxpage", poservice.countPerPage(itemsPerPage, inputValue));
 		list.put("brandList", coservice.codeBrandOne());
 		list.put("cateList", coservice.codeCateOne());
 		list.put("pieceList", coservice.codePieceOne());
@@ -48,6 +55,24 @@ public class ProductController {
 
 		return ResponseEntity.ok(list);
 	}
+//	@PostMapping("/productList")
+//	public ResponseEntity<?> productList(@RequestBody pageListDTO dto) {
+//		System.out.println("proCate1: " + dto.getCurrentPage());  // 이 부분을 확인
+//		
+//		System.out.println("************: " + dto.getProCate());  // 이 부분을 확인
+//		Map<String, Object> list = new HashMap< >();
+//		//list.put("productdslList", pservice.joinDSLpage(dto.getItemsPerPage()));
+//		//System.out.println("proCate2 = "+proCate);
+//		list.put("productList", pservice.joinDSLpage(dto.getItemsPerPage(), dto.getCurrentPage(), dto.getInputValue(), dto.getProCate()));
+//		list.put("allproduct", poservice.countAllProduct(dto.getInputValue()));
+//		list.put("maxpage", poservice.countPerPage(dto.getItemsPerPage(), dto.getInputValue()));
+//		list.put("brandList", coservice.codeBrandOne());
+//		list.put("cateList", coservice.codeCateOne());
+//		list.put("pieceList", coservice.codePieceOne());
+//		list.put("stateList", coservice.codeStateOne());
+//		
+//		return ResponseEntity.ok(list);
+//	}
 	
 	
 	@GetMapping("/productSearch")

@@ -32,25 +32,36 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue) {
+	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
 		
 		
-		return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue);
+//		if (proCate == null || proCate.isEmpty()) {
+//			if (cateBrand == null || cateBrand.isEmpty()) {
+//				return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue);
+//				
+//			}
+//			return pdslRepository.joinDSLpage1(itemsPerPage, currentPage, inputValue, cateBrand);
+//		}
+//		if (cateBrand == null || cateBrand.isEmpty()) {
+//			return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate);
+//		}
+		
+		return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price);
 	}
 	
 	// 전체 데이터 숫자 가져오기
-	public Integer countAllProduct() {
+	public Integer countAllProduct(String inputValue) {
 		
-		int maxproduct =  pdslRepository.countAllProduct().intValue();
+		int maxproduct =  pdslRepository.countAllProduct(inputValue).intValue();
 		
 		return maxproduct;
 		
 	}
 	
 	// 상품에서 얼마나 많은 데이터를 가져올지에 대한 값
-	public Integer countPerPage(int itemsPerPage) {
+	public Integer countPerPage(int itemsPerPage, String inputValue) {
 		
-		int maxproduct = countAllProduct();
+		int maxproduct = countAllProduct(inputValue);
 		
 		int maxpage = (int)Math.ceil((double)maxproduct / itemsPerPage);
 		

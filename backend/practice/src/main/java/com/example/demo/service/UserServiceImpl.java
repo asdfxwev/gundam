@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+
 
 
 @Service
@@ -21,22 +25,55 @@ public class UserServiceImpl implements UserService {
 		return urepository.findAll();
 	}
 	
-//<<<<<<< HEAD
 	@Override
 	public User selectOne(String login_id) {
 		return urepository.UserDetail(login_id);
 	}
-//=======
-//	@Override
-//	public User selectOne(String login_id) {
-//		return urepository.findByLoginId(login_id);
-//	}
-//>>>>>>> sb
 	
 	// ** insert, update
 	@Override
 	public User save(User entity) {
+		// ㅣastcon_dtm 초기값 셋팅
+		if (entity.getLastcon_dtm() == null) {
+	        entity.setLastcon_dtm(LocalDateTime.now());
+	    }
+		
+		// user_creat 초기값 셋팅
+		if (entity.getUser_creat() == null) {
+	        entity.setUser_creat(LocalDateTime.now());
+	    }
+		
+		// user_cd 초기값 셋팅
+		if (entity.getUser_cd() == null) {
+	        entity.setUser_cd("uc02");
+	    }
+		
+		// retry 초기값 셋팅
+		if (entity.getRetry() == null) {
+	        entity.setRetry(0);
+	    }
+		
+		// 입력받은 생년월일(yyyy-mm-dd)을 yymmdd형태로 저장
+		// yymmdd 형태로 변환할 포맷터 정의
+	    DateTimeFormatter birth_format = DateTimeFormatter.ofPattern("yyMMdd");
+	    
+        String birth = entity.getBirth();
+
+		// String을 LocalDate로 변환
+        LocalDate birthDate = LocalDate.parse(birth);
+
+        // LocalDate를 yymmdd 형식의 문자열로 변환
+        //String formattedBirth = birthDate.format(birth_format);
+		
+        entity.setBirth(birthDate.format(birth_format));
+		
+		
 		return urepository.save(entity);
+	}
+	
+	@Override
+	public List<String> findAllUserId() {
+		return urepository.findAllUserId();
 	}
 	
 	@Override

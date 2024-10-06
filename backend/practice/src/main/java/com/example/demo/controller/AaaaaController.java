@@ -15,18 +15,18 @@ import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@Log4j2
-@Controller
-@RequiredArgsConstructor
-@RequestMapping("/user")
+//@Log4j2
+//@Controller
+//@RequiredArgsConstructor
+//@RequestMapping("/user")
 public class AaaaaController {
 	
-	private final UserService uservice;
-	
-	@GetMapping("/userList")
-	public void userList(Model model) {
-		List<User> list = uservice.selectList();
-		model.addAttribute("userList", uservice.selectList());
-		System.out.println(uservice.selectList());
-	}
+//	private final UserService uservice;
+//	
+//	@GetMapping("/userList")
+//	public void userList(Model model) {
+//		List<User> list = uservice.selectList();
+//		model.addAttribute("userList", uservice.selectList());
+//		System.out.println(uservice.selectList());
+//	}
 }

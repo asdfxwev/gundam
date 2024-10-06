@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,13 +26,9 @@ public interface UserRepository extends JpaRepository<User, String> {
 	//		value = "Update User set password=:password where login_id=:login_id")
 	//void updatePassword2(@Param("login_id") String login_id, @Param("password") String password);
 	
-//<<<<<<< HEAD
 	@Query("select u from User u where u.login_id = :login_id")
     User UserDetail(@Param("login_id") String login_id);
-//=======
-//	@Query("select u from User u where u.login_id = :login_id")
-//	User UserDetail(@Param("login_id") String login_id);
 	
-	//User findByLoginId(String login_id);
-//>>>>>>> sb
+	@Query("SELECT u.user_id FROM User u")
+    List<String> findAllUserId();
 }
