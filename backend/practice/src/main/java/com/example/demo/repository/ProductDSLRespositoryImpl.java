@@ -63,6 +63,40 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 							  .fetch();
 	}
 	
+	@Override
+	public Product selectOneDSL(String proId) {
+		
+		QCode code1 = new QCode("code1");  
+		QCode code2 = new QCode("code2");  
+		QCode code3 = new QCode("code3");  
+		QCode code4 = new QCode("code4");
+		
+
+		return  jpaQueryFactory.select(Projections.bean(
+				Product.class, 
+				product.pro_id, 
+				product.pro_name, 
+				product.pro_des, 
+				product.pro_price, 
+				product.pro_stock,
+				product.pro_creat,
+				code1.code_name.as("pro_cate"),
+				code2.code_name.as("cate_brand"), 
+				code3.code_name.as("cate_piece"), 
+				code4.code_name.as("pro_state_cd")))
+				.from(product)
+				.leftJoin(code1)
+				.on(product.pro_cate.eq(code1.code_id))	
+				.leftJoin(code2)
+				.on(product.cate_brand.eq(code2.code_id))
+				.leftJoin(code3)
+				.on(product.cate_piece.eq(code3.code_id))
+				.leftJoin(code4)
+				.on(product.pro_state_cd.eq(code4.code_id))
+				.where(product.pro_id.eq(proId))
+				.fetchOne();
+	}
+	
 
 	@Override
     public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
@@ -138,162 +172,6 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
             .fetchJoin()
             .fetch();
     }
-	
-//	@Override
-//	public List<ImgDTO> joinDSLpage1(int itemsPerPage, int currentPage, String inputValue, List<String> cateBrand){
-//		
-//		QCode code1 = new QCode("code1");  
-//		QCode code2 = new QCode("code2");  
-//		QCode code3 = new QCode("code3");  
-//		QCode code4 = new QCode("code4");
-//		
-//		return (List<ImgDTO>)jpaQueryFactory.select(Projections.bean(
-//				ImgDTO.class, 
-//				product.pro_id, 
-//				product.pro_name, 
-//				product.pro_des, 
-//				product.pro_price, 
-//				product.pro_stock,
-//				product.pro_creat,
-//				code1.code_name.as("pro_cate"),
-//				code2.code_name.as("cate_brand"), 
-//				code3.code_name.as("cate_piece"), 
-//				code4.code_name.as("pro_state_cd"),
-//				img.pro_imgs.as("pro_imgs")))
-//				.from(product)
-//				.leftJoin(code1)
-//				.on(product.pro_cate.eq(code1.code_id))
-//				.leftJoin(code2)
-//				.on(product.cate_brand.eq(code2.code_id).and(code2.code_name.in(cateBrand)))
-//				.leftJoin(code3)
-//				.on(product.cate_piece.eq(code3.code_id))
-//				.leftJoin(code4)
-//				.on(product.pro_state_cd.eq(code4.code_id))
-//				.leftJoin(img)
-//				.on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0))) 
-//				.where(product.pro_name.contains(inputValue).and(product.pro_name.contains(inputValue)))
-//				.offset((currentPage - 1) * itemsPerPage)
-//				.limit(itemsPerPage)
-//				.fetchJoin()
-//				.fetch();
-//	}
-//	
-//	
-//	@Override
-//	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate){
-//		
-//		QCode code1 = new QCode("code1");  
-//		QCode code2 = new QCode("code2");  
-//		QCode code3 = new QCode("code3");  
-//		QCode code4 = new QCode("code4");
-//		
-//		return (List<ImgDTO>)jpaQueryFactory.select(Projections.bean(
-//				ImgDTO.class, 
-//				product.pro_id, 
-//				product.pro_name, 
-//				product.pro_des, 
-//				product.pro_price, 
-//				product.pro_stock,
-//				product.pro_creat,
-//				code1.code_name.as("pro_cate"),
-//				code2.code_name.as("cate_brand"), 
-//				code3.code_name.as("cate_piece"), 
-//				code4.code_name.as("pro_state_cd"),
-//				img.pro_imgs.as("pro_imgs")))
-//				.from(product)
-//				.leftJoin(code1)
-//				.on(product.pro_cate.eq(code1.code_id).and(code1.code_name.in(proCate)))
-//				.leftJoin(code2)
-//				.on(product.cate_brand.eq(code2.code_id))
-//				.leftJoin(code3)
-//				.on(product.cate_piece.eq(code3.code_id))
-//				.leftJoin(code4)
-//				.on(product.pro_state_cd.eq(code4.code_id))
-//				.leftJoin(img)
-//				.on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0))) 
-//				.where(product.pro_name.contains(inputValue).and(product.pro_name.contains(inputValue)))
-//				.offset((currentPage - 1) * itemsPerPage)
-//				.limit(itemsPerPage)
-//				.fetchJoin()
-//				.fetch();
-//	}
-//	@Override
-//	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue){
-//		
-//		QCode code1 = new QCode("code1");  
-//		QCode code2 = new QCode("code2");  
-//		QCode code3 = new QCode("code3");  
-//		QCode code4 = new QCode("code4");
-//		
-//		return (List<ImgDTO>)jpaQueryFactory.select(Projections.bean(
-//				ImgDTO.class, 
-//				product.pro_id, 
-//				product.pro_name, 
-//				product.pro_des, 
-//				product.pro_price, 
-//				product.pro_stock,
-//				product.pro_creat,
-//				code1.code_name.as("pro_cate"),
-//				code2.code_name.as("cate_brand"), 
-//				code3.code_name.as("cate_piece"), 
-//				code4.code_name.as("pro_state_cd"),
-//				img.pro_imgs.as("pro_imgs")))
-//				.from(product)
-//				.leftJoin(code1)
-//				.on(product.pro_cate.eq(code1.code_id))
-//				.leftJoin(code2)
-//				.on(product.cate_brand.eq(code2.code_id))
-//				.leftJoin(code3)
-//				.on(product.cate_piece.eq(code3.code_id))
-//				.leftJoin(code4)
-//				.on(product.pro_state_cd.eq(code4.code_id))
-//				.leftJoin(img)
-//				.on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0))) 
-//				.where(product.pro_name.contains(inputValue).and(product.pro_name.contains(inputValue)))
-//				.offset((currentPage - 1) * itemsPerPage)
-//				.limit(itemsPerPage)
-//				.fetchJoin()
-//				.fetch();
-//	}
-	
-	/*
-	 * @Override public Product insertDSL() { return jpaQueryFactory.insert(product)
-	 * ; }
-	 */
-	@Override
-	public Product selectOneDSL(String proId) {
-		
-		QCode code1 = new QCode("code1");  
-		QCode code2 = new QCode("code2");  
-		QCode code3 = new QCode("code3");  
-		QCode code4 = new QCode("code4");
-		
-
-		return  jpaQueryFactory.select(Projections.bean(
-				Product.class, 
-				product.pro_id, 
-				product.pro_name, 
-				product.pro_des, 
-				product.pro_price, 
-				product.pro_stock,
-				product.pro_creat,
-				code1.code_name.as("pro_cate"),
-				code2.code_name.as("cate_brand"), 
-				code3.code_name.as("cate_piece"), 
-				code4.code_name.as("pro_state_cd")))
-				.from(product)
-				.leftJoin(code1)
-				.on(product.pro_cate.eq(code1.code_id))	
-				.leftJoin(code2)
-				.on(product.cate_brand.eq(code2.code_id))
-				.leftJoin(code3)
-				.on(product.cate_piece.eq(code3.code_id))
-				.leftJoin(code4)
-				.on(product.pro_state_cd.eq(code4.code_id))
-				.where(product.pro_id.eq(proId))
-				.fetchOne();
-	}
-
 
 	@Override
 	public Long update(Product productEntity, String proId) {
@@ -352,7 +230,7 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 	@Override
 	public Long countAllProduct(String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
 		
-BooleanBuilder builder = new BooleanBuilder();
+		BooleanBuilder builder = new BooleanBuilder();
         
         // 검색어 조건 추가
         if (inputValue != null && !inputValue.isEmpty()) {

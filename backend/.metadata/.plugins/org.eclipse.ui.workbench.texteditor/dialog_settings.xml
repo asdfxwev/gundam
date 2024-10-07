@@ -8,6 +8,7 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="itemsperpage"/>
 			<item value="proStateCd"/>
 			<item value="builder"/>
 			<item value="catebrand"/>
@@ -22,7 +23,6 @@
 			<item value="maxproduct"/>
 			<item value="searchList"/>
 			<item value="productname"/>
-			<item value="piecelist"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -43,7 +43,6 @@ public class ProductController {
 			@RequestParam(required = false, value = "proStateCd[]") List<String> proStateCd,
 			@RequestParam(required = false) int price
 			) {
-
 		Map<String, Object> list = new HashMap< >();
 		list.put("productList", pservice.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price));
 		list.put("allproduct", poservice.countAllProduct(inputValue, proCate, cateBrand, catePiece, proStateCd, price));
