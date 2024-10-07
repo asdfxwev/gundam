@@ -66,11 +66,11 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 
 	@Override
     public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
+		
         QCode code1 = new QCode("code1");  
         QCode code2 = new QCode("code2");  
         QCode code3 = new QCode("code3");  
         QCode code4 = new QCode("code4");
-
         BooleanBuilder builder = new BooleanBuilder();
         
         

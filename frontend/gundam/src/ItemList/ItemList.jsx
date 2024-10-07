@@ -144,7 +144,6 @@ const ItemList = () => {
                     itemsPerPage,
                     currentPage,
                     inputValue,
-                    //data : proCate
                     proCate: proCate.length > 0 ? proCate : undefined,
                     cateBrand: cateBrand.length > 0 ? cateBrand : undefined,
                     catePiece: catePiece.length > 0 ? catePiece : undefined,
@@ -152,7 +151,6 @@ const ItemList = () => {
                     price
 
                 };
-                console.log("Request URL: ", `/product/productList`, { params }); // URL과 params 로그 출력
 
                 // Axios 인스턴스를 생성하여 paramsSerializer 설정
                 const axiosInstance = axios.create({
@@ -177,33 +175,18 @@ const ItemList = () => {
 
             } catch (error) {
                 console.error("데이터를 가져오는 중 에러가 발생했습니다: ", error);
-                // 오류 처리 로직 (예: alert 또는 콘솔 출력)
             }
         };
         // 2.4) 비동기 함수 호출
         fetchData();
-    }, [currentPage, itemsPerPage, proCate, inputValue, cateBrand, catePiece, proStateCd, price]);  // 빈 배열을 넣어 첫 렌더링 시에만 호출되도록 설정
+    }, [currentPage, itemsPerPage, proCate, inputValue, cateBrand, catePiece, proStateCd, price]);  
 
-    // inputValue에 따른 검색
-    const onSearchItem = (e) => {
-        e.preventDefault();
-        let url = `/product/productSearch?productname=${inputValue}`;
-        console.log(inputValue);
-        apiCall(url, 'GET', null, null)
-            .then((response) => {
-                alert(`** 서버 API 연결 성공 => ${response.checkData}`);
-                setProductList(response);
-            }).catch((err) => {
-                alert(`** 서버 API 연결 실패 => ${err}`);
-            });
-    }
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
 
 
-    console.log("price = " + price);
 
 
 
