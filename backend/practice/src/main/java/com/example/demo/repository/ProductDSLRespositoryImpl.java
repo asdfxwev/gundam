@@ -28,12 +28,22 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 	private final JPAQueryFactory jpaQueryFactory;
 	
 	@Override
-	public List<ImgDTO> joinDSL(){
+	public List<ImgDTO> joinDSL(String searchKeyword){
 		
 		QCode code1 = new QCode("code1");  
 		QCode code2 = new QCode("code2");  
 		QCode code3 = new QCode("code3");  
 		QCode code4 = new QCode("code4");
+        BooleanBuilder builder = new BooleanBuilder();
+        
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            builder.and(
+                    product.pro_name.contains(searchKeyword)
+                    .or(code1.code_name.contains(searchKeyword))
+                        .or(code2.code_name.contains(searchKeyword))  
+                        .or(code3.code_name.contains(searchKeyword))  
+                        .or(code4.code_name.contains(searchKeyword)) 
+                );		}
 		
 		return jpaQueryFactory.select(Projections.bean(
 									  ImgDTO.class, 
@@ -50,7 +60,7 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 									  img.pro_imgs.as("pro_imgs")))
 							  .from(product)
 							  .leftJoin(code1)
-							  .on(product.pro_cate.eq(code1.code_id))	
+							  .on(product.pro_cate.eq(code1.code_id))
 							  .leftJoin(code2)
 							  .on(product.cate_brand.eq(code2.code_id))
 							  .leftJoin(code3)
@@ -58,7 +68,8 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 							  .leftJoin(code4)
 							  .on(product.pro_state_cd.eq(code4.code_id))
 							  .leftJoin(img)
-							  .on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0))) 
+							  .on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0)))
+							  .where(builder)
 							  .fetchJoin()
 							  .fetch();
 	}
@@ -105,11 +116,16 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
         QCode code2 = new QCode("code2");  
         QCode code3 = new QCode("code3");  
         QCode code4 = new QCode("code4");
+        
         BooleanBuilder builder = new BooleanBuilder();
         
         
         if (inputValue != null && !inputValue.isEmpty()) {
-            builder.and(product.pro_name.contains(inputValue));
+            builder.and(product.pro_name.contains(inputValue)
+                    .or(code1.code_name.contains(inputValue))
+                    .or(code2.code_name.contains(inputValue))  
+                    .or(code3.code_name.contains(inputValue))  
+                    .or(code4.code_name.contains(inputValue)) );
         }
         
         // proCate 조건 추가

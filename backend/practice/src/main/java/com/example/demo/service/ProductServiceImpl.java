@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -27,8 +29,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ImgDTO> joinDSL() {
-		return pdslRepository.joinDSL();
+	public List<ImgDTO> joinDSL(String searchKeyword) {
+		return pdslRepository.joinDSL(searchKeyword);
 	}
 	
 	@Override
@@ -69,7 +71,11 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 	
-	
+	public Map<String, Object> page(){
+		Map<String, Object> list = new HashMap< >();
+		
+		return list;
+	}
 	
 	
 	

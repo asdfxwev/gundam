@@ -7,100 +7,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 페이지</title>
     <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-.container {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    height: 100vh;
-}
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            height: 100vh;
+        }
 
-.sidebar {
-    background-color: #2c3e50;
-    padding: 20px;
-    color: white;
-}
+        .sidebar {
+            background-color: #2c3e50;
+            padding: 20px;
+            color: white;
+        }
 
-.sidebar h2 {
-    color: #ecf0f1;
-}
+        .sidebar h2 {
+            color: #ecf0f1;
+        }
 
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
 
-.sidebar ul li {
-    margin: 15px 0;
-}
+        .sidebar ul li {
+            margin: 15px 0;
+        }
 
-.sidebar ul li a {
-    color: #ecf0f1;
-    text-decoration: none;
-}
+        .sidebar ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
 
-.sidebar ul li a:hover {
-    color: #3498db;
-}
+        .sidebar ul li a:hover {
+            color: #3498db;
+        }
 
-.content {
-    padding: 20px;
-}
+        .content {
+            padding: 20px;
+        }
 
-h1, h2 {
-    margin-bottom: 20px;
-}
+        h1, h2 {
+            margin-bottom: 20px;
+        }
 
-.user-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+        .search-container {
+            margin-bottom: 20px;
+        }
 
-.user-table th, .user-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
+        .search-container form {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-.user-table th {
-    background-color: #f2f2f2;
-}
+        .search-container input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
 
-.user-table td a {
-    color: #3498db;
-    text-decoration: none;
-}
+        .search-container button {
+            padding: 8px 16px;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-.user-table td a:hover {
-    text-decoration: underline;
-}
-    
+        .search-container button:hover {
+            background-color: #2980b9;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .user-table th, .user-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .user-table th {
+            background-color: #f2f2f2;
+        }
+
+        .user-table td a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .user-table td a:hover {
+            text-decoration: underline;
+        }
     </style>
-    
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
         <div class="sidebar">
             <h2>관리자 페이지</h2>
             <ul>
                 <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
-                <li><a href='adminproduct/adminproduct'>상품 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/codeTable' />">코드테이블 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/notice' />">공지사항 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/faq' />">FAQ 등록/수정/삭제</a></li>
+                <li><a href="productList">상품 등록/수정/삭제</a></li>
+                <li><a href="">코드테이블 등록/수정/삭제</a></li>
             </ul>
         </div>
 
-        <!-- Content -->
         <div class="content">
             <h1>Admin product</h1>
 
+            <!-- Search Bar -->
+            <div class="search-container">
+                <form action="/adminproduct/productList" method="GET">
+                    <input type="text" name="inputValue" placeholder="상품 이름, 브랜드, 카테고리 등 검색">
+                    <button type="submit">검색</button>
+                </form>
+            </div>
+
             <!-- User List Table -->
-            <h2>User List</h2>
+            <h2>Product List</h2>
             <table class="user-table">
                 <thead>
                     <tr>
@@ -116,7 +149,7 @@ h1, h2 {
                     </tr>
                 </thead>
                 <tbody>
-				<c:forEach var="productJoinList" items="${productJoinList}">
+                    <c:forEach var="productJoinList" items="${productJoinList}">
                         <tr>
                             <td>${productJoinList.pro_name}</td>
                             <td>${productJoinList.pro_price}</td>

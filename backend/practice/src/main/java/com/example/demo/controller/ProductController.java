@@ -51,7 +51,7 @@ public class ProductController {
 		list.put("cateList", coservice.codeCateOne());
 		list.put("pieceList", coservice.codePieceOne());
 		list.put("stateList", coservice.codeStateOne());
-
+		//Map<String, Object> list = pservice.
 		return ResponseEntity.ok(list);
 	}
 //	@PostMapping("/productList")

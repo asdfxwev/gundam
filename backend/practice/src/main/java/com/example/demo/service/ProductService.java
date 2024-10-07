@@ -10,7 +10,7 @@ public interface ProductService {
 	
 	List<Product> selectList();
 	
-	List<ImgDTO> joinDSL();
+	List<ImgDTO> joinDSL(String joinDSLpage);
 	
 	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price);
 	

@@ -39,9 +39,12 @@ public class AdiminProductController {
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
 
 	@GetMapping("/productList")
-	public void productList(Model model) {
+	public void productList(Model model, String inputValue) {
+		System.out.println("searchKeyword = "+inputValue);
 		// List<Product> list = pservice.selectList();
-		model.addAttribute("productJoinList", pservice.joinDSL());
+		int itemsPerPage = 20;
+		model.addAttribute("productJoinList", pservice.joinDSL(inputValue));
+//		model.addAttribute("productJoinList", pservice.joinDSL());
 	}
 
 	@GetMapping("/productInsert")
@@ -52,10 +55,10 @@ public class AdiminProductController {
 		model.addAttribute("codestate",coservice.codeStateOne());
 	}
 
-	@GetMapping("productJoinList")
-	public void productJoinList(Model model) {
-		model.addAttribute("productJoinList", pservice.joinDSL());
-	}
+//	@GetMapping("productJoinList")
+//	public void productJoinList(Model model) {
+//		model.addAttribute("productJoinList", pservice.joinDSL());
+//	}
 
 	@PostMapping("/productInsert")
 	public String productInsert(HttpServletRequest request, Model model, Product productEntity, Img imgEntity,
@@ -275,7 +278,7 @@ public class AdiminProductController {
 	    }
 		
 		
-		return "redirect:/product/productList";
+		return "redirect:/adminproduct/productList";
 		
 	}
 
@@ -316,6 +319,7 @@ public class AdiminProductController {
 	    
 	    return "redirect:/product/productList";
 	}
+	
 	
 	
 	
