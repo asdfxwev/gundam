@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartId implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String user_id;
-	private String pro_id;
+	private String userId; // user_id -> userId로 수정
+	private String proId; // pro_id -> proId로 수정
 }

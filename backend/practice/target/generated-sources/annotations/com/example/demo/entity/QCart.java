@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -18,36 +17,24 @@ public class QCart extends EntityPathBase<Cart> {
 
     private static final long serialVersionUID = 133242545L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QCart cart = new QCart("cart");
 
-    public final NumberPath<Integer> cart_quantity = createNumber("cart_quantity", Integer.class);
+    public final NumberPath<Integer> cartQuantity = createNumber("cartQuantity", Integer.class);
 
-    public final QProduct pro_id;
+    public final StringPath proId = createString("proId");
 
-    public final QUser user_id;
+    public final StringPath userId = createString("userId");
 
     public QCart(String variable) {
-        this(Cart.class, forVariable(variable), INITS);
+        super(Cart.class, forVariable(variable));
     }
 
     public QCart(Path<? extends Cart> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QCart(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QCart(PathMetadata metadata, PathInits inits) {
-        this(Cart.class, metadata, inits);
-    }
-
-    public QCart(Class<? extends Cart> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.pro_id = inits.isInitialized("pro_id") ? new QProduct(forProperty("pro_id")) : null;
-        this.user_id = inits.isInitialized("user_id") ? new QUser(forProperty("user_id")) : null;
+        super(Cart.class, metadata);
     }
 
 }

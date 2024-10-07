@@ -8,4 +8,5 @@ public interface CartService {
     Cart addToCart(Cart cart);
     List<Cart> getCartItemsByUserId(String userId);
     void removeCartItem(CartId cartId);
+    String getUserIdByLoginId(String loginId);
 }
