@@ -46,8 +46,8 @@ public class ProductController {
 
 		Map<String, Object> list = new HashMap< >();
 		list.put("productList", pservice.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price));
-		list.put("allproduct", poservice.countAllProduct(inputValue));
-		list.put("maxpage", poservice.countPerPage(itemsPerPage, inputValue));
+		list.put("allproduct", poservice.countAllProduct(inputValue, proCate, cateBrand, catePiece, proStateCd, price));
+		list.put("maxpage", poservice.countPerPage(itemsPerPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price));
 		list.put("brandList", coservice.codeBrandOne());
 		list.put("cateList", coservice.codeCateOne());
 		list.put("pieceList", coservice.codePieceOne());
