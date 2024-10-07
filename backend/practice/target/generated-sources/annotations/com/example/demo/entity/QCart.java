@@ -19,11 +19,11 @@ public class QCart extends EntityPathBase<Cart> {
 
     public static final QCart cart = new QCart("cart");
 
-    public final NumberPath<Integer> cartQuantity = createNumber("cartQuantity", Integer.class);
+    public final NumberPath<Integer> cart_quantity = createNumber("cart_quantity", Integer.class);
 
-    public final StringPath proId = createString("proId");
+    public final StringPath pro_id = createString("pro_id");
 
-    public final StringPath userId = createString("userId");
+    public final StringPath user_id = createString("user_id");
 
     public QCart(String variable) {
         super(Cart.class, forVariable(variable));

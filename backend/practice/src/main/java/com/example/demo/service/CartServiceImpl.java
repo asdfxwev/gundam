@@ -1,15 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Cart;
-import com.example.demo.entity.CartId;
-import com.example.demo.entity.User;
-import com.example.demo.repository.CartRepository;
-import com.example.demo.repository.CartDSLRepository;
-import com.example.demo.repository.UserRepository; // UserRepository 추가
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.example.demo.domain.CartDTO;
+import com.example.demo.entity.Cart;
+import com.example.demo.entity.CartId;
+import com.example.demo.entity.User;
+import com.example.demo.repository.CartDSLRepository;
+import com.example.demo.repository.CartRepository;
+import com.example.demo.repository.UserRepository; // UserRepository 추가
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -21,15 +23,15 @@ public class CartServiceImpl implements CartService {
     private CartDSLRepository cartDSLRepository;
 
     @Autowired
-    private UserRepository userRepository; // UserRepository 주입
+    private UserRepository userRepository;
 
     @Override
     public Cart addToCart(Cart cart) {
-        return cartRepository.save(cart);  // 장바구니에 추가
+        return cartRepository.save(cart);
     }
 
     @Override
-    public List<Cart> getCartItemsByUserId(String userId) {
+    public List<CartDTO> getCartItemsByUserId(String userId) {
         return cartDSLRepository.findByUserId(userId);  // 사용자 ID로 장바구니 항목 조회
     }
 

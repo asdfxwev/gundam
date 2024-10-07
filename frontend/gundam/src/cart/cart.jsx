@@ -7,28 +7,30 @@ import { API_BASE_URL } from '../service/app-config';
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
     const handleQuantityChange = (newQuantity) => {
         if (newQuantity >= 1) {
-            onQuantityChange(item.id, newQuantity);
+            onQuantityChange(item.pro_id, newQuantity);
         }
     };
+
+    const totalPrice = item.cart_quantity * item.pro_price;
 
     return (
         <div className="cart-item">
             <div>
-                <input type="checkbox" checked={isChecked} onChange={() => onCheckboxChange(item.id)} />
+                <input type="checkbox" checked={isChecked} onChange={() => onCheckboxChange(item.pro_id)} />
             </div>
             <div>
-                <a href={`${API_BASE_URL}/product/${item.pro_id.pro_id}`}>
-                    <img src={`${API_BASE_URL}/product/${item.pro_id.pro_id}`} alt={item.name} />
+                <a href={`/itemList/itemDetail/${item.pro_id}`}>
+                    <img src={`${API_BASE_URL}/resources/productImg/${item.pro_id}/${item.pro_imgs}`} alt={item.name} />
                 </a>
             </div>
-            <div>{item.name}</div>
+            <div>{item.pro_name}</div>
             <div className="quantity-controls">
-                <button onClick={() => handleQuantityChange(item.quantity - 1)}>-</button>
-                {item.quantity}
-                <button onClick={() => handleQuantityChange(item.quantity + 1)}>+</button>
+                <button onClick={() => handleQuantityChange(item.cart_quantity - 1)}>-</button>
+                {item.cart_quantity}
+                <button onClick={() => handleQuantityChange(item.cart_quantity + 1)}>+</button>
             </div>
-            <div>{item.price.toLocaleString()}원</div>
-            <div>{(item.price * item.quantity).toLocaleString()}원</div>
+            <div>{item.pro_price.toLocaleString()}원</div>
+            <div>{totalPrice.toLocaleString()}원</div>
         </div>
     );
 };
@@ -39,100 +41,78 @@ const Cart = () => {
     const [isAllChecked, setIsAllChecked] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
 
-    const existingInquiries = JSON.parse(localStorage.getItem('loginInfo'));
-    const userId = existingInquiries.user_id;
+    const userId = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userResponse = await axios.get(`http://localhost:3000/logininfo/${userId}`);
-                const userData = userResponse.data;
-
-                // 사용자의 카트가 없을 경우 초기화
-                const initialCart = userData.cart || [];
-                setCartItems(initialCart.reverse());
-                setCheckedItems(initialCart.map(item => item.id));
-                setIsAllChecked(initialCart.length > 0);
+                const response = await axios.get(`${API_BASE_URL}/cart/${userId}`);
+                setCartItems(response.data);
+                setCheckedItems(response.data.map(item => item.pro_id));
+                setIsAllChecked(response.data.length > 0);
             } catch (error) {
-                console.error('데이터를 가져오는 중 오류 발생:', error);
-                setErrorMessage('카트 데이터를 가져오는 데 실패했습니다. 나중에 다시 시도해주세요.');
+                setErrorMessage('카트 데이터를 가져오는 데 실패했습니다.');
             }
         };
         fetchData();
     }, [userId]);
 
-    const handleQuantityChange = async (id, quantity) => {
-        const updatedItems = cartItems.map(item => (item.id === id ? { ...item, quantity } : item));
+    const handleQuantityChange = (proId, quantity) => {
+        const updatedItems = cartItems.map(item =>
+            item.pro_id === proId ? { ...item, cart_quantity: quantity } : item
+        );
         setCartItems(updatedItems);
-
-        // 서버에 수량 업데이트 요청
-        try {
-            await axios.put(`http://localhost:3000/logininfo/${userId}`, { ...existingInquiries, cart: updatedItems });
-        } catch (error) {
-            console.error('Error updating quantity:', error);
-            setErrorMessage('수량 업데이트 중 오류가 발생했습니다.');
-        }
     };
 
-    const handleCheckboxChange = (id) => {
-        const newCheckedItems = checkedItems.includes(id)
-            ? checkedItems.filter(itemId => itemId !== id)
-            : [...checkedItems, id];
-
+    const handleCheckboxChange = (proId) => {
+        const newCheckedItems = checkedItems.includes(proId)
+            ? checkedItems.filter(itemId => itemId !== proId)
+            : [...checkedItems, proId];
         setCheckedItems(newCheckedItems);
         setIsAllChecked(newCheckedItems.length === cartItems.length);
     };
 
     const handleAllCheckboxChange = () => {
-        const newCheckedItems = isAllChecked ? [] : cartItems.map(item => item.id);
+        const newCheckedItems = isAllChecked ? [] : cartItems.map(item => item.pro_id);
         setCheckedItems(newCheckedItems);
         setIsAllChecked(!isAllChecked);
     };
 
-    const handleRemoveCheckedItems = async () => {
-        try {
-            const updatedItems = cartItems.filter(item => !checkedItems.includes(item.id));
+    // 선택된 상품 수량 업데이트 기능
+    const handleSaveSelected = async () => {
+        if (checkedItems.length === 0) {
+            alert('저장할 상품을 선택해주세요.');
+            return;
+        }
+        const confirmUpdate = window.confirm('선택한 상품의 수량을 업데이트하시겠습니까?');
+        if (confirmUpdate) {
+            try {
+                await Promise.all(checkedItems.map(proId => {
+                    const item = cartItems.find(item => item.pro_id === proId);
+                    return axios.put(`${API_BASE_URL}/cart/${proId}`, {
+                        cart_quantity: item.cart_quantity 
+                    });
+                }));
+                alert('선택한 상품의 수량이 업데이트되었습니다.');
 
-            await axios.put(`http://localhost:3000/logininfo/${userId}`, { ...existingInquiries, cart: updatedItems });
-
-            setCartItems(updatedItems);
-            setCheckedItems([]);
-            setIsAllChecked(false);
-        } catch (error) {
-            console.error('Error deleting items:', error);
-            setErrorMessage('선택한 상품을 삭제하는 중 오류가 발생했습니다.');
+                setCheckedItems([]);
+                setIsAllChecked(false);
+            } catch (error) {
+                alert('선택한 상품 수량 업데이트에 실패했습니다.');
+            }
         }
     };
 
-    const handleRemoveAllItems = async () => {
-        try {
-            await axios.put(`http://localhost:3000/logininfo/${userId}`, { ...existingInquiries, cart: [] });
-            setCartItems([]);
-            setCheckedItems([]);
-            setIsAllChecked(false);
-        } catch (error) {
-            console.error('Error clearing cart:', error);
-            setErrorMessage('장바구니를 비우는 중 오류가 발생했습니다.');
-        }
-    };
-
+    // 전체 선택된 상품들의 합계를 계산
     const total = cartItems
-        .filter(item => checkedItems.includes(item.id))
-        .reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-    const handleCheckout = () => {
-        if (cartItems.length === 0) {
-            alert('장바구니에 상품이 없습니다!');
-        } else {
-            window.location.href = '/Itembuy';
-        }
-    };
+        .filter(item => checkedItems.includes(item.pro_id))
+        .reduce((sum, item) => sum + (item.cart_quantity * item.pro_price), 0);
 
     return (
         <div className="mypageContainer">
             <MypageLeft />
             <div className="cartWrapper">
-                <h1 className='h1-names'>장바구니</h1>
+                <h1>장바구니</h1>
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <div className="cart-containers">
                     <div className="cart-header">
@@ -150,22 +130,20 @@ const Cart = () => {
                         <div>가격</div>
                         <div>총 가격</div>
                     </div>
-                    {cartItems && cartItems.map((item) => (
+                    {cartItems && cartItems.map(item => (
                         <CartItem
-                            key={item.id}
+                            key={item.pro_id}
                             item={item}
                             onQuantityChange={handleQuantityChange}
                             onCheckboxChange={handleCheckboxChange}
-                            isChecked={checkedItems.includes(item.id)}
+                            isChecked={checkedItems.includes(item.pro_id)}
                         />
                     ))}
-                    <button className='button-size' onClick={handleRemoveCheckedItems}>선택한 상품 삭제</button>
-                    <button className='button-size' onClick={handleRemoveAllItems}>전체 상품 삭제</button>
                     <div className="cart-total">
+                        <div className='cart-actions'>
+                            <button onClick={handleSaveSelected}>선택 값 저장</button>
+                        </div>
                         총 합계: {total.toLocaleString()}원
-                    </div>
-                    <div className="cart-actions">
-                        <button onClick={handleCheckout}>결제하기</button>
                     </div>
                 </div>
             </div>

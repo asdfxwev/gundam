@@ -73,7 +73,7 @@ const ItemBuy = () => {
 
     const gundam_buy = async () => {
         try {
-            const userResponse = await axios.get(`http://localhost:3001/users/${userinfo.id}`);
+            const userResponse = await axios.get(`http://localhost:3000/users/${userinfo.id}`);
             const userData = userResponse.data;
 
             const today = new Date().toISOString().split('T')[0]; // 오늘의 년월일을 얻음 (YYYY-MM-DD 형식)
@@ -131,7 +131,7 @@ const ItemBuy = () => {
             // isChecked가 true인 데이터는 cart에서 제거
             userData.cart = userData.cart.filter(cartItem => !cartItem.isChecked);
 
-            await axios.put(`http://localhost:3001/users/${userinfo.id}`, userData);
+            await axios.put(`http://localhost:3000/users/${userinfo.id}`, userData);
 
             alert('결제가 완료되었습니다.');
             navigate('../Order'); // 결제 완료 페이지로 이동
@@ -205,6 +205,15 @@ const ItemBuy = () => {
                                     <div className='count_num'>{totalQuantity}</div>
                                 </div>
                             </div>
+                                <div className='item_count underline'>
+                                    <div className='count_left_box font_medium'>결제 수단</div>
+                                    <select className=''>
+                                        <option>신용카드</option>
+                                        <option>무통장 입금</option>
+                                        <option>카카오 페이</option>
+                                        <option>네이버 페이</option>
+                                    </select>
+                                    </div>
                             <div className='item_total_price font_medium'>
                                 <p className='total_price_title '>총 결제금액</p>
                                 <p className='total_price'><span className='t_price'>{formatNumber(total)}</span> 원</p>

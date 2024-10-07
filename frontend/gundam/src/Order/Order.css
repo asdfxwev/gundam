@@ -58,7 +58,7 @@
 
 .cart-total {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 20px 0;
     font-size: 18px;
     font-weight: bold;

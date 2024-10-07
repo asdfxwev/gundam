@@ -124,10 +124,7 @@ export default function ItemDetail() {
                 console.error('장바구니 추가 실패: ', error.response ? error.response.data : error.message);
                 alert('오류가 발생, 다시 시도해주세요.');
             }
-        } else {
-            alert('로그인 후 사용 가능합니다.');
-            navigate('/Login');
-        }
+        } 
     };
     
 

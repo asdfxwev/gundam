@@ -42,7 +42,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userResponse = await axios.get(`http://localhost:3001/users/${userId}`);
+                const userResponse = await axios.get(`http://localhost:3000/users/${userId}`);
                 const userData = userResponse.data;
 
                 if (!userData.cart) {
@@ -53,7 +53,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
 
                 if (initialItem && initialCount) {
                     const existingItemIndex = combinedItems.find(item => item.id === initialItem.id);
-                    
+
                     if (existingItemIndex >= 0) {
                         combinedItems[existingItemIndex].quantity += initialCount;
                     } else {
@@ -196,15 +196,15 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
                 </div>
                 {cartItems.map((item) => (
                     <CartItem
-                        key={item.id}
+                        key={item.pro_id}
                         item={item}
                         onQuantityChange={handleQuantityChange}
                         onCheckboxChange={handleCheckboxChange}
-                        isChecked={checkedItems.includes(item.id)}
+                        isChecked={checkedItems.includes(item.pro_id)}
                     />
                 ))}
-                <button className='button-size' onClick={handleRemoveCheckedItems}>선택한 상품 삭제</button>
-                <button className='button-size' onClick={handleRemoveAllItems}>전체 상품 삭제</button>
+                {/* <button className='button-size' onClick={handleRemoveCheckedItems}>선택한 상품 삭제</button>
+                <button className='button-size' onClick={handleRemoveAllItems}>전체 상품 삭제</button> */}
             </div>
         </div>
     );
