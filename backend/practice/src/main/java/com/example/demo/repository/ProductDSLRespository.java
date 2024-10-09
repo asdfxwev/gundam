@@ -23,5 +23,5 @@ public interface ProductDSLRespository {
 	
 	List<ImgDTO> searchList(String productname);
 	
-	Long countAllProduct(String inputValue);
+	Long countAllProduct(String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price);
 }
