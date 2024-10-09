@@ -8,4 +8,6 @@ public interface OrdersService {
     void createOrder(OrdersDTO orderDto);
     void updateOrder(String orderId, OrdersDTO orderDto);
     void deleteOrder(String orderId);
+    
+    void searchOrderId(String loginId);
 }

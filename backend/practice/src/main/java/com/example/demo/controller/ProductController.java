@@ -17,6 +17,8 @@ import com.example.demo.domain.ImgDTO;
 import com.example.demo.domain.pageListDTO;
 import com.example.demo.service.CodeService;
 import com.example.demo.service.ImgService;
+import com.example.demo.service.OrderItemsService;
+import com.example.demo.service.OrdersService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ProductServiceImpl;
 
@@ -32,6 +34,8 @@ public class ProductController {
 	private final ProductService pservice;
 	private final ImgService iservice;
 	private final CodeService coservice;
+	private final OrderItemsService oriservice;
+	private final OrdersService orservice;
 	private final ProductServiceImpl poservice;
 	
 	@GetMapping("/productList")
@@ -93,6 +97,16 @@ public class ProductController {
 //		Product product = pservice.selectOne(proId);
 //		System.out.println("product = "+product);
 		return ResponseEntity.ok(list);
+	}
+	
+	
+	// 상품 구매한 것인지 확인하는거
+	@PostMapping("productReviewId")
+	public void productReviewId(@RequestParam String loginId) {
+		
+		orservice.searchOrderId(loginId);
+		
+		
 	}
 
 }

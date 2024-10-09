@@ -48,4 +48,20 @@ public class OrdersServiceImpl implements OrdersService {
     public void deleteOrder(String orderId) {
         ordersRepository.deleteById(orderId);
     }
+    
+    
+    
+    
+    
+    
+    @Override
+    public void searchOrderId(String loginId) {
+    	
+    	List<Orders> orderId = ordersRepository.searchOrderId(loginId);
+    	
+    	
+    }
+    
+    
+    
 }

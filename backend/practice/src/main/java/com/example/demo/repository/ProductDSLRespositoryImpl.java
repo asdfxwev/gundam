@@ -28,7 +28,7 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 	private final JPAQueryFactory jpaQueryFactory;
 	
 	@Override
-	public List<ImgDTO> joinDSL(String searchKeyword){
+	public List<ImgDTO> joinDSL(String inputValue){
 		
 		QCode code1 = new QCode("code1");  
 		QCode code2 = new QCode("code2");  
@@ -36,13 +36,13 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 		QCode code4 = new QCode("code4");
         BooleanBuilder builder = new BooleanBuilder();
         
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+        if (inputValue != null && !inputValue.isEmpty()) {
             builder.and(
-                    product.pro_name.contains(searchKeyword)
-                    .or(code1.code_name.contains(searchKeyword))
-                        .or(code2.code_name.contains(searchKeyword))  
-                        .or(code3.code_name.contains(searchKeyword))  
-                        .or(code4.code_name.contains(searchKeyword)) 
+                    product.pro_name.contains(inputValue)
+                    .or(code1.code_name.contains(inputValue))
+                        .or(code2.code_name.contains(inputValue))  
+                        .or(code3.code_name.contains(inputValue))  
+                        .or(code4.code_name.contains(inputValue)) 
                 );		}
 		
 		return jpaQueryFactory.select(Projections.bean(

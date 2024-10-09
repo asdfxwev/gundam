@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import reviewData from '../data/db.json';
 import PagiNationNum from "../csc/PagiNationNum";
 import { faStar as faStarEmpty, faStar } from '@fortawesome/free-solid-svg-icons';
+import { API_BASE_URL } from "../service/app-config";
 
 // 별점 UI 컴포넌트
 const StarRating = ({ rating, setRating }) => {
@@ -27,7 +28,7 @@ const StarRating = ({ rating, setRating }) => {
 };
 
 // ItemReview 컴포넌트
-const ItemReview = ({ item, setReviewCount, pathName }) => {
+const ItemReview = ({ item, setReviewCount, pathName, proId }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);  // 로그인 상태 저장 변수
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰작성 모달팝업 호출 변수
     const [modalOpenPop, setModalOpenPop] = useState(false); // 비로그인 시 안내모달팝업 호출 변수
@@ -41,6 +42,8 @@ const ItemReview = ({ item, setReviewCount, pathName }) => {
     const [expandedReviewId, setExpandedReviewId] = useState(null); // 클릭된 리뷰 ID
     const navigate = useNavigate();
 
+
+    const loginId = JSON.parse(sessionStorage.getItem('loginInfo'));
     useEffect(() => {
         setReviews(reviewData.review);
     }, []);
@@ -51,7 +54,7 @@ const ItemReview = ({ item, setReviewCount, pathName }) => {
     }, [reviews, item, setReviewCount]);
 
     useEffect(() => {
-        const loginCheck = JSON.parse(localStorage.getItem("loginInfo"));
+        const loginCheck = JSON.parse(sessionStorage.getItem('loginInfo'));
         if (loginCheck !== null) {
             setIsLoggedIn(true);
         }
@@ -59,8 +62,9 @@ const ItemReview = ({ item, setReviewCount, pathName }) => {
 
     const reviewPop = async () => {
         if (isLoggedIn) {     // 로그인 상태가 true 일때
-            const loginCheck = JSON.parse(localStorage.getItem("loginInfo"));
-            const userResponse = await axios.get(`http://localhost:3001/users/${loginCheck.id}`);
+            const loginId = {loginId, proId}
+            
+            const userResponse = await axios.post(`${API_BASE_URL}/product/productReviewId`, loginId);
             const userData = userResponse.data;
 
             const hasBoughtItem = userData.buy && userData.buy.some(buyItem => buyItem.id === item);

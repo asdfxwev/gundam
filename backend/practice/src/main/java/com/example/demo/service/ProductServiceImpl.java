@@ -14,6 +14,8 @@ import com.example.demo.repository.ProductDSLRespository;
 import com.example.demo.repository.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
+import pageTest.Criteria;
+import pageTest.PageMaker;
 
 @Service
 @RequiredArgsConstructor
@@ -29,24 +31,17 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ImgDTO> joinDSL(String searchKeyword) {
-		return pdslRepository.joinDSL(searchKeyword);
+	public List<ImgDTO> joinDSL(String inputValue) {
+		
+
+//		pageMaker.setTotalRowsCount(service.totalRowsCount(cri));
+		
+		int itemsPerPage = 20;
+		return pdslRepository.joinDSL(inputValue);
 	}
 	
 	@Override
 	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
-		
-		
-//		if (proCate == null || proCate.isEmpty()) {
-//			if (cateBrand == null || cateBrand.isEmpty()) {
-//				return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue);
-//				
-//			}
-//			return pdslRepository.joinDSLpage1(itemsPerPage, currentPage, inputValue, cateBrand);
-//		}
-//		if (cateBrand == null || cateBrand.isEmpty()) {
-//			return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate);
-//		}
 		
 		return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price);
 	}

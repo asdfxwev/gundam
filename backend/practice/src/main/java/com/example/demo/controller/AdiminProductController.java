@@ -26,6 +26,8 @@ import com.example.demo.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import pageTest.Criteria;
+import pageTest.PageMaker;
 
 @Log4j2
 @Controller
@@ -42,9 +44,9 @@ public class AdiminProductController {
 	public void productList(Model model, String inputValue) {
 		System.out.println("searchKeyword = "+inputValue);
 		// List<Product> list = pservice.selectList();
-		int itemsPerPage = 20;
+
 		model.addAttribute("productJoinList", pservice.joinDSL(inputValue));
-//		model.addAttribute("productJoinList", pservice.joinDSL());
+
 	}
 
 	@GetMapping("/productInsert")
