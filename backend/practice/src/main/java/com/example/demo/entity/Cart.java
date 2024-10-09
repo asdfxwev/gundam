@@ -3,7 +3,7 @@ package com.example.demo.entity;
 import java.io.Serializable;
 
 import org.hibernate.annotations.Check;
-
+import com.example.demo.entity.CartId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

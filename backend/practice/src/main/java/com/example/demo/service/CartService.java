@@ -7,8 +7,11 @@ import com.example.demo.entity.Cart;
 import com.example.demo.entity.CartId;
 
 public interface CartService {
-    Cart addToCart(Cart cartdto);
+    // 기존 메서드
+    Cart addToCart(Cart cart);
     List<CartDTO> getCartItemsByUserId(String userId);
     void removeCartItem(CartId cartId);
-    String getUserIdByLoginId(String loginId);
+    String getUserIdByLoginId(String loginId);    
+    Cart updateCart(Cart cart);
 }
+

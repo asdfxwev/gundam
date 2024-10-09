@@ -73,6 +73,17 @@
     gap: 20px;
 }
 
+.buy-action {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+    gap: 20px;
+    
+}
+
+
 .cart-buy {
     display: flex;
     justify-content: flex-end;
@@ -81,7 +92,7 @@
     font-weight: bold;
 }
 
-.cart-actions button {
+.cart-actions button, .buy-action button {
     padding: 10px 20px;
     font-size: 16px;
     margin-left: 10px;
