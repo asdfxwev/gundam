@@ -1,3 +1,5 @@
+/.metadata/
+
 # Compiled class file
 *.class
 
@@ -44,4 +46,3 @@ Thumbs.db
 # npm 관련 폴더 무시
 node_modules/
 .cache/
-/.metadata/
