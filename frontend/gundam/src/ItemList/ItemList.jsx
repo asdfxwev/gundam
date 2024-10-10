@@ -12,6 +12,7 @@ import { API_BASE_URL } from "../service/app-config";
 import axios from 'axios';
 import { Pagination, checkboxClasses } from '@mui/material';
 import qs from 'qs';
+import { debounce } from 'lodash';
 
 
 const ItemList = () => {
@@ -32,39 +33,49 @@ const ItemList = () => {
     const [itemListClass, setItemListClass] = useState('item-list');
     const [inputValue, setInputValue] = useState('');
     const [selectedOption, setSelectedOption] = useState('전체');
-    const [checkbox, setCheckbox] = useState({
-        pro_cate: {
-
-        },
-        cate_brand: {
-
-        },
-        cate_piece: {
-
-        },
-        pro_state_cd: {
-
-        }
-    });
+    const [width, setWidth] = useState(window.innerWidth);
     const [proCate, setProCate] = useState([]);
     const [cateBrand, setcateBrand] = useState([]);
     const [catePiece, setcatePiece] = useState([]);
     const [proStateCd, setProStateCd] = useState([]);
     const [price, setPrice] = useState(0);
-
+    const maxPagesToShow = 10;
 
     useEffect(() => {
-        const width = window.innerWidth;
-        if (width < 560) {
-            setItemsPerPage(4);
-        } else if (width < 880) {
-            setItemsPerPage(8);
-        } else if (width < 1360) {
-            setItemsPerPage(12);
-        } else {
-            setItemsPerPage(20);
-        }
-    })
+        const updateItemsPerPage = () => {
+            const newWidth = window.innerWidth;
+    
+            let newItemsPerPage;
+            if (newWidth < 560) {
+                newItemsPerPage = 4;
+            } else if (newWidth < 880) {
+                newItemsPerPage = 8;
+            } else if (newWidth < 1360) {
+                newItemsPerPage = 12;
+            } else {
+                newItemsPerPage = 20;
+            }
+    
+            // itemsPerPage가 변경된 경우에만 업데이트
+            if (newItemsPerPage !== itemsPerPage) {
+                setItemsPerPage(newItemsPerPage);
+            }
+        };
+    
+        // 디바운스를 통해 300ms 단위로 업데이트
+        const debouncedUpdateItemsPerPage = debounce(updateItemsPerPage, 300);
+    
+        window.addEventListener('resize', debouncedUpdateItemsPerPage);
+    
+        // 초기 호출
+        updateItemsPerPage();
+    
+        // cleanup: 컴포넌트가 언마운트될 때 이벤트 리스너와 디바운스 클리어
+        return () => {
+            window.removeEventListener('resize', debouncedUpdateItemsPerPage);
+            debouncedUpdateItemsPerPage.cancel();  // 디바운스 클리어
+        };
+    }, [itemsPerPage]);
 
     // 필터 숨기기
     const toggleFiltersVisible = () => {
@@ -134,7 +145,7 @@ const ItemList = () => {
         }
     }
 
-
+    console.log(itemsPerPage);
     useEffect(() => {
         // 비동기 함수 정의
         const fetchData = async () => {
@@ -149,7 +160,6 @@ const ItemList = () => {
                     catePiece: catePiece.length > 0 ? catePiece : undefined,
                     proStateCd: proStateCd.length > 0 ? proStateCd : undefined,
                     price
-
                 };
 
                 // Axios 인스턴스를 생성하여 paramsSerializer 설정
@@ -158,7 +168,6 @@ const ItemList = () => {
                         return qs.stringify(params, { arrayFormat: 'brackets' });
                     },
                 });
-
 
                 const response = await axiosInstance.get(`/product/productList`, { params });
                 //const response = await axios.post(`/product/productList`, params );
@@ -179,7 +188,7 @@ const ItemList = () => {
         };
         // 2.4) 비동기 함수 호출
         fetchData();
-    }, [currentPage, itemsPerPage, proCate, inputValue, cateBrand, catePiece, proStateCd, price]);  
+    }, [currentPage, itemsPerPage, proCate, inputValue, cateBrand, catePiece, proStateCd, price, width]);  
 
 
     const handlePageChange = (newPage) => {
@@ -324,7 +333,7 @@ const ItemList = () => {
             </div>
             <div className='pagination-container'>
                 <div className='pagination'>
-                    {<Paging maxpage={pageProduct} currentPage={currentPage} onPageChange={handlePageChange} />}
+                    {<Paging maxpage={pageProduct} currentPage={currentPage} onPageChange={handlePageChange} maxPagesToShow={maxPagesToShow} />}
                 </div>
             </div>
         </div>

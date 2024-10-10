@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -10,8 +12,11 @@ import com.example.demo.domain.ProductDTO;
 import com.example.demo.entity.Product;
 import com.example.demo.repository.ProductDSLRespository;
 import com.example.demo.repository.ProductRepository;
+import org.springframework.data.domain.Pageable;
 
 import lombok.RequiredArgsConstructor;
+import pageTest.Criteria;
+import pageTest.PageMaker;
 
 @Service
 @RequiredArgsConstructor
@@ -27,24 +32,16 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ImgDTO> joinDSL() {
-		return pdslRepository.joinDSL();
+	public List<ImgDTO> joinDSL(String inputValue, Pageable pageable) {
+		
+
+//		pageMaker.setTotalRowsCount(service.totalRowsCount(cri));
+		
+		return pdslRepository.joinDSL(inputValue, pageable);
 	}
 	
 	@Override
 	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
-		
-		
-//		if (proCate == null || proCate.isEmpty()) {
-//			if (cateBrand == null || cateBrand.isEmpty()) {
-//				return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue);
-//				
-//			}
-//			return pdslRepository.joinDSLpage1(itemsPerPage, currentPage, inputValue, cateBrand);
-//		}
-//		if (cateBrand == null || cateBrand.isEmpty()) {
-//			return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate);
-//		}
 		
 		return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price);
 	}
@@ -69,7 +66,11 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 	
-	
+	public Map<String, Object> page(){
+		Map<String, Object> list = new HashMap< >();
+		
+		return list;
+	}
 	
 	
 	

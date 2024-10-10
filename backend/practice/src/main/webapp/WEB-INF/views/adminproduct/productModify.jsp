@@ -52,14 +52,55 @@
     width: 100%; /* 전체 너비 사용 */
     justify-content: center; /* 중앙 정렬 */
     text-align: center;
+    colspan: 2;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    height: 100vh;
+}
+.sidebar {
+    background-color: #2c3e50;
+    padding: 20px;
+    color: white;
+}
+
+.sidebar h2 {
+    color: #ecf0f1;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    color: #3498db;
 }
 </style>
 </head>
 <body>
 
-	<h1>Product Table</h1>
 <form action="${pageContext.request.contextPath}/adminproduct/productModify?proId=${productSelectOne.pro_id}" method="post"  enctype="multipart/form-data">
-
+    <div class="container">
+        <div class="sidebar">
+            <h2>관리자 페이지</h2>
+            <ul>
+                <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
+                <li><a href="productList">상품 등록/수정/삭제</a></li>
+                <li><a href="">코드테이블 등록/수정/삭제</a></li>
+            </ul>
+        </div>
 	<div class="admingrid-wrapper">
 		<div class="admingrid-container">
 			<div class="admingrid-item admingrid-header">상품이름</div>
@@ -153,8 +194,8 @@
 		
 	</div>
 		<div class="productModifyFlex">
-			<div class="admingrid-item admingrid-header"><button type="submit">수정</button></div>
-			<div class="admingrid-item admingrid-header">삭제</div>
+			<div ><button type="submit">수정</button></div>
+			<div ><a href="/product/productDelete?proId=${productSelectOne.pro_id}" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a></div>
 		</div>
     </form>
 
