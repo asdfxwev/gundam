@@ -22,7 +22,7 @@
     margin-left: 25%;
     margin-right: 25%;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 1.5em;
+    /* font-size: 1em; */
     color: #333;
     border: 1px solid #ccc;
     border-radius: 50px;
@@ -45,7 +45,6 @@
     
 }
 
-
 .form-group input,
 .form-group select {
     width: 100%;
@@ -55,6 +54,52 @@
     border-radius: 0; /* 원래의 둥근 모서리를 제거합니다. */
     box-sizing: border-box;
     background-color: transparent; /* 배경색을 투명하게 설정합니다. */
+}
+
+.form-group button {
+    width: 60px;
+    border: none;
+    border-radius: 10px;
+}
+
+.form-group button:hover {
+    color: white;
+    background-color: blue;
+}
+
+.id_div .id_input{
+    width: 80%;
+}
+
+.form-group .id_div,
+.form-group .juso_div {
+    display: flex;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    justify-content: space-between;
+}
+
+.juso_div .post_input{
+    width: 15%;
+}
+
+.juso_div .juso_input{
+    width: 60%;
+}
+
+.form-group .birth_div {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+.birth_div .birth_input {
+    width: 20%;
+}
+
+.birth_div .gender_input {
+    width: 5%;
 }
 
 .error {
