@@ -68,7 +68,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
                     if (existingItemIndex >= 0) {
                         combinedItems[existingItemIndex].cart_quantity += initialCount; // 수량 업데이트
                     } else {
-                        const initialCartItem = { ...initialItem, cart_quantity: initialCount, isChecked: true };
+                        const initialCartItem = { ...initialItem, cart_quantity: initialCount, isChecked: true }; // isChecked를 false로 설정
                         combinedItems.push(initialCartItem); // 장바구니에 새로운 아이템 추가
                     }
                 }

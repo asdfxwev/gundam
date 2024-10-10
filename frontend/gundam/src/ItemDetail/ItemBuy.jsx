@@ -6,34 +6,20 @@ import axios from 'axios';
 import { API_BASE_URL } from "../service/app-config";
 
 const ItemBuy = () => {
+    const userinfo = JSON.parse(sessionStorage.getItem('loginInfo'));
+    console.log('userinfo 확인 :', userinfo);
     const location = useLocation();
     const navigate = useNavigate();
     const { item, count } = location.state || {};
-    const [userinfo, setUserinfo] = useState(null); // 사용자 정보를 저장할 상태
     const [checkedTrueItems, setCheckedTrueItems] = useState([]);
-    const [total, setTotal] = useState(0); // 총 결제금액 상태 변수
-    const [totalQuantity, setTotalQuantity] = useState(0); // 총 구매수량 상태 변수
-    const [showUser, setShowUser] = useState(true); // 사용자 정보 표시 여부 상태 변수
-    const [deliveryAddress, setDeliveryAddress] = useState(''); // 배송지 주소 상태 변수
-    const [deliveryUser, setDeliveryUser] = useState(''); // 수령자 이름 상태 변수
-    const [deliveryPhone, setDeliveryPhone] = useState(''); // 수령자 연락처 상태 변수
+    const [total, setTotal] = useState(0); 
+    const [totalQuantity, setTotalQuantity] = useState(0); 
+    const [showUser, setShowUser] = useState(true); 
+    const [deliveryAddress, setDeliveryAddress] = useState(''); 
+    const [deliveryUser, setDeliveryUser] = useState(''); 
+    const [deliveryPhone, setDeliveryPhone] = useState(''); 
 
     const formatNumber = (number) => number.toLocaleString('ko-KR');
-
-    useEffect(() => {
-        const fetchUserinfo = async () => {
-            const userId = JSON.parse(sessionStorage.getItem('loginInfo')).user_id; // 세션에서 user_id 가져오기
-            try {
-                const response = await axios.get(`${API_BASE_URL}/user/${userId}`); // 사용자 정보 가져오기
-                console.log('response test:',response);
-                setUserinfo(response.data); // 사용자 정보 상태 업데이트
-            } catch (error) {
-                console.error('사용자 정보를 가져오는 중 오류 발생:', error);
-            }
-        };
-
-        fetchUserinfo(); // 사용자 정보 가져오기 호출
-    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
     useEffect(() => {
         if (item && count) {
@@ -64,7 +50,7 @@ const ItemBuy = () => {
     }, []);
 
     const deliveryChange = () => {
-        setShowUser((prev) => !prev); // 사용자 정보 표시 상태 토글
+        setShowUser((prev) => !prev);
     };
 
     const handleOrder = async () => {
@@ -73,19 +59,17 @@ const ItemBuy = () => {
             return;
         }
 
-        if (!userinfo) {
-            alert('사용자 정보를 불러오는 중 오류가 발생했습니다.');
-            return;
-        }
-
         try {
+            const userResponse = await axios.get(`${API_BASE_URL}/user/${userinfo.id}`);
+            const userData = userResponse.data;
+
             const today = new Date();
             const formattedDate = today.toISOString().split('T')[0].replace(/-/g, '');
-            const orderCountResponse = await axios.get(`http://localhost:3000/orders/${userinfo.id}`);
+            const orderCountResponse = await axios.get(`${API_BASE_URL}/orders/${userinfo.id}`);
             const orderCount = orderCountResponse.data.oritem_count;
             const order_id = `${formattedDate}${userinfo.user_id}${String(orderCount + 1).padStart(4, '0')}`;
 
-            const itemsToBuyFromCart = userinfo.cart.filter(cartItem => cartItem.isChecked);
+            const itemsToBuyFromCart = userData.cart.filter(cartItem => cartItem.isChecked);
             const itemDetailToBuy = item ? {
                 ...item,
                 quantity: count,
@@ -105,7 +89,7 @@ const ItemBuy = () => {
                 deliveryaddress: deliveryAddress
             };
 
-            await axios.post('http://localhost:3000/orders', {
+            await axios.post(`${API_BASE_URL}/orders`, {
                 order_id,
                 user_id: userinfo.id,
                 order_date: today,
@@ -122,7 +106,7 @@ const ItemBuy = () => {
 
             await Promise.all(
                 allItemsToBuy.map(async (item) => {
-                    await axios.post('http://localhost:3000/oritems', {
+                    await axios.post(`${API_BASE_URL}/oritems`, {
                         order_id,
                         pro_id: item.pro_id,
                         oritem_quan: item.quantity
@@ -130,8 +114,8 @@ const ItemBuy = () => {
                 })
             );
 
-            userinfo.cart = userinfo.cart.filter(cartItem => !cartItem.isChecked);
-            await axios.put(`http://localhost:3000/user/${userinfo.id}`, userinfo);
+            userData.cart = userData.cart.filter(cartItem => !cartItem.isChecked);
+            await axios.put(`${API_BASE_URL}/user/${userinfo.id}`, userData);
 
             alert('결제가 완료되었습니다.');
             navigate('../Order'); // 결제 완료 페이지로 이동
@@ -169,18 +153,16 @@ const ItemBuy = () => {
 
                             <div className='buy_item_info underline'>
                                 {showUser ? (
-                                    userinfo && (
-                                        <div id='user' className='userinfo'>
-                                            <p>주문자</p>
-                                            <p>{userinfo.user_name}</p>
-                                            <p>연락처</p>
-                                            <p>{userinfo.phoneNumber}</p>
-                                            <p>e-Mail</p>
-                                            <p>{userinfo.email}</p>
-                                            <p>배송지</p>
-                                            <p className='buy_user_address_box'>{userinfo.address}</p>
-                                        </div>
-                                    )
+                                    <div id='user' className='userinfo'>
+                                        <p>주문자</p>
+                                        <p>{userinfo.user_name}</p>
+                                        <p>연락처</p>
+                                        <p>{userinfo.phoneNumber}</p>
+                                        <p>e-Mail</p>
+                                        <p>{userinfo.email}</p>
+                                        <p>배송지</p>
+                                        <p className='buy_user_address_box'>{userinfo.address}</p>
+                                    </div>
                                 ) : (
                                     <div id='delivery' className='delivery_info'>
                                         <p>수령자</p>
@@ -217,7 +199,9 @@ const ItemBuy = () => {
                                 <p className='total_price_title'>총 결제금액</p>
                                 <p className='total_price'><span className='t_price'>{formatNumber(total)}</span> 원</p>
                             </div>
-                            <button className='buy_btn' onClick={handleOrder}>결제하기</button>
+                            <div className='item_btn'>
+                                <button className='submit_btn' onClick={handleOrder}>결제하기</button>
+                            </div>
                         </div>
                     </div>
                 </div>
