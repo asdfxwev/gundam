@@ -1,5 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-    <typeInfo handle="=practice/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.demo.service{OrderItemsService.java[OrderItemsService" modifiers="513" timestamp="1728459633700"/>
-    <typeInfo handle="=practice/C:\/Users\/c\/.m2\/repository\/org\/springframework\/data\/spring-data-jpa\/3.3.3\/spring-data-jpa-3.3.3.jar=/maven.pomderived=/true=/=/maven.groupId=/org.springframework.data=/=/maven.artifactId=/spring-data-jpa=/=/maven.version=/3.3.3=/=/maven.scope=/compile=/=/maven.pomderived=/true=/&lt;org.springframework.data.jpa.repository(JpaRepository.class[JpaRepository" modifiers="1537" timestamp="1725983848748"/>
-</typeInfoHistroy>
+<typeInfoHistroy/>

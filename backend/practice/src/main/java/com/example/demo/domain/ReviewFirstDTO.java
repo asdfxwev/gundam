@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ReviewFirstDTO {
 	
-	private String userId;
-	private String proId;
+	private String user_id;
+	private String pro_id;
 
 }

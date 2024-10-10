@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.ImgDTO;
+import com.example.demo.domain.ReviewDTO;
 import com.example.demo.domain.ReviewFirstDTO;
 import com.example.demo.domain.pageListDTO;
 import com.example.demo.entity.Orders;
@@ -109,10 +110,10 @@ public class ProductController {
 	// 상품 구매한 것인지 확인하는거
 	@PostMapping("productReviewId")
 	public ResponseEntity<?> productReviewId(@RequestBody ReviewFirstDTO reviewdto) {
-		System.out.println("userId = "+reviewdto.getUserId());
-		System.out.println("proId = "+reviewdto.getProId());
-		String userId =  reviewdto.getUserId();
-		String proId = reviewdto.getProId();
+		System.out.println("userId = "+reviewdto.getUser_id());
+		System.out.println("proId = "+reviewdto.getPro_id());
+		String userId =  reviewdto.getUser_id();
+		String proId = reviewdto.getPro_id();
 		// 유저 아이디로 orderid찾기
 		List<String> userorderId = orservice.searchOrderId(userId);
 		System.out.println("userorderId = " +userorderId);
@@ -129,17 +130,35 @@ public class ProductController {
 			System.out.println("uo = " +uo);
 			for(String po : productOrderId) {
 				System.out.println("po = " +po);
+				System.out.println("a"+uo.equals(po));
+				System.out.println("b"+orderOrderId.isEmpty());
+				if (uo.equals(po) && orderOrderId.isEmpty()) {
+					System.out.println(3);
+					return ResponseEntity.ok(uo);
+				}
 				for(String oo : orderOrderId) {
 					System.out.println("oo = " +oo);
-					if ((uo == po && uo != oo && po != oo) || oo.isEmpty()) {
+					if ((uo.equals(po) && !uo.equals(oo) && !po.equals(oo)) || (uo.equals(po) && !uo.equals(oo) && !po.equals(oo) && oo.isEmpty())) {
 						System.out.println(1);
-						return ResponseEntity.ok(true);
+						return ResponseEntity.ok(uo);
 					}
 				}
+
 			}
 		}
 		System.out.println(2);
 		return ResponseEntity.ok(false);
+	}
+	
+	
+	
+	
+	
+	
+	@PostMapping("productReview")
+	public void productReview(@RequestBody ReviewDTO dto) {
+		System.out.println(dto);
+		reservice.save(dto);
 	}
 
 }

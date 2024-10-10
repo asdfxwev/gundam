@@ -182,7 +182,7 @@ export default function ItemDetail() {
                         <SectionImg imgList={imgList} productList={productList} />
                     )}
                     {productList && (
-                        <ItemReview key={productList.pro_id} item={productList} proId={proId} />
+                        <ItemReview key={productList.pro_id} item={productList} pro_id={proId} />
                     )}
                     {productList && (
                         <ItemQna key={productList.pro_id} item={productList} />

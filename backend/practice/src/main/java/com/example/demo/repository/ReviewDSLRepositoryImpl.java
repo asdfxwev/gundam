@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.domain.ReviewDTO;
+import com.example.demo.entity.Review;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -22,5 +24,8 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 					.where(review.user.user_id.eq(userId).and(review.product.pro_id.eq(proId)))
 					.fetch();
 		}
+	
+	
+
 
 }

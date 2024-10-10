@@ -28,22 +28,23 @@ const StarRating = ({ rating, setRating }) => {
 };
 
 // ItemReview 컴포넌트
-const ItemReview = ({ item, setReviewCount, pathName, proId }) => {
+const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);  // 로그인 상태 저장 변수
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰작성 모달팝업 호출 변수
     const [modalOpenPop, setModalOpenPop] = useState(false); // 비로그인 시 안내모달팝업 호출 변수
     const [modalNoPurchase, setModalNoPurchase] = useState(false); // 구매 후 작성 가능 안내 모달팝업 호출 변수
     const [reviews, setReviews] = useState([]); // 리뷰 데이터를 저장할 상태 변수
-    const [title, setReviewTitle] = useState('');
-    const [comment, setReviewMessage] = useState('');
-    const [rating, setRating] = useState(0); // 별점 상태
+    const [rev_title, setReviewTitle] = useState('');
+    const [rev_com, setReviewMessage] = useState('');
+    const [rev_rating, setRating] = useState(0); // 별점 상태
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedItems, setPaginatedItems] = useState([]);
     const [expandedReviewId, setExpandedReviewId] = useState(null); // 클릭된 리뷰 ID
+    const [order_id, setOrderId] = useState();
     const navigate = useNavigate();
 
 
-    const userId = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
+    const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
     useEffect(() => {
         setReviews(reviewData.review);
     }, []);
@@ -62,10 +63,11 @@ const ItemReview = ({ item, setReviewCount, pathName, proId }) => {
 
     const reviewPop = async () => {
         if (isLoggedIn) {     // 로그인 상태가 true 일때
-            const users = {userId, proId}
-            console.log(users);
+            const users = {user_id, pro_id}
             const Response = await axios.post(`${API_BASE_URL}/product/productReviewId`, users);
             const data = Response.data
+            console.log(data);
+            setOrderId(data);
 
             // const hasBoughtItem = userData.buy && userData.buy.some(buyItem => buyItem.id === item);
             console.log("data = "+data);
@@ -106,27 +108,26 @@ const ItemReview = ({ item, setReviewCount, pathName, proId }) => {
 
     const reviewSubmit = async (e) => {
         e.preventDefault();
+        const data = {rev_title, rev_com, rev_rating, pro_id, user_id, order_id}
+        console.log(data);
         try {
-            const response = await axios.get(`http://localhost:3001/review`);
-            const reviewList = response.data;
-            const date = new Date().toLocaleDateString();
-
-            // 리뷰 아이디 생성
-            const reviewId = reviewList.length ? reviewList[reviewList.length - 1].reviewId + 1 : 1;
-
-            const productId = item;
-            const existingInquiries = JSON.parse(localStorage.getItem('loginInfo'));
-            const userId = existingInquiries.id;
-
-            if (title === '' || comment === '' || rating === 0) {
-                alert(`제목, 내용, 별점을 모두 입력해주세요.`);
+            if (rev_title === '' || rev_com === '' || rev_rating === 0) {
+            alert(`제목, 내용, 별점을 모두 입력해주세요.`);
                 return false;
             }
+            console.log(data);
+            const response = await axios.post(`${API_BASE_URL}/product/productReview`, data);
 
-            const newReview = { reviewId, productId, userId, title, comment, date, rating };
+            // 리뷰 아이디 생성
+            // const reviewId = reviewList.length ? reviewList[reviewList.length - 1].reviewId + 1 : 1;
+
+
+
+
+            // const newReview = { reviewId, productId, userId, title, comment, date, rating };
 
             // 서버에 새로운 리뷰 추가
-            await axios.post(`http://localhost:3001/review`, newReview);
+            // await axios.post(`http://localhost:3001/review`, newReview);
 
             setReviewTitle('');
             setReviewMessage('');
@@ -170,13 +171,13 @@ const ItemReview = ({ item, setReviewCount, pathName, proId }) => {
                             <h2>리뷰작성</h2>
                             <div>
                                 <div>제목
-                                    <input value={title} onChange={onreviewTitle} type="text" id="title" className="re_title" />
+                                    <input value={rev_title} onChange={onreviewTitle} type="text" id="title" className="re_title" />
                                 </div>
                                 <div>별점
-                                    <StarRating rating={rating} setRating={setRating} />
+                                    <StarRating rating={rev_rating} setRating={setRating} />
                                 </div>
                                 <div className="reviewBox">내용
-                                    <textarea value={comment} onChange={onreviewMessage} type="text" id="comment" className="re_comment" />
+                                    <textarea value={rev_com} onChange={onreviewMessage} type="text" id="comment" className="re_comment" />
                                 </div>
                             </div>
                             <div className="re_button_box">

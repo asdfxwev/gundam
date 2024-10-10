@@ -72,10 +72,6 @@ public class ProductServiceImpl implements ProductService {
 		return list;
 	}
 	
-	
-	
-	
-	
 	@Override
 	public List<String> findAllProIds() {
 		return prepository.findAllProIds();

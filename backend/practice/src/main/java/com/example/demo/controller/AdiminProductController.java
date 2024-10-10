@@ -54,8 +54,8 @@ public class AdiminProductController {
             @PageableDefault(size = 20, sort = "pro_name", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
 		System.out.println("searchKeyword = "+inputValue);
 		int pageSize = 20;
-		Page<ImgDTO> pageResult = pservice.joinDSL(inputValue, pageable);
-		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("pro_name").ascending());
+//		Page<ImgDTO> pageResult = pservice.joinDSL(inputValue, pageable);
+//		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("pro_name").ascending());
 //		Page<ImgDTO> pageResult = pservice.getProductPage(inputValue, pageable);
 		// List<Product> list = pservice.selectList();
 //		PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNo).size(sizeNo).build();
