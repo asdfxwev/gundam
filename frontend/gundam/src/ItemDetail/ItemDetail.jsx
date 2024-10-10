@@ -75,6 +75,7 @@ export default function ItemDetail() {
     const handleBuyClick = (e) => {
         if (existingInquiries) {
             e.preventDefault();
+            console.log('productList:', productList, 'imgList:', imgList, 'count:', count);
             navigate('/ItemBuy', { state: { item: productList, imgList, count } });
         } else {
             navigate('/Login');
@@ -84,32 +85,30 @@ export default function ItemDetail() {
     const toCart = async (e) => {
         if (existingInquiries) {
             e.preventDefault();
-    
+
             const quantity = Number(count);
             if (isNaN(quantity) || quantity <= 0) {
                 alert('수량을 올바르게 입력해 주세요.');
                 return;
             }
-    
-            // 세션 스토리지에서 userId 가져오기
+
             const loginInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
-            const userId = loginInfo ? loginInfo.user_id : null; // user_id 가져오기
-    
-            // userId가 없을 경우 처리
+            const userId = loginInfo ? loginInfo.user_id : null;
+
             if (!userId) {
                 alert('로그인 정보가 없습니다.');
                 navigate('/Login');
                 return;
             }
-    
+
             const cartData = {
-                user_id: userId, // 로그인된 사용자 ID 사용
+                user_id: userId,
                 pro_id: proId,
                 cart_quantity: quantity,
             };
-    
+
             console.log('장바구니 추가 요청 데이터:', JSON.stringify(cartData, null, 2));
-    
+
             try {
                 const response = await axios.post(`${API_BASE_URL}/cart`, cartData);
                 if (response.status >= 200 && response.status < 300) {
@@ -124,10 +123,8 @@ export default function ItemDetail() {
                 console.error('장바구니 추가 실패: ', error.response ? error.response.data : error.message);
                 alert('오류가 발생, 다시 시도해주세요.');
             }
-        } 
+        }
     };
-    
-
 
     return (
         <div className="item_detail_main">

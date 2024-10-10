@@ -13,5 +13,7 @@ public interface CartService {
     void removeCartItem(CartId cartId);
     String getUserIdByLoginId(String loginId);    
     Cart updateCart(Cart cart);
+    
+    // 수정된 buyItems 메서드
+    List<Cart> buyItems(List<CartDTO> cartDTOs);
 }
-
