@@ -5,18 +5,27 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.example.demo.domain.ProductDTO;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Getter
 @Setter
 public class CartDTO extends ProductDTO {
     private String user_id;
     private String pro_id;
+    private String pro_name;
+    private int pro_price;
+    private String pro_imgs;
     private int cart_quantity;
-	@Override
+    
 	public String toString() {
-		return "CartDTO [user_id=" + user_id + ", pro_id=" + pro_id + ", cart_quantity=" + cart_quantity + "]";
+		return "CartDTO [cart_quantity=" + cart_quantity + ","
+				+ "pro_name="+pro_name +", pro_price="+pro_price +""
+				+ ",pro_imgs="+pro_imgs+""
+				+",pro_id="+pro_id+""
+				+ " total_price="+cart_quantity*pro_price+"]";
 	}
     
     
