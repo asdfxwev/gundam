@@ -10,7 +10,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface OrdersRepository extends JpaRepository<Orders, String> {
 	
 	
-	@Query("SELECT or.order_id from Orders or")
-	List<Orders> searchOrderId(String loginId);
 
 }

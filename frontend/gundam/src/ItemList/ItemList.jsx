@@ -168,7 +168,6 @@ const ItemList = () => {
                         return qs.stringify(params, { arrayFormat: 'brackets' });
                     },
                 });
-                console.log("params.itemsperpage = "+params.itemsPerPage);
 
                 const response = await axiosInstance.get(`/product/productList`, { params });
                 //const response = await axios.post(`/product/productList`, params );

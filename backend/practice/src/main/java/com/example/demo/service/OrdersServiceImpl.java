@@ -55,9 +55,9 @@ public class OrdersServiceImpl implements OrdersService {
     
     
     @Override
-    public void searchOrderId(String loginId) {
+    public List<String> searchOrderId(String userId) {
     	
-    	List<Orders> orderId = ordersRepository.searchOrderId(loginId);
+    	 return ordersDSLRepository.searchOrderId(userId);
     	
     	
     }

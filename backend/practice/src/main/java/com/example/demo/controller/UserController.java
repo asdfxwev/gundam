@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.UserDTO;
-import com.example.demo.entity.Member;
 import com.example.demo.entity.User;
 import com.example.demo.jwtToken.TokenProvider;
 import com.example.demo.service.UserService;

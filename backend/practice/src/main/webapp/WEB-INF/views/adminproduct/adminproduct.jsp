@@ -135,38 +135,37 @@ h1, h2 {
                     </c:forEach>
                 </tbody>
             </table>
-            	<div align="center">
-		<c:choose>
-			<c:when test="${pageMaker.prev && pageMaker.spageNo>1}">
-				<a href="${pageMaker.makeQuery(1)}">FP</a>&nbsp;
-				<a href="${pageMaker.makeQuery(pageMaker.spageNo - 1)}">&LT;</a>&nbsp;&nbsp;  
-			</c:when>
-			<c:otherwise>
-				<font color="Gray">FP&nbsp;&LT;&nbsp;&nbsp;</font>
-			</c:otherwise>
-		</c:choose>
+            	<%-- <div align="center">
+					<c:choose>
+						<c:when test="${pageMaker.prev && pageMaker.spageNo>1}">
+							<a href="${pageMaker.makeQuery(1)}">FP</a>&nbsp;
+							<a href="${pageMaker.makeQuery(pageMaker.spageNo - 1)}">&LT;</a>&nbsp;&nbsp;  
+						</c:when>
+						<c:otherwise>
+							<font color="Gray">FP&nbsp;&LT;&nbsp;&nbsp;</font>
+						</c:otherwise>
+					</c:choose>
 		<!-- 2) Display PageNo 
 	=> currPage 제외한 PageNo 만 a Tag 적용 -->
-		<c:forEach var="i" begin="${pageMaker.spageNo}"
-			end="${pageMaker.epageNo}">
-			<c:if test="${i==pageMaker.cri.currentPage}">
-				<font color="red" size="5"><b>${i}</b></font>&nbsp;
-  			</c:if>
-			<c:if test="${i!=pageMaker.cri.currentPage}">
-				<a href=" ${ pageMaker.makeQuery(i)}">${i}</a>&nbsp;
-  			</c:if>
-		</c:forEach>
+					<c:forEach var="i" begin="${pageMaker.spageNo}" end="${pageMaker.epageNo}">
+						<c:if test="${i==pageMaker.cri.currentPage}">
+							<font color="red" size="5"><b>${i}</b></font>&nbsp;
+  						</c:if>
+						<c:if test="${i!=pageMaker.cri.currentPage}">
+							<a href=" ${ pageMaker.makeQuery(i)}">${i}</a>&nbsp;
+  						</c:if>
+					</c:forEach>
 		<!-- 3) Next, LastPage  -->
-		<c:choose>
-			<c:when test="${pageMaker.next && pageMaker.epageNo>0}">
-  		&nbsp;<a href="${ pageMaker.makeQuery(pageMaker.epageNo+1)}">&GT;</a>
-  		&nbsp;<a href="${ pageMaker.makeQuery(pageMaker.lastPageNo)}">LP</a>
-			</c:when>
-			<c:otherwise>
-				<font color="Gray">&nbsp;&GT;&nbsp;LP</font>
-			</c:otherwise>
-		</c:choose>
-	</div>
+					<c:choose>
+						<c:when test="${pageMaker.next && pageMaker.epageNo>0}">
+  						&nbsp;<a href="${ pageMaker.makeQuery(pageMaker.epageNo+1)}">&GT;</a>
+  						&nbsp;<a href="${ pageMaker.makeQuery(pageMaker.lastPageNo)}">LP</a>
+						</c:when>
+					<c:otherwise>
+						<font color="Gray">&nbsp;&GT;&nbsp;LP</font>
+					</c:otherwise>
+				</c:choose>
+			</div> --%>
         </div>
     </div>
 </body>

@@ -43,7 +43,7 @@ const ItemReview = ({ item, setReviewCount, pathName, proId }) => {
     const navigate = useNavigate();
 
 
-    const loginId = JSON.parse(sessionStorage.getItem('loginInfo'));
+    const userId = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
     useEffect(() => {
         setReviews(reviewData.review);
     }, []);
@@ -62,14 +62,14 @@ const ItemReview = ({ item, setReviewCount, pathName, proId }) => {
 
     const reviewPop = async () => {
         if (isLoggedIn) {     // 로그인 상태가 true 일때
-            const loginId = {loginId, proId}
-            
-            const userResponse = await axios.post(`${API_BASE_URL}/product/productReviewId`, loginId);
-            const userData = userResponse.data;
+            const users = {userId, proId}
+            console.log(users);
+            const Response = await axios.post(`${API_BASE_URL}/product/productReviewId`, users);
+            const data = Response.data
 
-            const hasBoughtItem = userData.buy && userData.buy.some(buyItem => buyItem.id === item);
-
-            if (hasBoughtItem) {
+            // const hasBoughtItem = userData.buy && userData.buy.some(buyItem => buyItem.id === item);
+            console.log("data = "+data);
+            if (data) {
                 setModalIsOpen(true);
             } else {
                 setModalNoPurchase(true); // 구매 후 작성 가능 안내 모달팝업 호출

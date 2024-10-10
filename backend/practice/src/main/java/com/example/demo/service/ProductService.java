@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.demo.domain.ImgDTO;
 import com.example.demo.domain.ProductDTO;
 import com.example.demo.entity.Product;
+import org.springframework.data.domain.Pageable;
 
 import pageTest.Criteria;
 import pageTest.PageMaker;
@@ -13,7 +14,7 @@ public interface ProductService {
 	
 	List<Product> selectList();
 	
-	List<ImgDTO> joinDSL(String inputValue);
+	List<ImgDTO> joinDSL(String inputValue, Pageable pageable);
 	
 	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price);
 	

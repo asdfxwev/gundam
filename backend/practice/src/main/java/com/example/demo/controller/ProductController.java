@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,13 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.ImgDTO;
+import com.example.demo.domain.ReviewFirstDTO;
 import com.example.demo.domain.pageListDTO;
+import com.example.demo.entity.Orders;
 import com.example.demo.service.CodeService;
 import com.example.demo.service.ImgService;
 import com.example.demo.service.OrderItemsService;
 import com.example.demo.service.OrdersService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ProductServiceImpl;
+import com.example.demo.service.ReviewService;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -36,6 +41,7 @@ public class ProductController {
 	private final CodeService coservice;
 	private final OrderItemsService oriservice;
 	private final OrdersService orservice;
+	private final ReviewService reservice;
 	private final ProductServiceImpl poservice;
 	
 	@GetMapping("/productList")
@@ -102,11 +108,38 @@ public class ProductController {
 	
 	// 상품 구매한 것인지 확인하는거
 	@PostMapping("productReviewId")
-	public void productReviewId(@RequestParam String loginId) {
+	public ResponseEntity<?> productReviewId(@RequestBody ReviewFirstDTO reviewdto) {
+		System.out.println("userId = "+reviewdto.getUserId());
+		System.out.println("proId = "+reviewdto.getProId());
+		String userId =  reviewdto.getUserId();
+		String proId = reviewdto.getProId();
+		// 유저 아이디로 orderid찾기
+		List<String> userorderId = orservice.searchOrderId(userId);
+		System.out.println("userorderId = " +userorderId);
+		// proid로 상품
+		List<String> productOrderId = oriservice.searchOrderId(proId);
+		System.out.println("productOrderId = " +productOrderId);
 		
-		orservice.searchOrderId(loginId);
+		// userId와 proId로 review에서 가져오기
+		List<String> orderOrderId = reservice.searchOrderId(userId, proId);
+		System.out.println("orderOrderId = " +orderOrderId);
 		
 		
+		for(String uo : userorderId ) {
+			System.out.println("uo = " +uo);
+			for(String po : productOrderId) {
+				System.out.println("po = " +po);
+				for(String oo : orderOrderId) {
+					System.out.println("oo = " +oo);
+					if ((uo == po && uo != oo && po != oo) || oo.isEmpty()) {
+						System.out.println(1);
+						return ResponseEntity.ok(true);
+					}
+				}
+			}
+		}
+		System.out.println(2);
+		return ResponseEntity.ok(false);
 	}
 
 }
