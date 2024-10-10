@@ -3,16 +3,13 @@ package com.example.demo.repository;
 import java.util.List;
 
 import com.example.demo.domain.ImgDTO;
-import com.example.demo.domain.ProductDTO;
 import com.example.demo.entity.Product;
+import org.springframework.data.domain.Pageable;
 
 public interface ProductDSLRespository {
 	
-	List<ImgDTO> joinDSL();
+	List<ImgDTO> joinDSL(String inputValue, Pageable pageable);
 	
-//	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate);
-//	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue);
-//	List<ImgDTO> joinDSLpage1(int itemsPerPage, int currentPage, String inputValue, List<String> cateBrand);
 	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price);
 	
 	

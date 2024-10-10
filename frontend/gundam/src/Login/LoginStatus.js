@@ -37,11 +37,24 @@ export function LoginProvider({ children }) {
             }).catch((err) => {
                 setIsLoggedIn(false);
                 setLoginInfo('');
+                alert(err);
+                // if (err === 502) {
+                //     alert("ID 또는 비밀번호를 확인하세요.");
+                // } else {
+                //     alert("로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");
+                //     // alert(`** 시스템 오류 발생: err=${err}`);
+                // }
+
                 if (err === 502) {
                     alert("ID 또는 비밀번호를 확인하세요.");
+                } else if (err === 429) {
+                    alert("로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");
+                } else if (err === 401) {
+                    alert("로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");
                 } else {
-                    alert(`** 시스템 오류 발생: err=${err}`);
+                    alert("id 또는 password 가 다릅니다.");
                 }
+
                 navigate("/Login");
             });
     };

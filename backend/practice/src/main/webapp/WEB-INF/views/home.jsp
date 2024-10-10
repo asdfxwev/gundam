@@ -1,46 +1,132 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/myLib/myStyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-<meta charset="UTF-8">
-<title>home Spring 3 JPA</title>
+.container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: #2c3e50;
+    padding: 20px;
+    color: white;
+}
+
+.sidebar h2 {
+    color: #ecf0f1;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    color: #3498db;
+}
+
+.content {
+    padding: 20px;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.user-table th {
+    background-color: #f2f2f2;
+}
+
+.user-table td a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.user-table td a:hover {
+    text-decoration: underline;
+}
+    
+    </style>
+    
 </head>
 <body>
-	<h1>SpringBoot 3 JPA</h1>
-	<p>Home_Time : ${requestScope.serverTime}</p>
-	<hr>
-	
-	<a href="user/userList">userList</a>&nbsp;
-	<a href="product/productList">productList</a>
-	<a href="product/productJoinList">productJoinList</a>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>관리자 페이지</h2>
+            <ul>
+                <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
+                <li><a href="adminproduct/productList">상품 등록/수정/삭제</a></li>
+                <li><a href="<c:url value='/codeTable' />">코드테이블 등록/수정/삭제</a></li>
+            </ul>
+        </div>
 
-	<br>
-	<a href="bcrypt">BCrypt</a>
-	<br>
-	<a href="member/memberList">Mlist</a>
-	<br>
-	<a href="team/joList2">joinlist</a>
-	<br>
-	<a href="member/joindsl">joinDSL</a>
-	<hr>
-	<a href="/ginsert">GInsert</a> &nbsp;
-	<a href="/glist">GList</a> &nbsp;
-	<a href="/gupdate">GUpdate</a> &nbsp;
-	<a href="/gpage?pageNo=2&sizeNo=3">GPage</a> &nbsp;
-	<hr>
-	<a href="/tsave">TSave</a> &nbsp;
-	<a href="/tupdate">TUpdate</a> &nbsp;
-	<a href="/tdupupdate?id=beom&no=10&name=승범&count=4">TDupUpdate</a> &nbsp;
-	<a href="/tcalc">TCalc</a> &nbsp;
-	<a href="/tlist">TList</a> &nbsp;
-	<hr>
+        <!-- Content -->
+        <div class="content">
+            <h1>Admin Dashboard</h1>
 
-	<img alt="왜 안나오냐" src="./resources/images/bg2.jpg" width="400"
-		height="600">
+            <!-- User List Table -->
+            <h2>User List</h2>
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Login ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="user" items="${userList}">
+                        <tr>
+                            <td>${user.user_id}</td>
+                            <td>${user.login_id}</td>
+                            <td>${user.user_name}</td>
+                            <td>${user.email}</td>
+                            <td>${user.phone_num}</td>
+                            <td>
+                                <a href="<c:url value='/user/edit/${user.user_id}' />">수정</a> |
+                                <a href="<c:url value='/user/delete/${user.user_id}' />" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

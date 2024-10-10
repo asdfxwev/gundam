@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.UserDTO;
-import com.example.demo.entity.Member;
 import com.example.demo.entity.User;
 import com.example.demo.jwtToken.TokenProvider;
 import com.example.demo.service.UserService;
@@ -60,7 +59,7 @@ public class UserController {
     
     
     
-    // *** Login02 : token 발행후 & 스프링 인증.인가 전
+    // ** Login : token 발행
     @PostMapping("/login")
     // 전달된 값이 id가 같다면 자동으로 담아주지만 전달된 데이터는 json형태이기때문에 
     // @RequestBody 로 타이블 맞춰줘야 데이터가 들어옴
@@ -70,7 +69,10 @@ public class UserController {
     	
     	// 2) Service 처리 & 결과 전송
     	entity = service.selectOne(entity.getLogin_id());
-    	if( entity!=null && passwordEncoder.matches(password, entity.getPassword()) ) {
+    	
+    	int logintry = entity.getRetry();
+    	
+    	if( entity != null && passwordEncoder.matches(password, entity.getPassword()) && logintry < 5 ) {
     		// => 성공 : token 생성 & 로그인 정보 session 에 보관 & Front로 전송
     		session.setAttribute("login_Id", entity.getLogin_id());
     		session.setAttribute("login_Name", entity.getUser_name());
@@ -79,7 +81,7 @@ public class UserController {
     		final String token = tokenProvider.create(entity.getLogin_id());
     		
     		// => token parser 확인
-    		log.info("Login: token parser 확인 => "+tokenProvider.validateAndGetUserId(token));
+    		log.info("Login: token parser 확인 => " + tokenProvider.validateAndGetUserId(token));
     		
     		// => 전송할 UserDTO 객체생성
     		//	  빌더패턴, 값변경을 예방을위해 final
@@ -90,11 +92,33 @@ public class UserController {
 					.user_name(entity.getUser_name())
 					.user_cd(entity.getUser_cd())
 					.build();
-    		log.info("로그인 성공 => "+HttpStatus.OK);
-    		return ResponseEntity.ok(userDTO);
+    		
+    		entity.setRetry(0);
+    		entity.setLastcon_dtm(LocalDateTime.now());
+    		service.save(entity);
+    		
+    		log.info("로그인 성공 => " + HttpStatus.OK);
+    		//return ResponseEntity.ok(userDTO);
+    		return ResponseEntity.ok(token);
+    		
+    		
+    	} else if(entity != null && passwordEncoder.matches(password, entity.getPassword()) && logintry >= 5) {
+    		log.error("로그인 실패 => " + HttpStatus.TOO_MANY_REQUESTS);
+    		return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("** 로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");
+    	} else if(entity != null && !passwordEncoder.matches(password, entity.getPassword()) && logintry < 5) {
+    		// 로그인 실패시 시도횟수 update
+    		logintry = logintry + 1 ;
+    		entity.setRetry(logintry);
+    		service.save(entity);
+    		
+    		log.error("로그인 실패 => " + HttpStatus.UNAUTHORIZED);
+    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("** id 또는 password 가 다릅니다.");
+    	} else if(entity != null && !passwordEncoder.matches(password, entity.getPassword()) && logintry >= 5) {
+    		log.error("로그인 실패 => " + HttpStatus.TOO_MANY_REQUESTS);
+    		return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("** 로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");
     	} else {
-    		log.error("로그인 실패 => "+HttpStatus.BAD_GATEWAY);
-    		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("** id 또는 password 오류!!");
+    		log.error("로그인 실패 => " + HttpStatus.NOT_FOUND);
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("** id 또는 password 가 다릅니다.");
     	}
     } //login
     
@@ -138,10 +162,10 @@ public class UserController {
 		// passwordEncoder 적용
 		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
  		
+		service.save(entity);
+		
  		// 2) Service 처리 & 결과 전송
- 		log.info(entity);
-    	entity = service.save(entity);
-    	log.info(entity);
+      	log.info(entity);
     	if( entity!=null ) {
     		log.info("회원가입 성공 => "+HttpStatus.OK);
     		return ResponseEntity.ok(entity);
@@ -151,6 +175,22 @@ public class UserController {
     	}
     	
     } //join
+ 	
+ 	// ** id중복체크
+  	@GetMapping("/checkid")
+  	public ResponseEntity<?> checkid(@RequestBody User entity, Model model) {
+  		
+  		//entity = service.checkid(entity.getLogin_id());
+  		entity = service.selectOne(entity.getLogin_id());
+  		
+  		if( entity != null ) {
+ 			return ResponseEntity.ok(entity);
+ 		} else {
+ 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+ 					.body("사용가능 ID");
+ 		}
+  		
+  	} //checkid
  	
 //  ** User Detail
 // 	@GetMapping("/userDetail")

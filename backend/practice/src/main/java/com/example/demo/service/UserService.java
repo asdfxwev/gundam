@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import com.example.demo.entity.User;
@@ -15,6 +17,7 @@ public interface UserService {
 	// ** insert, update
 	User save(User entity);
 	
+	// ** user_id 시퀀스 증가를 위한 select
 	List<String> findAllUserId();
 
 	// ** delete
@@ -22,4 +25,9 @@ public interface UserService {
 	
 	// ** Password 수정 하기
 	void updatePassword(String id, String password);
+	
+	// ** id 중복체크
+//	User checkid(String login_id);
+	
+
 }

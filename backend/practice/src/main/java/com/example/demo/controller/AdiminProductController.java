@@ -17,15 +17,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.domain.ImgDTO;
+import com.example.demo.domain.PageRequestDTO;
+import com.example.demo.domain.PageResultDTO;
+import com.example.demo.domain.ProductDTO;
 import com.example.demo.entity.Img;
 import com.example.demo.entity.Product;
 import com.example.demo.service.CodeService;
 import com.example.demo.service.ImgService;
 import com.example.demo.service.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import pageTest.Criteria;
+import pageTest.PageMaker;
 
 @Log4j2
 @Controller
@@ -39,9 +50,20 @@ public class AdiminProductController {
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
 
 	@GetMapping("/productList")
-	public void productList(Model model) {
+	public void productList(String inputValue,
+            @PageableDefault(size = 20, sort = "pro_name", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+		System.out.println("searchKeyword = "+inputValue);
+		int pageSize = 20;
+		Page<ImgDTO> pageResult = pservice.joinDSL(inputValue, pageable);
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("pro_name").ascending());
+//		Page<ImgDTO> pageResult = pservice.getProductPage(inputValue, pageable);
 		// List<Product> list = pservice.selectList();
-		model.addAttribute("productJoinList", pservice.joinDSL());
+//		PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNo).size(sizeNo).build();
+		
+//		PageResultDTO<ProductDTO, Product> resultDTO = pservice.joinDSL(requestDTO);
+
+		model.addAttribute("productJoinList", pservice.joinDSL(inputValue, pageable));
+
 	}
 
 	@GetMapping("/productInsert")
@@ -52,10 +74,10 @@ public class AdiminProductController {
 		model.addAttribute("codestate",coservice.codeStateOne());
 	}
 
-	@GetMapping("productJoinList")
-	public void productJoinList(Model model) {
-		model.addAttribute("productJoinList", pservice.joinDSL());
-	}
+//	@GetMapping("productJoinList")
+//	public void productJoinList(Model model) {
+//		model.addAttribute("productJoinList", pservice.joinDSL());
+//	}
 
 	@PostMapping("/productInsert")
 	public String productInsert(HttpServletRequest request, Model model, Product productEntity, Img imgEntity,
@@ -275,7 +297,7 @@ public class AdiminProductController {
 	    }
 		
 		
-		return "redirect:/product/productList";
+		return "redirect:/adminproduct/productList";
 		
 	}
 
@@ -316,6 +338,7 @@ public class AdiminProductController {
 	    
 	    return "redirect:/product/productList";
 	}
+	
 	
 	
 	

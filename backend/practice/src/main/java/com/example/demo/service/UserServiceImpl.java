@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -55,18 +57,14 @@ public class UserServiceImpl implements UserService {
 		
 		// 입력받은 생년월일(yyyy-mm-dd)을 yymmdd형태로 저장
 		// yymmdd 형태로 변환할 포맷터 정의
-	    DateTimeFormatter birth_format = DateTimeFormatter.ofPattern("yyMMdd");
-	    
-        String birth = entity.getBirth();
-
-		// String을 LocalDate로 변환
-        LocalDate birthDate = LocalDate.parse(birth);
-
-        // LocalDate를 yymmdd 형식의 문자열로 변환
-        //String formattedBirth = birthDate.format(birth_format);
-		
-        entity.setBirth(birthDate.format(birth_format));
-		
+//	    DateTimeFormatter birth_format = DateTimeFormatter.ofPattern("yyMMdd");
+//	    
+//        String birth = entity.getBirth();
+//
+//		// String을 LocalDate로 변환
+//        LocalDate birthDate = LocalDate.parse(birth);
+//		
+//        entity.setBirth(birthDate.format(birth_format));
 		
 		return urepository.save(entity);
 	}
@@ -86,5 +84,11 @@ public class UserServiceImpl implements UserService {
 	public void updatePassword(String login_id, String password) {
 		urepository.updatePassword(login_id, password);
 	}
+	
+//	@Override
+//	public User checkid(String login_id) {
+//		return urepository.UserDetail(login_id);
+//	}
+	
 
 }

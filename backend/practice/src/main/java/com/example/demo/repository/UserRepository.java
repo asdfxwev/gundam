@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,4 +33,5 @@ public interface UserRepository extends JpaRepository<User, String> {
 	
 	@Query("SELECT u.user_id FROM User u")
     List<String> findAllUserId();
+	
 }

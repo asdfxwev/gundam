@@ -1,6 +1,11 @@
 package com.example.demo.repository;
 
+import static com.example.demo.entity.QOrders.orders;
+
+import com.example.demo.domain.ImgDTO;
 import com.example.demo.entity.Orders;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.example.demo.entity.QOrders;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +29,15 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
                     (orderStatus != null) ? orders.order_status.eq(orderStatus) : null
                 )
                 .fetch();
+    }
+    
+    
+    
+    @Override
+    public List<String> searchOrderId(String userId) {
+    	return queryFactory.select(orders.order_id)
+    			.from(orders)
+    			.where(orders.user.user_id.eq(userId))
+    			.fetch();
     }
 }
