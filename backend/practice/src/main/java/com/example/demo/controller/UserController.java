@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.Console;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -55,7 +56,31 @@ public class UserController {
         //    - 초기화 이후에 조회만 하는경우 주로사용함.(Key 관리 등)
     }
     
-    
+    // token 값을 받아서 login_id return 받음
+    @PostMapping("/token_info")
+    public ResponseEntity<?> getUserInfo(String token) {
+        String login_id = tokenProvider.validateAndGetUserId(token);
+        
+        User entity = service.selectOne(login_id);
+        
+        if( entity != null ) {
+        	
+        	UserDTO userDTO = UserDTO.builder()
+    				.token(token)
+		    		.user_id(entity.getUser_id())
+					.login_id(entity.getLogin_id())
+					.user_name(entity.getUser_name())
+					.user_cd(entity.getUser_cd())
+					.build();
+        	
+        	log.info("토큰으로 꺼내온 login_id 값 ==>> "+userDTO);
+ 			return ResponseEntity.ok(userDTO);
+ 			
+ 		} else {
+ 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+ 					.body("사용자 정보를 찾을수없습니다.");
+ 		}
+    }
     
     // ** Login : token 발행
     @PostMapping("/login")
@@ -96,8 +121,8 @@ public class UserController {
     		service.save(entity);
     		
     		log.info("로그인 성공 => " + HttpStatus.OK);
-    		//return ResponseEntity.ok(userDTO);
-    		return ResponseEntity.ok(token);
+    		return ResponseEntity.ok(userDTO);
+//    		return ResponseEntity.ok(token);
     		
     		
     	} else if(entity != null && passwordEncoder.matches(password, entity.getPassword()) && logintry >= 5) {

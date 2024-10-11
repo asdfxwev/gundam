@@ -33,17 +33,12 @@ export function LoginProvider({ children }) {
                 alert('로그인 성공');
                 setIsLoggedIn(true);
                 setLoginInfo(response);
+                alert("로그인 토큰값 확인 => " + response);
                 navigate("/");
             }).catch((err) => {
                 setIsLoggedIn(false);
                 setLoginInfo('');
                 alert(err);
-                // if (err === 502) {
-                //     alert("ID 또는 비밀번호를 확인하세요.");
-                // } else {
-                //     alert("로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");
-                //     // alert(`** 시스템 오류 발생: err=${err}`);
-                // }
 
                 if (err === 502) {
                     alert("ID 또는 비밀번호를 확인하세요.");

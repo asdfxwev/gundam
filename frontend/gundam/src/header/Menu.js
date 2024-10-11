@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import HeaderSearch from './HeaderSearch';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../Login/LoginStatus';
+import { apiCall } from '../service/apiService';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faUser, faShoppingCart, faSearch, faRightFromBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +18,7 @@ export default function Menu() {
     const [menuClosing, setMenuClosing] = useState(false); // 메뉴 닫기 애니메이션 상태 추가
     const location = useLocation();
     const { loginInfo, isLoggedIn, onLogout } = useLogin();
-
+    const [userInfo, setUserInfo] = useState(''); // token 값으로 select한 user정보
 
     const Menu = (menu) => {
         if (visibleMenu === menu) {
@@ -34,6 +35,44 @@ export default function Menu() {
         }
         // scroll();
     };
+
+    
+    // if (isLoggedIn) {
+    //     let url = `/user/token_info`;
+
+    //     const data = {token: loginInfo};
+
+    //     const response = apiCall(url, 'POST', data, null)
+    //         .then((response) => {
+    //             setUserInfo(response);
+    //             alert("토큰으로 사용자 정보 가져왔음!"+userInfo);
+    //         }).catch((err) => {
+    //             isLoggedIn(false);
+    //             alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+    //         });
+    // }
+
+    // 화면 로드 시 토큰값이 있으면 user정보를 가져와야하는 부분
+    // useEffect(() => {
+        
+    //     if (isLoggedIn) {
+    //         const fetchUserInfo = async () => {
+    //             try {
+    //                 console.log("토큰값 확인 => ", loginInfo);
+    //                 const url = `/user/token_info`;
+    //                 const data = { token: loginInfo };
+    //                 const response = await apiCall(url, 'POST', data, null);
+    //                 setUserInfo(response);
+    //                 console.log("토큰으로 사용자 정보 가져왔음!", userInfo);
+    //             } catch (err) {
+    //                 onLogout(); // 로그아웃 상태로 처리
+    //                 alert("사용자 정보를 찾을 수 없습니다. 다시 로그인하세요.");
+    //             }
+    //         };
+
+    //         fetchUserInfo(); // 비동기 함수 호출
+    //     }
+    // }, [isLoggedIn, loginInfo, onLogout]);
 
     useEffect(() => {
         const scroll = () => {
@@ -72,8 +111,6 @@ export default function Menu() {
         }
     };
 
-    // console.log(loginInfo.name);
-
     const isMainPage = location.pathname !== '/';
     if (location.pathname.includes('Login')) return null;
 
@@ -86,7 +123,7 @@ export default function Menu() {
                     <div className={`h_menu ${smallTopMenu ? 'blackText' : ''}`} onClick={() => Menu('headerMenu2')}>피규어</div>
                     <div className={`h_menu ${smallTopMenu ? 'blackText' : ''}`} onClick={() => Menu('etc')}>기타</div>
                 </div>
-
+                
                 <div className="h_right_container">
                     {isLoggedIn ? (
                         <>
