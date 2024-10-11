@@ -28,7 +28,7 @@ const StarRating = ({ rating, setRating }) => {
 };
 
 // ItemReview 컴포넌트
-const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
+const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);  // 로그인 상태 저장 변수
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰작성 모달팝업 호출 변수
     const [modalOpenPop, setModalOpenPop] = useState(false); // 비로그인 시 안내모달팝업 호출 변수
@@ -44,15 +44,15 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
     const navigate = useNavigate();
 
 
-    const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
-    useEffect(() => {
-        setReviews(reviewData.review);
-    }, []);
+    
+    // useEffect(() => {
+    //     setReviews(reviewData.review);
+    // }, []);
 
-    useEffect(() => {
-        const filteredReviews = reviews.filter(review => review.productId === item);
-        // setReviewCount(filteredReviews.length);
-    }, [reviews, item, setReviewCount]);
+    // useEffect(() => {
+    //     const filteredReviews = reviews.filter(review => review.productId === item);
+    //     // setReviewCount(filteredReviews.length);
+    // }, [reviews, item, setReviewCount]);
 
     useEffect(() => {
         const loginCheck = JSON.parse(sessionStorage.getItem('loginInfo'));
@@ -63,6 +63,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
 
     const reviewPop = async () => {
         if (isLoggedIn) {     // 로그인 상태가 true 일때
+            const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
             const users = {user_id, pro_id}
             const Response = await axios.post(`${API_BASE_URL}/product/productReviewId`, users);
             const data = Response.data
@@ -93,10 +94,10 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
         setModalNoPurchase(false);
     };
 
-    const filteredReviews = useMemo(() => {
-        const filteredReview = reviews.filter(review => review.productId === item);
-        return filteredReview.reverse();
-    }, [reviews, item]);
+    // const filteredReviews = useMemo(() => {
+    //     const filteredReview = reviews.filter(review => review.productId === item);
+    //     return filteredReview.reverse();
+    // }, [reviews, item]);
 
     function onreviewTitle(e) {
         setReviewTitle(e.target.value)
@@ -108,6 +109,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
 
     const reviewSubmit = async (e) => {
         e.preventDefault();
+        const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
         const data = {rev_title, rev_com, rev_rating, pro_id, user_id, order_id}
         console.log(data);
         try {
@@ -116,19 +118,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
                 return false;
             }
             console.log(data);
-            const response = await axios.post(`${API_BASE_URL}/product/productReview`, data);
-
-            // 리뷰 아이디 생성
-            // const reviewId = reviewList.length ? reviewList[reviewList.length - 1].reviewId + 1 : 1;
-
-
-
-
-            // const newReview = { reviewId, productId, userId, title, comment, date, rating };
-
-            // 서버에 새로운 리뷰 추가
-            // await axios.post(`http://localhost:3001/review`, newReview);
-
+            await axios.post(`${API_BASE_URL}/product/productReview`, data);
             setReviewTitle('');
             setReviewMessage('');
             setRating(0); // 별점 초기화
@@ -138,24 +128,24 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
         }
     }
 
-    useEffect(() => {
-        const startIndex = (currentPage - 1) * 5;
-        const endIndex = startIndex + 5;
-        const newPaginatedItems = filteredReviews.slice(startIndex, endIndex);
 
-        setPaginatedItems(prevItems => {
-            // 상태가 실제로 변경되었는지 확인하여 불필요한 상태 변경 방지
-            if (JSON.stringify(prevItems) !== JSON.stringify(newPaginatedItems)) {
-                return newPaginatedItems;
-            }
-            return prevItems;
-        });
-    }, [currentPage, filteredReviews]);
+    // useEffect(() => {
+    //     const startIndex = (currentPage - 1) * 5;
+    //     const endIndex = startIndex + 5;
+    //     const newPaginatedItems = filteredReviews.slice(startIndex, endIndex);
+
+    //     setPaginatedItems(prevItems => {
+    //         // 상태가 실제로 변경되었는지 확인하여 불필요한 상태 변경 방지
+    //         if (JSON.stringify(prevItems) !== JSON.stringify(newPaginatedItems)) {
+    //             return newPaginatedItems;
+    //         }
+    //         return prevItems;
+    //     });
+    // }, [currentPage, filteredReviews]);
 
     const handleReviewClick = (reviewId) => {
         setExpandedReviewId(prevId => (prevId === reviewId ? null : reviewId));
     };
-
     return (
         <>
             <div className="info_top_box" id="REVIEW_TAB">
@@ -220,25 +210,34 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
                     <div>등록일</div><div>Review</div>
                 </div>
                 <div className="re_list_data">
-                    {paginatedItems.length > 0 ? (
-                        paginatedItems.map(review => (
+                    {reviewList && reviewList.length > 0 ? (
+                        reviewList.map((item, i) => (
                             <div
-                                key={review.reviewId}
-                                className={`re_list_row ${expandedReviewId === review.reviewId ? 'expanded' : ''}`}
-                                onClick={() => handleReviewClick(review.reviewId)}
+                                key={i}
+                                className={`re_list_row ${expandedReviewId === item.rev_id ? 'expanded' : ''}`}
+                                onClick={() => handleReviewClick(item.rev_id)}  
                             >
-                                <div>{review.date}</div>
+                                <div>{item.rev_creat}</div>
                                 <div>
-                                    <p>{review.title}</p>
-                                    <div className={`review-details ${expandedReviewId === review.reviewId ? 'show' : ''}`}>
-                                        <p>{review.comment}</p>
-                                        <p>별점: {review.rating} <FontAwesomeIcon icon={faStar} className="star-icon" /></p>
+                                    <p>제목 : {item.rev_title}</p>
+                                    <div className={`review-details ${expandedReviewId === item.rev_id ? 'show' : ''}`}>
+                                        <h2>내용</h2>
+                                        <p>{item.rev_com}</p>
+                                        <p>별점:                             
+                                            {Array.from({ length: 5 }, (_, index) => (
+                                                <FontAwesomeIcon
+                                                    key={index}
+                                                    icon={faStar}
+                                                    className={`star-icon ${index < item.rev_rating ? 'filled' : ''}`}
+                                                />
+                                            ))}
+                                            {/* {item.rev_rating} <FontAwesomeIcon icon={faStar} className="star-icon" /> */}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-
                         ))
-                    ) : (
+                    ) :  (
                         <div className="re_list_row">
                             <div className="no_review">등록된 리뷰가 없습니다.</div>
                         </div>
@@ -248,7 +247,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id }) => {
             <PagiNationNum
                 itemsPerPage={5}
                 maxPagesToShow={5}
-                totalItems={filteredReviews.length}
+                totalItems={reviewList.length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
             />

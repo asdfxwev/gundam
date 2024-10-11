@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.ReviewDTO;
+import com.example.demo.domain.reviewanswerDTO;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.Review;
 import com.example.demo.entity.User;
@@ -49,6 +50,23 @@ public class ReviewServiceImpl implements ReviewService {
                 .rev_creat(LocalDateTime.now())  // 현재 시간으로 설정
                 .build();
 		return reRepository.save(review);
+	}
+	
+	@Override
+	public List<Review> selectList(String proId) {
+		return reDSLRepository.selectList(proId);
+	}
+	
+	@Override
+	public List<Review> selectList() {
+		return reDSLRepository.selectList();
+	}
+	
+	@Override
+	public void update(reviewanswerDTO dto) {
+		
+		
+		reDSLRepository.update(dto.getRev_answer(), dto.getRev_id(), LocalDateTime.now());
 	}
 
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import com.example.demo.domain.ImgDTO;
 import com.example.demo.entity.Img;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public interface ImgService {
 	
 	Img save(Img imgEntity);
@@ -29,6 +31,7 @@ public interface ImgService {
 	ImgDTO selectProduct(String proId);
 	
 	List<Img> imgList(String proId);
-
+	
+	void deleteImagesByIds(List<Long> imgId, HttpServletRequest request, String proId);
 	
 }

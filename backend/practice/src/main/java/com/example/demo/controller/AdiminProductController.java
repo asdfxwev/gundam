@@ -51,19 +51,14 @@ public class AdiminProductController {
 
 	@GetMapping("/productList")
 	public void productList(String inputValue,
-            @PageableDefault(size = 20, sort = "pro_name", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
-		System.out.println("searchKeyword = "+inputValue);
+		Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
 		int pageSize = 20;
-//		Page<ImgDTO> pageResult = pservice.joinDSL(inputValue, pageable);
-//		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("pro_name").ascending());
-//		Page<ImgDTO> pageResult = pservice.getProductPage(inputValue, pageable);
-		// List<Product> list = pservice.selectList();
-//		PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNo).size(sizeNo).build();
-		
-//		PageResultDTO<ProductDTO, Product> resultDTO = pservice.joinDSL(requestDTO);
-
-		model.addAttribute("productJoinList", pservice.joinDSL(inputValue, pageable));
-
+	    Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("pro_id").ascending());
+		Page<ImgDTO> pageResult = pservice.joinDSL(inputValue, pageable);
+        model.addAttribute("productJoinList", pageResult.getContent());
+        int totalPages = pageResult.getTotalPages();  // 서비스에서 총 페이지 수를 계산
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
 	}
 
 	@GetMapping("/productInsert")
@@ -190,11 +185,11 @@ public class AdiminProductController {
 			}
 			
 			// product_name duplicate 검사
-			return "redirect:/product/productList";
+			return "redirect:/adminproduct/productList";
 
 		} catch (Exception e) {
 			log.info("errorMessage : " + e.getMessage());
-			return "redirect:/product/productInsert";
+			return "redirect:/adminproduct/productInsert";
 		}
 
 	}
@@ -300,6 +295,18 @@ public class AdiminProductController {
 		return "redirect:/adminproduct/productList";
 		
 	}
+	
+	@PostMapping("/deleteImages")
+	public String deleteSelectedImages(@RequestParam("img_id") List<Long> imgId, @RequestParam String proId, HttpServletRequest request) {
+		System.out.println("gd");
+	    // 선택된 이미지 삭제 로직
+		iservice.deleteImagesByIds(imgId, request, proId);
+	    
+	    // 삭제 후 상품 수정 페이지로 리다이렉트
+	    return "redirect:/adminproduct/productModify?proId=" + proId;
+	}
+
+	
 
 	@PostMapping("/productDelete")
 	public String productDelete(@RequestParam(value = "proId") String proId, HttpServletRequest request) {

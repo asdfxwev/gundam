@@ -1,12 +1,14 @@
 package com.example.demo.repository;
 import static com.example.demo.entity.QReview.review;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.domain.ReviewDTO;
 import com.example.demo.entity.Review;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,47 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 					.fetch();
 		}
 	
+//	@Override
+//	public List<Review> selectList(String proId) {
+//		return queryFactory.select(Projections.bean(
+//				Review.class,
+//				review.rev_id,
+//				review.rev_title,
+//				review.rev_com,
+//				review.rev_rating,
+//				review.rev_creat,
+//				review.rev_answer,
+//				review.rev_answer_creat
+//				))
+//				.from(review)
+//				.where(review.product.pro_id.eq(proId))
+//				.orderBy(review.rev_creat.desc())
+//				.fetch();
+//	}
+	@Override
+	public List<Review> selectList(String proId) {
+		return queryFactory.selectFrom(review)
+				.where(review.product.pro_id.eq(proId))
+				.orderBy(review.rev_creat.desc())
+				.fetch();
+	}
 	
+	@Override
+	public List<Review> selectList() {
+		return queryFactory.selectFrom(review)
+				.where(review.rev_answer_creat.isNull())
+				.orderBy(review.rev_creat.asc())
+				.fetch();	
+		}
+	
+	@Override
+	public void update(String rev_answer, Long rev_id, LocalDateTime localDateTime) {
+		queryFactory.update(review)
+		.set(review.rev_answer, rev_answer)
+		.set(review.rev_answer_creat, localDateTime)
+		.where(review.rev_id.eq(rev_id))
+		.execute();
+	}
 
 
 }

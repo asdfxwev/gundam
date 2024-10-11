@@ -6,6 +6,7 @@ import static com.example.demo.entity.QImg.img;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +31,7 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 	private final JPAQueryFactory jpaQueryFactory;
 	
 	@Override
-	public List<ImgDTO> joinDSL(String inputValue, Pageable pageable){
+	public Page<ImgDTO> joinDSL(String inputValue, Pageable pageable){
 		
 		QCode code1 = new QCode("code1");  
 		QCode code2 = new QCode("code2");  
@@ -45,7 +46,8 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
                         .or(code2.code_name.contains(inputValue))  
                         .or(code3.code_name.contains(inputValue))  
                         .or(code4.code_name.contains(inputValue)) 
-                );		}
+                );		
+            }
         
         long total = jpaQueryFactory
                 .select(product.pro_id)

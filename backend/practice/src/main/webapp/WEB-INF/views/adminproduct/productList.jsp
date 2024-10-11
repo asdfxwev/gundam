@@ -12,6 +12,9 @@
             margin: 0;
             padding: 0;
         }
+        a {
+        text-decoration: none;
+        }
 
         .container {
             display: grid;
@@ -94,6 +97,7 @@
         .user-table th, .user-table td {
             border: 1px solid #ddd;
             padding: 8px;
+            text-align: center;
         }
 
         .user-table th {
@@ -145,10 +149,11 @@
                         <th>카테고리</th>
                         <th>품절유무</th>
                         <th>이미지</th>
-                        <th>Actions</th>
+                        <th>수정 | 삭제</th>
                     </tr>
                 </thead>
                 <tbody>
+                <c:if test="${!empty productJoinList }">
                     <c:forEach var="productJoinList" items="${productJoinList}">
                         <tr>
                             <td>${productJoinList.pro_name}</td>
@@ -165,41 +170,45 @@
                             </td>
                         </tr>
                     </c:forEach>
+                </c:if>
+                <c:if test="${empty productJoinList}">
+   					<tr>
+        				<td colspan="9">상품이 없습니다.</td>
+    				</tr>
+				</c:if>
                 </tbody>
             </table>
+       	<div align="center">
+			<c:choose>
+        		<c:when test="${currentPage > 1}">
+            		<a href="?inputValue=${inputValue}&page=1">&LT;&LT;</a>&nbsp;
+            		<a href="?inputValue=${inputValue}&page=${currentPage - 1}">&LT;</a>&nbsp;&nbsp;
+		        </c:when>
+	        	<c:otherwise>
+            		<font color="Gray">&LT;&LT;&nbsp;&LT;&nbsp;&nbsp;</font>
+        		</c:otherwise>
+    		</c:choose>
+
+    		<c:forEach var="i" begin="1" end="${totalPages}">
+        		<c:if test="${i == currentPage}">
+            		<font color="red" size="5"><b>${i}</b></font>&nbsp;
+        		</c:if>
+        		<c:if test="${i != currentPage}">
+            		<a href="?inputValue=${inputValue}&page=${i}">${i}</a>&nbsp;
+        		</c:if>
+    		</c:forEach>
+
+    		<c:choose>
+        		<c:when test="${currentPage < totalPages}">
+            		&nbsp;<a href="?inputValue=${inputValue}&page=${currentPage + 1}">&GT;</a>
+            		&nbsp;<a href="?inputValue=${inputValue}&page=${totalPages}">&GT;&GT;</a>
+        		</c:when>
+        	<c:otherwise>
+            	<font color="Gray">&nbsp;&GT;&nbsp;&GT;&GT;</font>
+        	</c:otherwise>
+    		</c:choose>
+		</div>
         </div>
-        <div align="center">
-		<c:choose>
-			<c:when test="${pageMaker.prev && pageMaker.spageNo>1}">
-				<a href="${pageMaker.makeQuery(1)}">FP</a>&nbsp;
-				<a href="${pageMaker.makeQuery(pageMaker.spageNo - 1)}">&LT;</a>&nbsp;&nbsp;  
-			</c:when>
-			<c:otherwise>
-				<font color="Gray">FP&nbsp;&LT;&nbsp;&nbsp;</font>
-			</c:otherwise>
-		</c:choose>
-		<!-- 2) Display PageNo 
-	=> currPage 제외한 PageNo 만 a Tag 적용 -->
-		<c:forEach var="i" begin="${pageMaker.spageNo}"
-			end="${pageMaker.epageNo}">
-			<c:if test="${i==pageMaker.cri.currentPage}">
-				<font color="red" size="5"><b>${i}</b></font>&nbsp;
-  			</c:if>
-			<c:if test="${i!=pageMaker.cri.currentPage}">
-				<a href=" ${ pageMaker.makeQuery(i)}">${i}</a>&nbsp;
-  			</c:if>
-		</c:forEach>
-		<!-- 3) Next, LastPage  -->
-		<c:choose>
-			<c:when test="${pageMaker.next && pageMaker.epageNo>0}">
-  		&nbsp;<a href="${ pageMaker.makeQuery(pageMaker.epageNo+1)}">&GT;</a>
-  		&nbsp;<a href="${ pageMaker.makeQuery(pageMaker.lastPageNo)}">LP</a>
-			</c:when>
-			<c:otherwise>
-				<font color="Gray">&nbsp;&GT;&nbsp;LP</font>
-			</c:otherwise>
-		</c:choose>
-	</div>
     </div>
 </body>
 </html>

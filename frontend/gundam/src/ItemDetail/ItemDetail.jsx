@@ -21,6 +21,7 @@ export default function ItemDetail() {
     const [count, setCount] = useState(1);
     const location = useLocation();
     const { id } = useParams();
+    const [reviewList, setReviewList] = useState([]);
     const proId = location.pathname.split('/').pop();
 
     const existingInquiries = JSON.parse(sessionStorage.getItem('loginInfo'));
@@ -57,9 +58,10 @@ export default function ItemDetail() {
             try {
                 const params = { proId };
                 const response = await axios.get(`${API_BASE_URL}/product/productDetail`, { params });
-                const { productList, imgList } = response.data;
+                const { productList, imgList, reviewList } = response.data;
                 setProductList(productList);
                 setImgList(imgList);
+                setReviewList(reviewList);
                 const defaultImage = imgList.find(item => item.pro_num === 0);
                 if (defaultImage) {
                     setMainImage(`${API_BASE_URL}/resources/productImg/${proId}/${defaultImage.pro_imgs}`);
@@ -125,6 +127,10 @@ export default function ItemDetail() {
             }
         }
     };
+    console.log("imgList = " +imgList);
+    console.log("productList = " +productList);
+    console.log("reviewList = " +reviewList);
+
 
     return (
         <div className="item_detail_main">
@@ -182,7 +188,7 @@ export default function ItemDetail() {
                         <SectionImg imgList={imgList} productList={productList} />
                     )}
                     {productList && (
-                        <ItemReview key={productList.pro_id} item={productList} pro_id={proId} />
+                        <ItemReview key={productList.pro_id} item={productList} pro_id={proId} reviewList = {reviewList} />
                     )}
                     {productList && (
                         <ItemQna key={productList.pro_id} item={productList} />
