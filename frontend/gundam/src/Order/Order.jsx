@@ -32,7 +32,7 @@ const Cart = () => {
     const [isAllChecked, setIsAllChecked] = useState(false);
 
     // 로그인한 사용자 정보
-    const existingInquiries = JSON.parse(localStorage.getItem('loginInfo'));
+    const existingInquiries = JSON.parse(sessionStorage.getItem('loginInfo'));
     const userId = existingInquiries.id;
 
     useEffect(() => {

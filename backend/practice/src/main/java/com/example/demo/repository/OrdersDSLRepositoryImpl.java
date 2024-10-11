@@ -40,4 +40,12 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
     			.where(orders.user.user_id.eq(userId))
     			.fetch();
     }
+    
+    
+//    @Override
+//    public List<Orders> orderList(String user_id) {
+//    	return queryFactory.;
+//    }
+    
+    
 }

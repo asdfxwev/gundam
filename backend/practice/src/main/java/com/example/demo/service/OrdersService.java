@@ -12,4 +12,6 @@ public interface OrdersService {
     void deleteOrder(String orderId);
     
     List<String> searchOrderId(String userId);
+    
+    List<Orders> orderList(String user_id);
 }
