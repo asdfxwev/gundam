@@ -73,19 +73,19 @@ const ItemBuy = () => {
         setShowUser(prev => !prev);
     };
 
-    const handleSaveDeliveryInfo = () => {
-        if (!deliveryUser || !deliveryPhone || !deliveryAddress) {
-            alert('모든 배송 정보를 입력해주세요.');
-            return;
-        }
-        setUserDetails(prevDetails => ({
-            ...prevDetails,
-            user_name: deliveryUser,
-            phone_num: deliveryPhone,
-            address: deliveryAddress,
-        }));
-        alert('배송 정보가 저장되었습니다.');
-    };
+    // const handleSaveDeliveryInfo = () => {
+    //     if (!deliveryUser || !deliveryPhone || !deliveryAddress) {
+    //         alert('모든 배송 정보를 입력해주세요.');
+    //         return;
+    //     }
+    //     setUserDetails(prevDetails => ({
+    //         ...prevDetails,
+    //         user_name: deliveryUser,
+    //         phone_num: deliveryPhone,
+    //         address: deliveryAddress,
+    //     }));
+    //     alert('배송 정보가 저장되었습니다.');
+    // };
 
     const handleOrder = async () => {
         // 배송 정보가 없으면 경고
@@ -107,15 +107,15 @@ const ItemBuy = () => {
             console.log('order_id : ', order_id);
             console.log('userDetails : ', userDetails);
             const itemsToBuyFromCart = (await axios.get(`${API_BASE_URL}/cart/${loginId}`)).data;
-            console.log('itemcart : ',itemsToBuyFromCart);
+            console.log('itemcart : ', itemsToBuyFromCart);
             const itemDetailToBuy = item ? {
                 ...item,
                 quantity: count,
                 pro_id: item.pro_id,
                 order_id: order_id
             } : null;
-            console.log('itemdetailtobuy :',itemDetailToBuy);
-            
+            console.log('itemdetailtobuy :', itemDetailToBuy);
+
             const allItemsToBuy = itemDetailToBuy ? [...itemsToBuyFromCart, itemDetailToBuy] : itemsToBuyFromCart;
 
             const stockCheckPromises = allItemsToBuy.map(async (item) => {
@@ -223,7 +223,7 @@ const ItemBuy = () => {
                                     </p>
                                     <input type='text' name='delivery_address' className='buy_delivery_address_box'
                                         placeholder='주소를 검색하세요.' value={deliveryAddress} readOnly />
-                                    <button className="save_btn" onClick={handleSaveDeliveryInfo}>저장</button>
+                                    {/* <button className="save_btn" onClick={handleSaveDeliveryInfo}>저장</button> */}
                                 </div>
                             )}
                         </div>
