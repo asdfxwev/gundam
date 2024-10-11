@@ -114,12 +114,16 @@ public class TokenProvider {
 	// => 토큰을 디코딩 및 파싱 하여 토큰의 위조여부 확인 후
 	// => subject 에 보관한 userId 를 꺼내어 return
 	public String validateAndGetUserId(String token) {
-		
-		Claims claims = Jwts.parser()
-							.setSigningKey(SECRET_KEY)
-							.parseClaimsJws(token)
-							.getBody();
-		return claims.getSubject();
+		try {
+			Claims claims = Jwts.parser()
+								.setSigningKey(SECRET_KEY)
+								.parseClaimsJws(token)
+								.getBody();
+			return claims.getSubject();
+		} catch (Exception e) {
+	        System.out.println("토큰 유효성 검사 실패: " + e.getMessage());
+	        throw new RuntimeException("유효하지 않은 토큰입니다.");
+	    }
 	} //validateAndGetUserId
 	
 } //class

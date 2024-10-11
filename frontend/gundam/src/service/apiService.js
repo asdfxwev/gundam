@@ -40,8 +40,8 @@ export async function apiCall(url, method, requestData, token) {
 
   console.log(`** apiCall options.method=${options.method}`);
   console.log(`** apiCall options.url=${options.url}`);
-  // console.log(`** apiCall options.data=${options.headers}`);
-  // alert(`** apiCall 전달된 Data 확인: options.data=${options.data}`);
+  console.log(`** apiCall options.data=${options.headers}`);
+  alert(`** apiCall 전달된 Data 확인: options.data=${options.data}`);
   // => 전달된 options 값들 확인
 
   // 1.3) Axios 요청

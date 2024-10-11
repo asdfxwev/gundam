@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,10 +57,15 @@ public class UserController {
         //    - 초기화 이후에 조회만 하는경우 주로사용함.(Key 관리 등)
     }
     
-    // token 값을 받아서 login_id return 받음
+    // token 값을 받아서 login_id return 받고 selectOne으로 정보를 가져와서 보냄
     @PostMapping("/token_info")
-    public ResponseEntity<?> getUserInfo(String token) {
-        String login_id = tokenProvider.validateAndGetUserId(token);
+	public ResponseEntity<?> getUserInfo(@RequestHeader("Authorization") String token) {
+    	log.info("전달된 토큰 값 ==>> "+token);
+    	
+        String login_id = tokenProvider.validateAndGetUserId(token.substring(7));
+//        String login_id = tokenProvider.validateAndGetUserId(token);
+        
+        log.info("토큰으로 꺼내온 login_id 값 ==>> "+login_id);
         
         User entity = service.selectOne(login_id);
         
@@ -73,7 +79,6 @@ public class UserController {
 					.user_cd(entity.getUser_cd())
 					.build();
         	
-        	log.info("토큰으로 꺼내온 login_id 값 ==>> "+userDTO);
  			return ResponseEntity.ok(userDTO);
  			
  		} else {
@@ -121,8 +126,8 @@ public class UserController {
     		service.save(entity);
     		
     		log.info("로그인 성공 => " + HttpStatus.OK);
-    		return ResponseEntity.ok(userDTO);
-//    		return ResponseEntity.ok(token);
+//    		return ResponseEntity.ok(userDTO);
+    		return ResponseEntity.ok(token);
     		
     		
     	} else if(entity != null && passwordEncoder.matches(password, entity.getPassword()) && logintry >= 5) {
