@@ -19,47 +19,37 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rev_id")
-    private Long revId;
-
-    @Column(name = "user_id", length = 10)
-    private String userId;
-
-    @Column(name = "pro_id", length = 10)
-    private String proId;
-
-    @Column(name = "rev_rating", length = 10, nullable = false)
-    private String revRating;
-
-    @Column(name = "rev_title", length = 30, nullable = false)
-    private String revTitle;
-
-    @Column(name = "rev_com", length = 100, nullable = false)
-    private String revCom;
-
-    @Column(name = "rev_cnt", columnDefinition = "int default 0")
-    private Integer revCnt = 0;
-
-    @Column(name = "rev_creat", columnDefinition = "datetime default current_timestamp", nullable = false)
-    private LocalDateTime revCreat;
-
-    @Column(name = "rev_answer", length = 100)
-    private String revAnswer;
-
-    @Column(name = "rev_answer_creat")
-    private LocalDateTime revAnswerCreat;
-
-    @Column(name = "rev_image", length = 100)
-    private String revImage;
+    private Long rev_id;
 
     @ManyToOne
-    @JoinColumn(name = "pro_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", nullable = false)  // 외래 키로 'user' 테이블의 'user_id' 참조
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "pro_id", nullable = false)  // 외래 키로 'product' 테이블의 'pro_id' 참조
     private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
+    @Column(name = "rev_rating", length = 10, nullable = false)
+    private String rev_rating;
+
+    @Column(name = "rev_title", length = 30, nullable = false)
+    private String rev_title;
+
+    @Column(name = "rev_com", length = 100, nullable = false)
+    private String rev_com;
+
+    @Column(name = "rev_creat", columnDefinition = "datetime default current_timestamp", nullable = false)
+    private LocalDateTime rev_creat;
+
+    @Column(name = "rev_answer", length = 100)
+    private String rev_answer;
+
+    @Column(name = "rev_answer_creat")
+    private LocalDateTime rev_answer_creat;
+
+    @Column(name = "rev_image", length = 100)
+    private String rev_image;
     
-    // Order와의 다대일 관계 설정
     @ManyToOne
     @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private Orders order;

@@ -168,13 +168,14 @@ const ItemList = () => {
                         return qs.stringify(params, { arrayFormat: 'brackets' });
                     },
                 });
-
+                console.log(params);
                 const response = await axiosInstance.get(`/product/productList`, { params });
                 //const response = await axios.post(`/product/productList`, params );
                 //const response = await apiCall(`/product/productList`,'POST', params ,null);
 
 
                 // 2.2) 응답 데이터를 상태 변수에 저장
+                console.log("response.data = "+response.data);
                 setProductList(response.data.productList);
                 setBrandList(response.data.brandList);
                 setCateList(response.data.cateList);

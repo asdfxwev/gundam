@@ -26,29 +26,23 @@ public class QReview extends EntityPathBase<Review> {
 
     public final QProduct product;
 
-    public final StringPath proId = createString("proId");
+    public final StringPath rev_answer = createString("rev_answer");
 
-    public final StringPath revAnswer = createString("revAnswer");
+    public final DateTimePath<java.time.LocalDateTime> rev_answer_creat = createDateTime("rev_answer_creat", java.time.LocalDateTime.class);
 
-    public final DateTimePath<java.time.LocalDateTime> revAnswerCreat = createDateTime("revAnswerCreat", java.time.LocalDateTime.class);
+    public final StringPath rev_com = createString("rev_com");
 
-    public final NumberPath<Integer> revCnt = createNumber("revCnt", Integer.class);
+    public final DateTimePath<java.time.LocalDateTime> rev_creat = createDateTime("rev_creat", java.time.LocalDateTime.class);
 
-    public final StringPath revCom = createString("revCom");
+    public final NumberPath<Long> rev_id = createNumber("rev_id", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> revCreat = createDateTime("revCreat", java.time.LocalDateTime.class);
+    public final StringPath rev_image = createString("rev_image");
 
-    public final NumberPath<Long> revId = createNumber("revId", Long.class);
+    public final StringPath rev_rating = createString("rev_rating");
 
-    public final StringPath revImage = createString("revImage");
-
-    public final StringPath revRating = createString("revRating");
-
-    public final StringPath revTitle = createString("revTitle");
+    public final StringPath rev_title = createString("rev_title");
 
     public final QUser user;
-
-    public final StringPath userId = createString("userId");
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);

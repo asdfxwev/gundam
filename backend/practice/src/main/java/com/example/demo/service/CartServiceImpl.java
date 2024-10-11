@@ -33,14 +33,14 @@ public class CartServiceImpl implements CartService {
     public List<CartDTO> getCartItemsByUserId(String userId) {
         return cartDSLRepository.findByUserId(userId);
     }
+    
+    public User getUserByLoginId(String loginId) {
+    	System.out.println("serviceimpl 확인"+cartDSLRepository.findUserByLoginId(loginId));
+    	return cartDSLRepository.findUserByLoginId(loginId);
+    }
 
     public void removeCartItem(CartId cartId) {
         cartRepository.deleteById(cartId);
-    }
-
-    public String getUserIdByLoginId(String loginId) {
-        User user = userRepository.UserDetail(loginId);
-        return user != null ? user.getUser_id() : null;
     }
 
     public Cart updateCart(Cart cart) {
@@ -63,6 +63,6 @@ public class CartServiceImpl implements CartService {
                         .build())
                 .collect(Collectors.toList());
 
-        return cartRepository.saveAll(boughtCarts); // 한번에 여러 아이템을 저장
+        return cartRepository.saveAll(boughtCarts);
     }
 }

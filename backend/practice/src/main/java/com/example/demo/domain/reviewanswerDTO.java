@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ReviewFirstDTO {
+public class reviewanswerDTO {
 	
-	private String user_id;
-	private String pro_id;
+	private Long rev_id;
+	private String rev_answer;
 
 }

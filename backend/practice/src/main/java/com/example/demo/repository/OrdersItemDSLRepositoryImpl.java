@@ -16,8 +16,8 @@ public class OrdersItemDSLRepositoryImpl implements OrdersItemDSLRepository {
     private final JPAQueryFactory queryFactory;
 	
 	@Override
-		public List<String> searchOrderId(String proId) {
-			return queryFactory.select(oritems.order_id.order_id)
+	public List<String> searchOrderId(String proId) {
+		return queryFactory.select(oritems.order_id.order_id)
 					.from(oritems)
 					.where(oritems.pro_id.pro_id.eq(proId))
 					.fetch();

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.domain.CartDTO;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.CartId;
+import com.example.demo.entity.User;
 import com.example.demo.service.CartService;
 import jakarta.validation.Valid;
 
@@ -74,4 +75,24 @@ public class CartController {
         List<Cart> boughtCarts = cartService.buyItems(cartDTOs);
         return ResponseEntity.ok(boughtCarts);
     }
+    
+    @GetMapping("/user/{loginId}")
+    public ResponseEntity<User> getUserByLoginId(@PathVariable String loginId) {
+        User user = cartService.getUserByLoginId(loginId);
+        
+        if (user != null) {
+            // 콘솔에 사용자 정보를 출력합니다.
+            System.out.println("User ID: " + user.getUser_id());
+            System.out.println("User Name: " + user.getUser_name());
+            System.out.println("User Email: " + user.getEmail());
+            System.out.println("User Address: " + user.getAddress());
+            System.out.println("User phone_num: " + user.getPhone_num());
+            // 필요한 다른 필드들도 출력할 수 있습니다.
+        } else {
+            System.out.println("User not found for loginId: " + loginId);
+        }
+
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    }
+
 }

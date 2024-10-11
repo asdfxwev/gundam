@@ -645,6 +645,16 @@
     cursor: pointer;
 }
 
+.save_btn {
+    width: 300%;
+    height: 40px;
+    bottom: 0%;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 /* ============== Right Box End ================ */
 
 
@@ -932,6 +942,7 @@
     height: 30px;
     border: none;
     border-radius: 10px;
+    
 }
 
 .address_search_btn:hover {
@@ -939,7 +950,7 @@
     background-color: blue;
 }
 
-.buy_deliyvery_address_box {
+.buy_delivery_address_box {
     height: 80px;
     grid-area: 4/1/5/3;
 }

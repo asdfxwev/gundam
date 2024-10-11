@@ -12,6 +12,8 @@ import com.example.demo.domain.ProductDTO;
 import com.example.demo.entity.Product;
 import com.example.demo.repository.ProductDSLRespository;
 import com.example.demo.repository.ProductRepository;
+
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import lombok.RequiredArgsConstructor;
@@ -32,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ImgDTO> joinDSL(String inputValue, Pageable pageable) {
+	public Page<ImgDTO> joinDSL(String inputValue, Pageable pageable) {
 		
 
 //		pageMaker.setTotalRowsCount(service.totalRowsCount(cri));
@@ -71,10 +73,6 @@ public class ProductServiceImpl implements ProductService {
 		
 		return list;
 	}
-	
-	
-	
-	
 	
 	@Override
 	public List<String> findAllProIds() {
