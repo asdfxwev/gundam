@@ -85,10 +85,4 @@ public class UserServiceImpl implements UserService {
 		urepository.updatePassword(login_id, password);
 	}
 	
-//	@Override
-//	public User checkid(String login_id) {
-//		return urepository.UserDetail(login_id);
-//	}
-	
-
 }

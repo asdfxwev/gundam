@@ -26,8 +26,5 @@ public interface UserService {
 	// ** Password 수정 하기
 	void updatePassword(String id, String password);
 	
-	// ** id 중복체크
-//	User checkid(String login_id);
-	
 
 }

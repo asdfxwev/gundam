@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.io.Console;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -104,7 +102,7 @@ public class UserController {
     		
     	} else if(entity != null && passwordEncoder.matches(password, entity.getPassword()) && logintry >= 5) {
     		log.error("로그인 실패 => " + HttpStatus.TOO_MANY_REQUESTS);
-    		return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("** 로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");
+    		return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("** 로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");		// TOO_MANY_REQUESTS = 429
     	} else if(entity != null && !passwordEncoder.matches(password, entity.getPassword()) && logintry < 5) {
     		// 로그인 실패시 시도횟수 update
     		logintry = logintry + 1 ;
@@ -112,13 +110,13 @@ public class UserController {
     		service.save(entity);
     		
     		log.error("로그인 실패 => " + HttpStatus.UNAUTHORIZED);
-    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("** id 또는 password 가 다릅니다.");
+    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("** id 또는 password 가 다릅니다.");		// UNAUTHORIZED = 401
     	} else if(entity != null && !passwordEncoder.matches(password, entity.getPassword()) && logintry >= 5) {
     		log.error("로그인 실패 => " + HttpStatus.TOO_MANY_REQUESTS);
-    		return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("** 로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");
+    		return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("** 로그인 시도 횟수가 초과됐습니다. 비밀번호 변경 후 다시 로그인하세요.");		// TOO_MANY_REQUESTS = 429
     	} else {
     		log.error("로그인 실패 => " + HttpStatus.NOT_FOUND);
-    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("** id 또는 password 가 다릅니다.");
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("** 입력하신 정보는 탈퇴 되었거나 없는정보 입니다.");	// NOT_FOUND = 404
     	}
     } //login
     
@@ -177,17 +175,16 @@ public class UserController {
     } //join
  	
  	// ** id중복체크
-  	@GetMapping("/checkid")
-  	public ResponseEntity<?> checkid(@RequestBody User entity, Model model) {
-  		
-  		//entity = service.checkid(entity.getLogin_id());
+  	@GetMapping("/checkid/{login_id}")
+  	public ResponseEntity<?> checkid(User entity, Model model) {
+  		//log.info("login_id 수신"+entity.getLogin_id());
   		entity = service.selectOne(entity.getLogin_id());
   		
-  		if( entity != null ) {
- 			return ResponseEntity.ok(entity);
+  		if( entity == null ) {
+ 			return ResponseEntity.ok("사용가능 ID");
  		} else {
  			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
- 					.body("사용가능 ID");
+ 					.body("ID 중복");
  		}
   		
   	} //checkid

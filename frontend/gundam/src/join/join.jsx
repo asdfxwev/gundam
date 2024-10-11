@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
 import './SignupForm.css';
 import { useNavigate } from 'react-router-dom';
-import { JoinProvider, useJoin } from './JoinStatus';
 import { apiCall } from '../service/apiService';
 
 const SignupForm = () => {
-    //const { onJoinSubmit } = JoinProvider();
-    // const { onJoinSubmit } = useJoin();
     const navigate = useNavigate();
 
     const [userName, setUserName] = useState("");
@@ -24,7 +18,7 @@ const SignupForm = () => {
     const [birth, setBirth] = useState("");
     const [gender, setGender] = useState("");
 
-    const [completeVal, setCompleteVal] = useState(true); //validation 결과 변수
+    const [completeVal, setCompleteVal] = useState(false); //validation 결과 변수
 
     // 카카오 주소 api
     useEffect(() => {
@@ -54,94 +48,149 @@ const SignupForm = () => {
     // Login_id 중복체크
     const [counts, setCounts] = useState(false);
     const checkloginid = async () => {
-        
+        // 아이디 입력길이 체크
+        if (loginId.length < 4 || loginId.length > 16) {
+            alert("ID를 4자 이상, 16자 이하로 입력하세요.");
+            return;
+        }
+
         if (loginId != null && loginId.length > 0) {
-            let url = "/user/checkid";
+            //get방식은 data 로 전달할수없고 url에 담아서 보내야함
+            let url = `/user/checkid/${loginId}`;
 
-            const data = {login_id: loginId};
-
-            const response = await apiCall(url, 'GET', data, null)
+            const response = apiCall(url, 'get', null, null)
                 .then((response) => {
-                    // if (response.exists) {  // 서버에서 `exists: true`를 반환하는 경우 (중복됨)
-                        alert("해당 ID는 이미 사용 중입니다.");
-                        document.getElementById("loginId").value = ''; // 입력창 초기화
-                        setCounts(false);
-                    // } else {  // 중복되지 않음
-                    //     alert("해당 ID는 사용 가능합니다.");
-                    //     setCounts(true);  // 중복 체크 통과 상태 저장
-                    // }
+                    alert("사용 가능한 ID 입니다.");
+                    setCounts(true);
                 }).catch((err) => {
-                    alert("ID 중복확인중 오류가 발생했습니다.");
-                    
+                    alert("해당 ID는 이미 사용 중입니다.");
+                    document.getElementById("loginId").value = ''; // 입력창 초기화
+                    setCounts(false);
                 });
         } else {
             alert("아이디를 입력하세요.");
         }
-        // try {
-            // let url = "/user/checkid";
 
-            // const data = {login_id: loginId};
-
-            // const response = await apiCall(url, 'GET', data, null)
-            //     .then((response) => {
-            //         if (response.exists) {  // 서버에서 `exists: true`를 반환하는 경우 (중복됨)
-            //             alert("해당 ID는 이미 사용 중입니다.");
-            //             document.getElementById("loginId").value = ''; // 입력창 초기화
-            //             setCounts(false);
-            //         } else {  // 중복되지 않음
-            //             alert("해당 ID는 사용 가능합니다.");
-            //             setCounts(true);  // 중복 체크 통과 상태 저장
-            //         }
-            //     }).catch((err) => {
-            //         alert("ID 중복확인중 오류가 발생했습니다.");
-            //     });
-                
-            // if (response.exists) {  // 서버에서 `exists: true`를 반환하는 경우 (중복됨)
-            //     alert("해당 ID는 이미 사용 중입니다.");
-            //     document.getElementById("loginId").value = ''; // 입력창 초기화
-            //     setCounts(false);
-            // } else {  // 중복되지 않음
-            //     alert("해당 ID는 사용 가능합니다.");
-            //     setCounts(true);  // 중복 체크 통과 상태 저장
-            // }
-
-        // } catch (error) {
-        //     console.error("ID 중복체크 중 오류가 발생했습니다: ", error);
-        // }
     }
 
-    const validation = (e) => {
-        // 입력값들이 null이면 해당 항목은 필수입력 항목이라는 메세지 노출 시키는 부분.
+    const validation = () => {
 
-        
-
+        // 이름 필수입력 체크
+        if (userName.trim() === "") {
+            alert("이름은 필수입력 항목입니다.");
+            document.querySelector("input[name='userName']").focus();
+            setCompleteVal(false);
+            return;
+        }
+        // 이름 입력길이 체크
+        if (userName.length < 2 || userName.length > 10) {
+            alert("이름은 2자 이상, 10자 이하로 입력하세요.");
+            setCompleteVal(false);
+            return;
+        }
+        // 아이디 필수입력 체크
+        if (loginId.trim() === "") {
+            alert("아이디는 필수입력 항목입니다.");
+            document.querySelector("input[name='loginId']").focus();
+            setCompleteVal(false);
+            return;
+        }
+        // 아이디 입력길이 체크
+        if (loginId.length < 4 || loginId.length > 16) {
+            alert("ID를 4자 이상, 16자 이하로 입력하세요.");
+            setCompleteVal(false);
+            return;
+        }
+        // 아이디 중복체크
+        if (!counts) {
+            alert("ID 중복을 확인하세요.");
+            setCompleteVal(false);
+            return;
+        }
         // 비밀번호 필수입력 체크
-        if (userPassword == null || userPassword == '') {
+        if (userPassword.trim() === "") {
             alert("비밀번호는 필수입력 항목입니다.");
             document.querySelector("input[name='password']").focus();
-            setCompleteVal = false;
+            setCompleteVal(false);
+            return;
         }
         // 비밀번호 입력길이 체크
-        if (userPassword.length <= 5 || userPassword.length >= 17) {
-            alert("비밀번호는 6이상, 16이하 입력하세요.");
-            setCompleteVal = false;
+        if (userPassword.length < 6 || userPassword.length > 16) {
+            alert("비밀번호는 6자 이상, 16자 이하로 입력하세요.");
+            setCompleteVal(false);
+            return;
         }
         // 비밀번호 입력값 일치 체크
         if (userPassword !== checkPassword) {
-            alert("입력된 비밀번호가 일치하지 않습니다.<br>다시 확인해주세요.");
-            // document.getElementById(checkPassword).focus();
+            alert("비밀번호가 일치하지 않습니다.");
             document.querySelector("input[name='checkPassword']").focus();
-            setCompleteVal = false;
+            setCompleteVal(false);
+            return;
+        }
+        // 연락처 필수입력 체크
+        if (phoneNumber.trim() === "") {
+            alert("연락처는 필수입력 항목입니다.");
+            document.querySelector("input[name='phoneNumber']").focus();
+            setCompleteVal(false);
+            return;
+        }
+        // 연락처 입력길이 체크
+        if (phoneNumber.length < 10 || phoneNumber.length > 11) {
+            alert("연락처를 10자 이상, 11자 이하로 입력하세요.");
+            setCompleteVal(false);
+            return;
+        }
+        // 이메일 필수입력 체크
+        if (email.trim() === "") {
+            alert("이메일은 필수입력 항목입니다.");
+            document.querySelector("input[name='email']").focus();
+            setCompleteVal(false);
+            return;
+        }
+        // 이메일 형식 체크
+        if (!/^[0-9a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/i.test(email)) {
+            alert("이메일 형식이 올바르지 않습니다.");
+            document.querySelector("input[name='email']").focus();
+            setCompleteVal(false);
+            return;
+        }
+        // 주소 필수입력 체크
+        if (postCode.trim() === "" || address.trim() === "") {
+            alert("주소는 필수입력 항목입니다.");
+            setCompleteVal(false);
+            return;
+        }
+        // 생년월일 필수입력 체크
+        if (birth.trim() === "") {
+            alert("생년월일은 필수입력 항목입니다.");
+            document.querySelector("input[name='birth']").focus();
+            setCompleteVal(false);
+            return;
+        }
+        // 생년월일 입력길이 체크
+        if (birth.length != 6) {
+            alert("생년월일이 올바르지 않습니다.");
+            setCompleteVal(false);
+            return;
+        }
+        // 성별 필수입력 체크
+        if (gender.trim() === "") {
+            alert("성별은 필수입력 항목입니다.");
+            document.querySelector("input[name='gender']").focus();
+            setCompleteVal(false);
+            return;
         }
 
+        setCompleteVal(true);
+
         return completeVal;
-    }
+    };
 
     // 회원가입
     const onJoinSubmit = async () => {
 
         if (completeVal && counts) {
-            
+
             try {
                 let url = "/user/join";
 
@@ -154,7 +203,6 @@ const SignupForm = () => {
                     .then((response) => {
                         sessionStorage.setItem("loginInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
                         alert('회원가입이 완료됐습니다. 로그인 후 접속해주세요.');
-                        //setJoinInfo(response);
                         navigate("/Login");
                     }).catch((err) => {
                         if (err === 502) {
@@ -165,13 +213,10 @@ const SignupForm = () => {
                         navigate("/Login/Join");
                     });
 
-                //console.log("회원가입 응답 데이터: ", response.data);
             } catch (error) {
                 console.error("회원가입 중 에러가 발생했습니다: ", error);
             }
-        
-        } else {
-            alert("입력정보를 다시 확인하세요.");
+
         }
 
     }
@@ -180,6 +225,7 @@ const SignupForm = () => {
         <div className='join_box'>
             <form className="signup-form" onSubmit={(e) => {
                 e.preventDefault();
+                validation();
                 onJoinSubmit(userName, loginId, userPassword, checkPassword, phoneNumber,
                     email, postCode, address, dtlAddress, birth, gender);
             }} >
@@ -195,16 +241,9 @@ const SignupForm = () => {
                         name="userName"
                         type="text"
                         value={userName}
-                        minLength={2} maxLength={10}
+                        maxLength={10}
                         onChange={(e) => setUserName(e.target.value)}
                         placeholder="이름을 입력하세요"
-                        onBlur={() => {
-                            if (userName.length <= 0) {
-                                alert("이름은 필수입력 항목입니다.");
-                            } else if (userName.length < 2 || userName.length > 10) {
-                                alert("이름을 확인하세요");
-                            }
-                        }}
                     />
                 </div>
 
@@ -217,7 +256,7 @@ const SignupForm = () => {
                             type="text"
                             className='id_input'
                             value={loginId}
-                            minLength={4} maxLength={20}
+                            maxLength={16}
                             onChange={(e) => setLoginId(e.target.value)}
                             placeholder="아이디를 입력하세요"
                         />
@@ -234,21 +273,9 @@ const SignupForm = () => {
                         name="password"
                         type="password"
                         value={userPassword}
-                        minLength={6} maxLength={16}
+                        maxLength={16}
                         onChange={(e) => setUserPassword(e.target.value)}
                         placeholder="비밀번호를 입력하세요"
-                        // onBlur={() => {
-                        //     if (userPassword == null || userPassword == '') {
-                        //         alert("비밀번호는 필수입력 항목입니다.");
-                        //         document.querySelector("input[name='password']").focus();
-                        //         return;
-                        //     }
-
-                        //     if (userPassword.length <= 5 || userPassword.length >= 17) {
-                        //         alert("비밀번호는 6이상, 16이하 입력하세요.");
-                        //         return;
-                        //     }
-                        // }}
                     />
                 </div>
 
@@ -259,33 +286,26 @@ const SignupForm = () => {
                         name="checkPassword"
                         type="password"
                         value={checkPassword}
-                        minLength={6} maxLength={16}
-                        onChange={(e) => {
-                            setCheckPassword(e.target.value)
-                            //setIsAlertShown(false); // 사용자가 다시 입력할 때 경고 상태 리셋
-                        }}
-                        
+                        maxLength={16}
+                        onChange={(e) => setCheckPassword(e.target.value)}
                         placeholder="비밀번호를 입력하세요"
-                        // onBlur={() => {
-                        //     if (userPassword !== checkPassword) {
-                        //         alert("비밀번호가 일치하지 않습니다.");
-                        //         // document.getElementById('checkPassword').value = '';
-                        //     }
-                        // }}
                     />
-                    {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="phoneNumber">핸드폰 번호</label>
+                    <label htmlFor="phoneNumber">연락처</label>
                     <input
                         id="phoneNumber"
                         name="phoneNumber"
                         type="text"
                         value={phoneNumber}
-                        minLength={10} maxLength={11}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder="핸드폰 번호를 입력하세요"
+                        maxLength={11}
+                        onChange={(e) => {
+                            if (/^\d*$/.test(e.target.value)) {
+                                setPhoneNumber(e.target.value);
+                            }
+                        }}
+                        placeholder="연락처를 입력하세요"
                     />
                 </div>
 
@@ -294,8 +314,9 @@ const SignupForm = () => {
                     <input
                         id="email"
                         name="email"
-                        type="email"
+                        type="text"
                         value={email}
+                        maxLength={50}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="이메일을 입력하세요"
                     />
@@ -308,7 +329,6 @@ const SignupForm = () => {
                             id="postCode"
                             name="postCode"
                             value={postCode}
-                            // style={{ width: 60 }}
                             className='post_input'
                             type="text"
                             readOnly
@@ -317,12 +337,11 @@ const SignupForm = () => {
                             type='text' id='address' name='address'
                             value={address}
                             placeholder='주소를 검색하세요.'
-                            // style={{ width: 100 }}
                             className='juso_input'
                             readOnly
                         /> &nbsp;
                         <button type="button" id="address_kakao">주소 검색</button>
-                    </div><br/>
+                    </div><br />
                     <input
                         id="dtlAddress"
                         name="dtlAddress"
@@ -331,20 +350,8 @@ const SignupForm = () => {
                         onChange={(e) => setDtlAddress(e.target.value)}
                         placeholder="상세 주소를 입력하세요"
                     />
-                    
-                </div>
 
-                {/* <div className="form-group">
-                    <label htmlFor="dtlAddress">상세 주소</label>
-                    <input
-                        id="dtlAddress"
-                        name="dtlAddress"
-                        type="text"
-                        value={dtlAddress}
-                        onChange={(e) => setDtlAddress(e.target.value)}
-                        placeholder="상세 주소를 입력하세요"
-                    />
-                </div> */}
+                </div>
 
                 <div className="form-group">
                     <label htmlFor="birth">생년월일</label>
@@ -355,47 +362,28 @@ const SignupForm = () => {
                             type="text"
                             value={birth}
                             className='birth_input'
-                            minLength={6} maxLength={6}
+                            maxLength={6}
                             onChange={(e) => {
                                 if (/^\d*$/.test(e.target.value)) {
                                     setBirth(e.target.value);
                                 }
                             }}
-                            />&nbsp;-&nbsp;
+                        />&nbsp;-&nbsp;
                         <input
                             id="gender"
                             name="gender"
                             type="text"
                             value={gender}
                             className='gender_input'
-                            minLength={1} maxLength={1}
+                            maxLength={1}
                             onChange={(e) => {
                                 if (/^\d*$/.test(e.target.value)) {
-                                    setGender(e.target.value)
+                                    setGender(e.target.value);
                                 }
                             }}
-                            />
+                        />
                     </div>
-                    {/* <input
-                        id="birth"
-                        name="birth"
-                        type="date"
-                        value={birth}
-                        minLength={6} maxLength={6}
-                        onChange={(e) => setBirth(e.target.value)}
-                    /> */}
                 </div>
-
-                {/* <div className="form-group">
-                    <label htmlFor="gender">성별</label>
-                    <input
-                        id="gender"
-                        name="gender"
-                        value={gender}
-                        minLength={1} maxLength={1}
-                        onChange={(e) => setGender(e.target.value)}
-                    />
-                </div> */}
 
                 <button type="submit">회원가입</button>
             </form>
