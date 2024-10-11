@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.OrdersDTO;
+import com.example.demo.entity.Orders;
 import com.example.demo.service.OrdersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,4 +41,15 @@ public class OrdersController {
         ordersService.deleteOrder(orderId);
         return ResponseEntity.ok("Order deleted successfully");
     }
+    
+    @GetMapping("/orderList")
+    public ResponseEntity<?> orderList(@RequestParam String user_id){
+    	
+    	List<Orders> list = ordersService.orderList(user_id);
+    	
+    	return ResponseEntity.ok(list);
+    }
+    
+    
+    
 }

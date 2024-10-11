@@ -50,6 +50,20 @@ public class OrdersServiceImpl implements OrdersService {
     }
     
     
+    @Override
+    public List<Orders> orderList(String user_id) {
+    	
+    	List<String> orderlist = ordersDSLRepository.searchOrderId(user_id);
+    	
+    	for (String or : orderlist) {
+			
+		}
+    	
+    	
+    	return ordersDSLRepository.orderList(user_id);
+    }
+    
+    
     
     
     
