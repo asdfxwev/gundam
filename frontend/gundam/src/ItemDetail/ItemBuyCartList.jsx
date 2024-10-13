@@ -44,7 +44,7 @@ const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
 const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, initialItem, initialCount }) => {
     const [cartItems, setCartItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState([]);
-    const [isAllChecked, setIsAllChecked] = useState(true);
+    const [isAllChecked, setIsAllChecked] = useState(false);
     const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
 
     // 데이터 로드 및 장바구니 아이템 설정
@@ -52,9 +52,8 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
-                console.log('responser ?',response);
                 const cartData = response.data || [];
-                console.log('cartdata ?',cartData);
+
                 // 장바구니에 initialItem 추가 및 수량 업데이트 처리
                 const updatedItems = [...cartData];
                 if (initialItem && initialCount) {
@@ -83,14 +82,14 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
         if (cartItems.length > 0) {
             const totalAmount = cartItems
                 .filter(item => checkedItems.includes(item.pro_id))
-                .reduce((sum, item) => sum + item.pro_price * item.cart_quantity, 0);
+                .reduce((sum, item) => sum + (item.pro_price * item.cart_quantity || 0), 0);
             const totalQuantity = cartItems
                 .filter(item => checkedItems.includes(item.pro_id))
-                .reduce((sum, item) => sum + item.cart_quantity, 0);
+                .reduce((sum, item) => sum + (item.cart_quantity || 0), 0);
 
             setTotal(totalAmount);
             setTotalQuantity(totalQuantity);
-            setCheckedTrueItems(cartItems.filter(item => item.isChecked));
+            setCheckedTrueItems(cartItems.filter(item => checkedItems.includes(item.pro_id)));
         }
     }, [cartItems, checkedItems, setTotal, setTotalQuantity, setCheckedTrueItems]);
 
@@ -121,10 +120,8 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
 
         const newCheckedItems = updatedItems.filter(item => item.isChecked).map(item => item.pro_id);
         setCheckedItems(newCheckedItems);
-        setIsAllChecked(newCheckedItems.length === updatedItems.length);
+        setIsAllChecked(!isAllChecked);
     };
-
-
 
     return (
         <div>

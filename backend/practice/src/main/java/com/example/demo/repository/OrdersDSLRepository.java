@@ -5,6 +5,5 @@ import java.util.List;
 
 public interface OrdersDSLRepository {
     List<Orders> findOrdersByDynamicCondition(String userId, String orderStatus);
-    
     List<String> searchOrderId(String userId);
 }

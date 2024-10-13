@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class OritemsDTO extends OrdersDTO {
-	private String order_id;
-	private String pro_id;
-	private String oritem_quan;
+public class OritemsDTO {
+    private String order_id;
+    private String pro_id;
+    private String oritem_quan;
 }

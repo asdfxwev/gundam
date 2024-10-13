@@ -33,4 +33,8 @@ public class Code {
 
     @Column(name = "code_dtm", nullable = false)
     private LocalDateTime code_dtm;
+    
+    public String getCodeValue() {
+    	return code_value;
+    }
 }

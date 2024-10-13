@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface OrdersService {
     List<OrdersDTO> getOrders(String userId, String orderStatus);
-    void createOrder(OrdersDTO orderDto);
-    void updateOrder(String orderId, OrdersDTO orderDto);
-    void deleteOrder(String orderId);
-    
+    void createOrder(OrdersDTO orderDto);    
     List<String> searchOrderId(String userId);
+    List<String> getOrderStatusCodes();
 }
