@@ -1,9 +1,13 @@
 package com.example.demo.repository;
 
 import static com.example.demo.entity.QOrders.orders;
+import static com.example.demo.entity.QOritems.oritems;
+import static com.example.demo.entity.QProduct.product;
 
 import com.example.demo.domain.ImgDTO;
 import com.example.demo.entity.Orders;
+import com.example.demo.entity.Oritems;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -40,7 +44,14 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
     			.where(orders.user.user_id.eq(userId))
     			.fetch();
     }
-    
+    @Override
+    public List<Oritems> orderList(List<String> orderlist) {
+
+    	
+    	return queryFactory.selectFrom(oritems)
+    			.where(oritems.order_id.order_id.in(orderlist))
+    			.fetch();
+    }
     
 //    @Override
 //    public List<Orders> orderList(String user_id) {

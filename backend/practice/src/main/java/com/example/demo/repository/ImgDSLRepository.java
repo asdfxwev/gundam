@@ -23,4 +23,6 @@ public interface ImgDSLRepository {
 	
 	List<Img> imgList(String proId);
 	
+	List<Img> orderImgList(List<String> proId);
+	
 }

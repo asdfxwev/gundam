@@ -51,6 +51,6 @@ public class Review {
     private String rev_image;
     
     @ManyToOne
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @JoinColumn(name = "order_id", nullable = false)
     private Orders order;
 }

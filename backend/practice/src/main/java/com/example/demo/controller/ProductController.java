@@ -65,25 +65,7 @@ public class ProductController {
 		//Map<String, Object> list = pservice.
 		return ResponseEntity.ok(list);
 	}
-//	@PostMapping("/productList")
-//	public ResponseEntity<?> productList(@RequestBody pageListDTO dto) {
-//		System.out.println("proCate1: " + dto.getCurrentPage());  // 이 부분을 확인
-//		
-//		System.out.println("************: " + dto.getProCate());  // 이 부분을 확인
-//		Map<String, Object> list = new HashMap< >();
-//		//list.put("productdslList", pservice.joinDSLpage(dto.getItemsPerPage()));
-//		//System.out.println("proCate2 = "+proCate);
-//		list.put("productList", pservice.joinDSLpage(dto.getItemsPerPage(), dto.getCurrentPage(), dto.getInputValue(), dto.getProCate()));
-//		list.put("allproduct", poservice.countAllProduct(dto.getInputValue()));
-//		list.put("maxpage", poservice.countPerPage(dto.getItemsPerPage(), dto.getInputValue()));
-//		list.put("brandList", coservice.codeBrandOne());
-//		list.put("cateList", coservice.codeCateOne());
-//		list.put("pieceList", coservice.codePieceOne());
-//		list.put("stateList", coservice.codeStateOne());
-//		
-//		return ResponseEntity.ok(list);
-//	}
-	
+
 	
 	@GetMapping("/productSearch")
 	public ResponseEntity<?> productSearch(@RequestParam String productname) {
@@ -97,7 +79,7 @@ public class ProductController {
 	public ResponseEntity<Map<String, ?>> productDetail(@RequestParam String proId) {
 		Map<String, Object> list = new HashMap< >();
 		list.put("imgList", iservice.imgList(proId));
-		System.out.println(iservice.imgList(proId));
+		System.out.println("imgList"+iservice.imgList(proId));
 		list.put("productList", pservice.selectOne(proId));
 		System.out.println("productList"+pservice.selectOne(proId));
 		list.put("reviewList", reservice.selectList(proId));
@@ -160,6 +142,17 @@ public class ProductController {
 	public void productReview(@RequestBody ReviewDTO dto) {
 		System.out.println(dto);
 		reservice.save(dto);
+	}
+	
+	@PostMapping("productReviewModify")
+	public void productReviewModify(@RequestBody ReviewDTO dto) {
+		System.out.println(dto);
+		reservice.reviewUpdate(dto);
+	}
+	
+	@PostMapping("productReviewDelete")
+	public void productReviewDelete(@RequestBody ReviewDTO dto) {
+		reservice.reviewDelete(dto);
 	}
 
 }

@@ -68,6 +68,39 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 		.where(review.rev_id.eq(rev_id))
 		.execute();
 	}
-
+	
+	@Override
+	public List<Review> booleanOne(String userId) {
+		return queryFactory.selectFrom(review)
+				.where(review.user.user_id.eq(userId))
+				.fetch();
+	}
+	
+//	@Override
+//	public void reviewUpdate(Review review) {
+//		 queryFactory.update(review)
+//				.set(review.getRev_rating(), review.getRev_rating())
+//				.set(review.revtitle)
+//				.execute();
+//	}
+	@Override
+	public void reviewUpdate(Review reviews) {
+		queryFactory.update(review)
+		.set(review.rev_rating, reviews.getRev_rating())
+		.set(review.rev_rating, reviews.getRev_rating())
+		.set(review.rev_title, reviews.getRev_title())
+		.set(review.rev_com, reviews.getRev_com())
+		.set(review.rev_creat, reviews.getRev_creat())
+		.where(review.user.eq(reviews.getUser()).and(review.product.eq(reviews.getProduct()).and(review.order.eq(reviews.getOrder()))))
+		.execute();
+	}
+	
+	
+	@Override
+	public void reviewDelete(Review reviews) {
+		queryFactory.delete(review)
+		.where(review.order.eq(reviews.getOrder()).and(review.product.eq(reviews.getProduct())))
+		.execute();
+	}
 
 }

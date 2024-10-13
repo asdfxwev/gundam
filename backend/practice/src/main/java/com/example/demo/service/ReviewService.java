@@ -12,9 +12,13 @@ public interface ReviewService {
 	
 	Review save(ReviewDTO dto);
 	
+	void reviewUpdate(ReviewDTO dto);
+	
 	List<Review> selectList(String proId);
 	List<Review> selectList();
 	
 	void update(reviewanswerDTO dto);
+	
+	void reviewDelete(ReviewDTO dto);
 
 }

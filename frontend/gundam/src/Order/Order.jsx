@@ -2,81 +2,166 @@ import React, { useState, useEffect } from 'react';
 import './Order.css';
 import axios from 'axios';
 import MypageLeft from '../MyPage/MypageLeft';
+import { API_BASE_URL } from "../service/app-config";
+import Modal from 'react-modal';
+import { faStar as faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
-    const handleQuantityChange = (newQuantity) => {
-        if (newQuantity >= 1) {
-            onQuantityChange(item.order_id, newQuantity); // order_id로 수정
-        }
-    };
-
+// 별점 UI 컴포넌트
+const StarRating = ({ rating, setRating }) => {
+    const stars = [1, 2, 3, 4, 5];
     return (
-        <div className="cart-item">
-            <div>{item.order_date}</div> {/* 주문 날짜 */}
-            <div><a href={`ItemList/ItemDetail/${item.order_id}`}>
-                <img src={item.image} alt={item.name} /></a>
-            </div>
-            <div> {item.oritem_name}</div> {/* 상품 이름 */}
-            <div className="quantity-controls">
-                {item.oritem_count} {/* 수량 */}
-            </div>
-            <div>{item.oritem_payment.toLocaleString()}원</div> {/* 가격 */}
-            <div>{(item.oritem_payment * item.oritem_count).toLocaleString()}원</div> {/* 총 가격 */}
+        <div className="star-rating">
+            {stars.map((star) => (
+                <FontAwesomeIcon
+                    key={star}
+                    icon={faStar}
+                    onClick={() => setRating(star)}
+                    className={`star-icon ${rating >= star ? 'filled' : ''}`}
+                />
+            ))}
         </div>
     );
 };
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([]);
-    const [checkedItems, setCheckedItems] = useState([]);
-    const [isAllChecked, setIsAllChecked] = useState(false);
+    const [orderList, setOrderList] = useState([]); // 주문 목록 상태
+    const [mainImage, setMainImage] = useState([]); // 상품 이미지 상태
+    const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰 작성 모달 상태
+    const [modalModifyIsOpen, setModalModifyIsOpen] = useState(false); // 리뷰 작성 모달 상태
+    const [rev_title, setReviewTitle] = useState(''); // 리뷰 제목 상태
+    const [rev_com, setReviewMessage] = useState(''); // 리뷰 내용 상태
+    const [rev_rating, setRating] = useState(0); // 별점 상태
+    const [selectedProId, setSelectedProId] = useState(''); // 선택된 상품 ID
+    const [selectedOrderId, setSelectedOrderId] = useState(''); // 선택된 주문 ID
+    const [reviewExist, setReviewExist] = useState([]); // 기존 리뷰 상태
 
     // 로그인한 사용자 정보
-    const existingInquiries = JSON.parse(sessionStorage.getItem('loginInfo'));
-    const userId = existingInquiries.id;
+    const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
+    const user_id = existingInquiries.user_id;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Spring Boot API에서 주문 데이터 가져오기
-                const response = await axios.get(`http://localhost:8080/api/orders?userId=${userId}`);
-                const ordersData = response.data;
-
-                setCartItems(ordersData.reverse());   // 최신순으로 정렬
-                setCheckedItems(ordersData.map(item => item.order_id));
-                setIsAllChecked(true);
+                const response = await axios.post(`${API_BASE_URL}/api/orders/orderList`, { user_id });
+                setOrderList(response.data.orderList);
+                setMainImage(response.data.imgList);
+                setReviewExist(response.data.reviewList); // 리뷰 리스트를 배열로 설정
             } catch (error) {
-                console.error('주문 데이터를 가져오는 중 오류 발생:', error);
+                console.error("데이터를 가져오는 중 에러가 발생했습니다: ", error);
             }
         };
         fetchData();
-    }, [userId]);
+    }, [user_id]);
 
-    // 수량 변경 처리
-    const handleQuantityChange = async (orderId, quantity) => {
-        const updatedItems = cartItems.map(item =>
-            item.order_id === orderId ? { ...item, oritem_count: quantity } : item
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const closeModalModify = () => {
+        // setModalIsOpen(false);
+        setModalModifyIsOpen(false);
+        setReviewTitle('');
+        setReviewMessage('');
+        setRating(0);
+        closeModal();
+    }
+
+    // 리뷰 작성 모달 팝업을 여는 함수
+    function reviewPop(pro_id, order_id) {
+        setSelectedProId(pro_id);
+        setSelectedOrderId(order_id);
+        setModalIsOpen(true);
+    }
+
+    function reviewModifyPop(pro_id, order_id) {
+        setSelectedProId(pro_id);
+        setSelectedOrderId(order_id);
+
+        // 선택된 리뷰의 기존 데이터를 불러와 상태에 설정
+        const matchedReview = reviewExist.find(review =>
+            review.product.pro_id === pro_id && review.order.order_id === order_id
         );
-        setCartItems(updatedItems);
+        if (matchedReview) {
+            setReviewTitle(matchedReview.rev_title);
+            setReviewMessage(matchedReview.rev_com);
+            setRating(matchedReview.rev_rating); // 별점 설정
+        }
+
+        setModalModifyIsOpen(true);
+    }
+
+
+    // 리뷰 제출 함수
+    const reviewSubmit = async (e) => {
+        e.preventDefault();
+        const data = {
+            rev_title,
+            rev_com,
+            rev_rating,
+            user_id,
+            order_id: selectedOrderId,
+            pro_id: selectedProId
+        };
+
+        if (rev_title === '' || rev_com === '' || rev_rating === 0) {
+            alert(`제목, 내용, 별점을 모두 입력해주세요.`);
+            return false;
+        }
 
         try {
-            // 수량 업데이트 API 호출
-            await axios.put(`http://localhost:8080/api/orders/${orderId}`, {
-                ...updatedItems.find(item => item.order_id === orderId), // 해당 주문 데이터 전송
-                oritem_count: quantity
-            });
+            await axios.post(`${API_BASE_URL}/product/productReview`, data);
+            setReviewTitle('');
+            setReviewMessage('');
+            setRating(0); // 별점 초기화
+            closeModal();
         } catch (error) {
-            console.error('수량 업데이트 중 오류 발생:', error.response ? error.response.data : error.message);
+            console.error('리뷰 제출 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
         }
     };
 
-    const handleCheckboxChange = (id) => {
-        const newCheckedItems = checkedItems.includes(id)
-            ? checkedItems.filter(itemId => itemId !== id)
-            : [...checkedItems, id];
+    const reviewModify = async (e) => {
+        e.preventDefault();
+        const data = {
+            rev_title,
+            rev_com,
+            rev_rating,
+            user_id,
+            order_id: selectedOrderId,
+            pro_id: selectedProId
+        };
 
-        setCheckedItems(newCheckedItems);
-        setIsAllChecked(newCheckedItems.length === cartItems.length);
+        if (rev_title === '' || rev_com === '' || rev_rating === 0) {
+            alert(`제목, 내용, 별점을 모두 입력해주세요.`);
+            return false;
+        }
+
+        try {
+            await axios.post(`${API_BASE_URL}/product/productReviewModify`, data);
+            setReviewTitle('');
+            setReviewMessage('');
+            setRating(0); // 별점 초기화
+            closeModal();
+        } catch (error) {
+            console.error('리뷰 제출 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
+        }
+    };
+
+    const reviewDelete = async (e) => {
+        e.preventDefault();
+        const data = {
+            order_id: selectedOrderId,
+            pro_id: selectedProId
+        };
+        try {
+            await axios.post(`${API_BASE_URL}/product/productReviewDelete`, data);
+            // setReviewTitle('');
+            // setReviewMessage('');
+            // setRating(0); // 별점 초기화
+            // closeModal();
+        } catch (error) {
+            console.error('리뷰 제출 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
+        }
     };
 
     return (
@@ -92,16 +177,101 @@ const Cart = () => {
                         <div>수량</div>
                         <div>가격</div>
                         <div>총 가격</div>
+                        <div>리뷰</div>
                     </div>
-                    {cartItems && cartItems.map((item) => (
-                        <CartItem
-                            key={item.order_id}
-                            item={item}
-                            onQuantityChange={handleQuantityChange}
-                            onCheckboxChange={handleCheckboxChange}
-                            isChecked={checkedItems.includes(item.order_id)}
-                        />
-                    ))}
+                    {orderList && orderList.length > 0 ? (
+                        orderList.map((item) => {
+                            const matchedImage = mainImage.find(image => image.pro_id.pro_id === item.pro_id.pro_id);
+                            const matchedReview = reviewExist.find(review =>
+                                review.product.pro_id === item.pro_id.pro_id && review.order.order_id === item.order_id.order_id
+                            );
+                            console.log(matchedReview);
+
+
+                            return (
+                                <div className="cart-item" key={item.order_id.order_id}>
+                                    <div>{item.order_id.order_date}</div>
+                                    <div>
+                                        <a href={`ItemList/ItemDetail/${item.pro_id.pro_id}`}>
+                                            {matchedImage ? (
+                                                <img src={`${API_BASE_URL}/resources/productImg/${item.pro_id.pro_id}/${matchedImage.pro_imgs}`} alt={item.pro_id.pro_name} />
+                                            ) : (
+                                                <img src={`${API_BASE_URL}/resources/default-image.png`} alt="default" />
+                                            )}
+                                        </a>
+                                    </div>
+                                    <div>{item.pro_id.pro_name}</div>
+                                    <div>{item.order_id.oritem_count}</div>
+                                    <div>{item.pro_id.pro_price}원</div>
+                                    <div>{(item.pro_id.pro_price * item.oritem_quan)}원</div>
+                                    {matchedReview ? (
+                                        <div>
+                                            <div onClick={() => reviewModifyPop(item.pro_id.pro_id, item.order_id.order_id)}>리뷰수정</div>
+                                            <div onClick={() => reviewDelete(item.pro_id.pro_id, item.order_id.order_id)}>리뷰삭제</div>
+                                        </div>
+                                    ) : (
+                                        <div onClick={() => reviewPop(item.pro_id.pro_id, item.order_id.order_id)}>리뷰작성</div>
+                                    )}
+                                </div>
+
+                            );
+                        })
+                    ) : (
+                        <div className="cart-item">
+                            <div>등록된 주문이 없습니다.</div>
+                        </div>
+                    )}
+
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        contentLabel="리뷰 작성"
+                    >
+                        <form className="review_pop">
+                            <h2>리뷰작성</h2>
+                            <div>
+                                <div>제목
+                                    <input name='rev_title' value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} type="text" id="title" className="re_title" />
+                                </div>
+                                <div>별점
+                                    <StarRating name='rev_rating' rating={rev_rating} setRating={setRating} />
+                                </div>
+                                <div className="reviewBox">내용
+                                    <textarea value={rev_com} name='rev_com' onChange={(e) => setReviewMessage(e.target.value)} id="comment" className="re_comment" />
+                                </div>
+                            </div>
+                            <div className="re_button_box">
+                                <button type="button" className="re_button" onClick={reviewModify}>저장</button>
+                                <button type="button" className="re_button" onClick={closeModal}>닫기</button>
+                            </div>
+                        </form>
+                    </Modal>
+
+                    <Modal
+                        isOpen={modalModifyIsOpen}
+                        onRequestClose={closeModalModify}
+                        contentLabel="리뷰 수정"
+                    >
+                        <form className="review_pop">
+                            <h2>리뷰수정</h2>
+                            <div>
+                                <div>제목
+                                    <input name='rev_title' value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} type="text" id="title" className="re_title" />
+                                </div>
+                                <div>별점
+                                    <StarRating name='rev_rating' rating={rev_rating} setRating={setRating} />
+                                </div>
+                                <div className="reviewBox">내용
+                                    <textarea value={rev_com} name='rev_com' onChange={(e) => setReviewMessage(e.target.value)} id="comment" className="re_comment" />
+                                </div>
+                            </div>
+                            <div className="re_button_box">
+                                <button type="button" className="re_button" onClick={reviewSubmit}>저장</button>
+                                <button type="button" className="re_button" onClick={closeModalModify}>닫기</button>
+                            </div>
+                        </form>
+                    </Modal>
+
                 </div>
             </div>
         </div>

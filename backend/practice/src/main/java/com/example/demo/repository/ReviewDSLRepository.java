@@ -15,5 +15,9 @@ public interface ReviewDSLRepository {
 
 	void update(String rev_answer, Long rev_id, LocalDateTime localDateTime);
 	
+	List<Review> booleanOne(String userId);
 
+	void reviewUpdate(Review reviews);
+	
+	void reviewDelete(Review reviews);
 }
