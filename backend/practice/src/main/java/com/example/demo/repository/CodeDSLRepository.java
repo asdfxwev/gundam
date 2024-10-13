@@ -11,6 +11,6 @@ public interface CodeDSLRepository {
 	List<Code> codeCateOne();
 	List<Code> codePieceOne();
 	List<Code> codeStateOne();
-	
+	List<Code> findByCodeValue(String codeValue);
 
 }

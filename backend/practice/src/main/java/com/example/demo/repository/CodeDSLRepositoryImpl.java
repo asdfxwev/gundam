@@ -51,5 +51,12 @@ public class CodeDSLRepositoryImpl implements CodeDSLRepository {
 				.fetch();
 	}
 
+	@Override
+	public List<Code> findByCodeValue(String codeValue) {
+	    return jpaQueryFactory.selectFrom(code)
+	        .where(code.code_value.eq(codeValue))
+	        .fetch();
+	}
+
 
 }

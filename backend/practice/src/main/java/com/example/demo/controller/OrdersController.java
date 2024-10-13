@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.OrdersDTO;
-import com.example.demo.entity.Orders;
 import com.example.demo.service.OrdersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,30 +25,17 @@ public class OrdersController {
 
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody OrdersDTO orderDto) {
+        // 주문 생성 시 입력 데이터 확인을 위한 로그 출력
+        System.out.println("Creating order: " + orderDto);
+        
         ordersService.createOrder(orderDto);
         return ResponseEntity.ok("Order created successfully");
     }
-
-    @PutMapping("/{orderId}")
-    public ResponseEntity<String> updateOrder(@PathVariable String orderId, @RequestBody OrdersDTO orderDto) {
-        ordersService.updateOrder(orderId, orderDto);
-        return ResponseEntity.ok("Order updated successfully");
+    @GetMapping("/status")
+    public ResponseEntity<List<String>> getOrderStatus() {
+        List<String> orderStatusCodes = ordersService.getOrderStatusCodes();
+        System.out.println("orderstatuscode : "+orderStatusCodes);
+        return ResponseEntity.ok(orderStatusCodes);
     }
 
-    @DeleteMapping("/{orderId}")
-    public ResponseEntity<String> deleteOrder(@PathVariable String orderId) {
-        ordersService.deleteOrder(orderId);
-        return ResponseEntity.ok("Order deleted successfully");
-    }
-    
-    @GetMapping("/orderList")
-    public ResponseEntity<?> orderList(@RequestParam String user_id){
-    	
-    	List<Orders> list = ordersService.orderList(user_id);
-    	
-    	return ResponseEntity.ok(list);
-    }
-    
-    
-    
 }
