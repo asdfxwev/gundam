@@ -152,4 +152,12 @@ public class ImgDSLRepositoryImpl implements ImgDSLRepository {
 				.fetch();
 	}
 	
+	
+	@Override
+	public List<Img> orderImgList(List<String> proId) {
+	    return jpaQueryFactory.selectFrom(img)
+	            .where(img.pro_id.pro_id.in(proId).and(img.pro_num.eq(0)))  
+	            .fetch();
+	}
+	
 }
