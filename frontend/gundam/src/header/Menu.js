@@ -44,21 +44,8 @@ export default function Menu() {
 
             const response = apiCall(url, 'POST', null, loginInfo)
                 .then((response) => {
-                    sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
                     setUser_id(response);
-
-                    // alert(userId);
-
-                    // let url = `/user/user_info`;
-
-                    // const response = apiCall(url, 'POST', userId, null)
-                    //     .then((response) => {
-                    //         sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
-                    //         setUserInfo(response);
-                    //     }).catch((err) => {
-                    //         // onLogout(); // 로그아웃 상태로 처리
-                    //         alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
-                    //     });
 
                 }).catch((err) => {
                     onLogout(); // 로그아웃 상태로 처리
@@ -76,7 +63,7 @@ export default function Menu() {
             
             const response = apiCall(url, 'POST', data, null)
                 .then((response) => {
-                    sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
                     setUserInfo(response);
                 });
         }
