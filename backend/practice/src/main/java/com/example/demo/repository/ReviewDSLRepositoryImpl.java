@@ -91,7 +91,9 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 		.set(review.rev_title, reviews.getRev_title())
 		.set(review.rev_com, reviews.getRev_com())
 		.set(review.rev_creat, reviews.getRev_creat())
-		.where(review.user.eq(reviews.getUser()).and(review.product.eq(reviews.getProduct()).and(review.order.eq(reviews.getOrder()))))
+		.set(review.order, reviews.getOrder())
+		.set(review.product, reviews.getProduct())
+		.where(review.rev_id.eq(reviews.getRev_id()))
 		.execute();
 	}
 	
@@ -99,7 +101,8 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 	@Override
 	public void reviewDelete(Review reviews) {
 		queryFactory.delete(review)
-		.where(review.order.eq(reviews.getOrder()).and(review.product.eq(reviews.getProduct())))
+		.where(review.rev_id.eq(reviews.getRev_id()))
+//		.where(review.order.eq(reviews.getOrder()).and(review.product.eq(reviews.getProduct())))
 		.execute();
 	}
 

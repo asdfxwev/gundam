@@ -35,24 +35,28 @@ const Cart = () => {
     const [selectedProId, setSelectedProId] = useState(''); // 선택된 상품 ID
     const [selectedOrderId, setSelectedOrderId] = useState(''); // 선택된 주문 ID
     const [reviewExist, setReviewExist] = useState([]); // 기존 리뷰 상태
+    const [selectedRevId, setSelectedRevId] = useState('');
 
     // 로그인한 사용자 정보
     const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
     const user_id = existingInquiries.user_id;
 
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/api/orders/orderList`, { user_id });
+            setOrderList(response.data.orderList);
+            setMainImage(response.data.imgList);
+            setReviewExist(response.data.reviewList); // 리뷰 리스트를 배열로 설정
+        } catch (error) {
+            console.error("데이터를 가져오는 중 에러가 발생했습니다: ", error);
+        }
+    };
+
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.post(`${API_BASE_URL}/api/orders/orderList`, { user_id });
-                setOrderList(response.data.orderList);
-                setMainImage(response.data.imgList);
-                setReviewExist(response.data.reviewList); // 리뷰 리스트를 배열로 설정
-            } catch (error) {
-                console.error("데이터를 가져오는 중 에러가 발생했습니다: ", error);
-            }
-        };
         fetchData();
-    }, [user_id]);
+    }, []);
 
     const closeModal = () => {
         setModalIsOpen(false);
@@ -74,9 +78,11 @@ const Cart = () => {
         setModalIsOpen(true);
     }
 
-    function reviewModifyPop(pro_id, order_id) {
+    function reviewModifyPop(pro_id, order_id, rev_id) {
+        console.log("revid = " + rev_id);
         setSelectedProId(pro_id);
         setSelectedOrderId(order_id);
+        setSelectedRevId(rev_id);
 
         // 선택된 리뷰의 기존 데이터를 불러와 상태에 설정
         const matchedReview = reviewExist.find(review =>
@@ -90,7 +96,6 @@ const Cart = () => {
 
         setModalModifyIsOpen(true);
     }
-
 
     // 리뷰 제출 함수
     const reviewSubmit = async (e) => {
@@ -114,7 +119,10 @@ const Cart = () => {
             setReviewTitle('');
             setReviewMessage('');
             setRating(0); // 별점 초기화
-            closeModal();
+            closeModalModify();
+            // window.location.reload();
+            await fetchData();
+
         } catch (error) {
             console.error('리뷰 제출 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
         }
@@ -127,9 +135,11 @@ const Cart = () => {
             rev_com,
             rev_rating,
             user_id,
+            rev_id: selectedRevId,
             order_id: selectedOrderId,
             pro_id: selectedProId
         };
+        console.log(data);
 
         if (rev_title === '' || rev_com === '' || rev_rating === 0) {
             alert(`제목, 내용, 별점을 모두 입력해주세요.`);
@@ -141,20 +151,30 @@ const Cart = () => {
             setReviewTitle('');
             setReviewMessage('');
             setRating(0); // 별점 초기화
-            closeModal();
+            closeModalModify();
+            await fetchData();
         } catch (error) {
             console.error('리뷰 제출 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
         }
     };
 
-    const reviewDelete = async (e) => {
-        e.preventDefault();
+    const reviewDelete = async (rev_id) => {
+        const confirmDelete = window.confirm("정말로 이 리뷰를 삭제하시겠습니까?");
+    
+        if (!confirmDelete) {
+            return; // 사용자가 취소를 누르면 삭제 작업을 중단
+        }
+    
+        //e.preventDefault();
         const data = {
-            order_id: selectedOrderId,
-            pro_id: selectedProId
+            rev_id
+            // order_id: selectedOrderId,
+            // pro_id: selectedProId
         };
+        console.log(data);
         try {
             await axios.post(`${API_BASE_URL}/product/productReviewDelete`, data);
+            await fetchData();
             // setReviewTitle('');
             // setReviewMessage('');
             // setRating(0); // 별점 초기화
@@ -185,7 +205,7 @@ const Cart = () => {
                             const matchedReview = reviewExist.find(review =>
                                 review.product.pro_id === item.pro_id.pro_id && review.order.order_id === item.order_id.order_id
                             );
-                            console.log(matchedReview);
+
 
 
                             return (
@@ -206,11 +226,12 @@ const Cart = () => {
                                     <div>{(item.pro_id.pro_price * item.oritem_quan)}원</div>
                                     {matchedReview ? (
                                         <div>
-                                            <div onClick={() => reviewModifyPop(item.pro_id.pro_id, item.order_id.order_id)}>리뷰수정</div>
-                                            <div onClick={() => reviewDelete(item.pro_id.pro_id, item.order_id.order_id)}>리뷰삭제</div>
+                                            <span style={{cursor: 'pointer'}} onClick={() => reviewModifyPop(item.pro_id.pro_id, item.order_id.order_id, matchedReview.rev_id)}>리뷰수정</span>
+                                            &nbsp;&nbsp;&#124;&#124;&nbsp;&nbsp;
+                                            <span style={{cursor: 'pointer'}} onClick={() => reviewDelete(matchedReview.rev_id)}>리뷰삭제</span>
                                         </div>
                                     ) : (
-                                        <div onClick={() => reviewPop(item.pro_id.pro_id, item.order_id.order_id)}>리뷰작성</div>
+                                        <div style={{cursor: 'pointer'}} onClick={() => reviewPop(item.pro_id.pro_id, item.order_id.order_id)}>리뷰작성</div>
                                     )}
                                 </div>
 
@@ -241,7 +262,7 @@ const Cart = () => {
                                 </div>
                             </div>
                             <div className="re_button_box">
-                                <button type="button" className="re_button" onClick={reviewModify}>저장</button>
+                                <button type="button" className="re_button" onClick={reviewSubmit}>저장</button>
                                 <button type="button" className="re_button" onClick={closeModal}>닫기</button>
                             </div>
                         </form>
@@ -266,7 +287,7 @@ const Cart = () => {
                                 </div>
                             </div>
                             <div className="re_button_box">
-                                <button type="button" className="re_button" onClick={reviewSubmit}>저장</button>
+                                <button type="button" className="re_button" onClick={reviewModify}>저장</button>
                                 <button type="button" className="re_button" onClick={closeModalModify}>닫기</button>
                             </div>
                         </form>

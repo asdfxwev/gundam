@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.domain.ImgDTO;
 import com.example.demo.domain.ReviewDTO;
 import com.example.demo.domain.ReviewFirstDTO;
+import com.example.demo.domain.ReviewModifyDTO;
 import com.example.demo.domain.pageListDTO;
 import com.example.demo.entity.Orders;
 import com.example.demo.service.CodeService;
@@ -139,13 +140,14 @@ public class ProductController {
 	
 	
 	@PostMapping("productReview")
-	public void productReview(@RequestBody ReviewDTO dto) {
+	public ResponseEntity<?> productReview(@RequestBody ReviewDTO dto) {
 		System.out.println(dto);
 		reservice.save(dto);
+		return ResponseEntity.ok("리뷰작성에 성공하였습니다");
 	}
 	
 	@PostMapping("productReviewModify")
-	public void productReviewModify(@RequestBody ReviewDTO dto) {
+	public void productReviewModify(@RequestBody ReviewModifyDTO dto) {
 		System.out.println(dto);
 		reservice.reviewUpdate(dto);
 	}

@@ -4,8 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.ReviewDTO;
+import com.example.demo.domain.ReviewModifyDTO;
 import com.example.demo.domain.reviewanswerDTO;
 import com.example.demo.entity.Orders;
 import com.example.demo.entity.Product;
@@ -37,6 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
 			return reDSLRepository.searchOrderId(userId, proId);
 		}
 	
+	@Transactional
 	@Override
 	public Review save(ReviewDTO dto) {
         // 1. ReviewDTO를 Review 엔티티로 변환
@@ -70,29 +73,33 @@ public class ReviewServiceImpl implements ReviewService {
 		return reDSLRepository.selectList();
 	}
 	
+	@Transactional
 	@Override
 	public void update(reviewanswerDTO dto) {
 		
 		
 		reDSLRepository.update(dto.getRev_answer(), dto.getRev_id(), LocalDateTime.now());
 	}
-	
+
+	@Transactional
 	@Override
-	public void reviewUpdate(ReviewDTO dto) {
+	public void reviewUpdate(ReviewModifyDTO dto) {
         // 1. ReviewDTO를 Review 엔티티로 변환
         // DTO에서 필요한 필드를 추출하여 Review 엔티티를 생성
+		System.out.println("dto = "+dto);
         User user = userRepository.findById(dto.getUser_id()).orElseThrow(() -> new IllegalArgumentException("Invalid user_id"));
         Product product = productRepository.findById(dto.getPro_id()).orElseThrow(() -> new IllegalArgumentException("Invalid pro_id"));
         Orders orders = orderRepository.findById(dto.getOrder_id()).orElseThrow(() -> new IllegalArgumentException("Invalid order_id"));
         
         Review reviews = Review.builder()
                 .user(user)
-                .product(product)
                 .rev_rating(String.valueOf(dto.getRev_rating()))  // int 타입을 String으로 변환
                 .rev_title(dto.getRev_title())
                 .rev_com(dto.getRev_com())
                 .rev_creat(LocalDateTime.now())  // 현재 시간으로 설정
+                .rev_id(dto.getRev_id())
                 .order(orders)
+                .product(product)
                 .build();
         
         System.out.println("gdgd"+reRepository.save(reviews));
@@ -100,14 +107,16 @@ public class ReviewServiceImpl implements ReviewService {
         reDSLRepository.reviewUpdate(reviews);
 	}
 	
+	@Transactional
 	@Override
 	public void reviewDelete(ReviewDTO dto) {
-        Product product = productRepository.findById(dto.getPro_id()).orElseThrow(() -> new IllegalArgumentException("Invalid pro_id"));
-        Orders orders = orderRepository.findById(dto.getOrder_id()).orElseThrow(() -> new IllegalArgumentException("Invalid order_id"));
-        
+		System.out.println("dto = " +dto);
+//        Product product = productRepository.findById(dto.getPro_id()).orElseThrow(() -> new IllegalArgumentException("Invalid pro_id"));
+//        Orders orders = orderRepository.findById(dto.getOrder_id()).orElseThrow(() -> new IllegalArgumentException("Invalid order_id"));
         Review reviews = Review.builder()
-                .product(product)
-                .order(orders)
+//                .product(product)
+//                .order(orders)
+        		.rev_id(dto.getRev_id())
                 .build();
         
         
