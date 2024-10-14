@@ -105,11 +105,18 @@ public class UserController {
         if( entity != null ) {
       	
       	UserDTO userDTO = UserDTO.builder()
-		    		.user_id(entity.getUser_id())
-					.login_id(entity.getLogin_id())
-					.user_name(entity.getUser_name())
-					.user_cd(entity.getUser_cd())
-					.build();
+      			.user_id(entity.getUser_id())
+				.login_id(entity.getLogin_id())
+				.user_name(entity.getUser_name())
+				.email(entity.getEmail())
+				.birth(entity.getBirth())
+				.gender(entity.getGender())
+				.phone_num(entity.getPhone_num())
+				.postcode(entity.getPostcode())
+				.address(entity.getAddress())
+				.dtl_address(entity.getDtl_address())
+				.user_cd(entity.getUser_cd())
+				.build();
       	
 			return ResponseEntity.ok(userDTO);
 			
@@ -158,8 +165,8 @@ public class UserController {
     		service.save(entity);
     		
     		log.info("로그인 성공 => " + HttpStatus.OK);
-//    		return ResponseEntity.ok(userDTO);
-    		return ResponseEntity.ok(token);
+    		return ResponseEntity.ok(userDTO);
+//    		return ResponseEntity.ok(token);	// 세션스토리지에서 토큰만 사용할때
     		
     		
     	} else if(entity != null && passwordEncoder.matches(password, entity.getPassword()) && logintry >= 5) {
