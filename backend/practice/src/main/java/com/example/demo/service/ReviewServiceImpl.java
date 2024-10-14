@@ -47,6 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
         User user = userRepository.findById(dto.getUser_id()).orElseThrow(() -> new IllegalArgumentException("Invalid user_id"));
         Product product = productRepository.findById(dto.getPro_id()).orElseThrow(() -> new IllegalArgumentException("Invalid pro_id"));
         Orders orders = orderRepository.findById(dto.getOrder_id()).orElseThrow(() -> new IllegalArgumentException("Invalid order_id"));
+        System.out.println("orders : "+orders);
         
         Review review = Review.builder()
                 .user(user)
@@ -57,7 +58,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .rev_creat(LocalDateTime.now())  // 현재 시간으로 설정
                 .order(orders)
                 .build();
-        
+        System.out.println("review : "+review);
         System.out.println("gdgd"+reRepository.save(review));
         
 		return reRepository.save(review);

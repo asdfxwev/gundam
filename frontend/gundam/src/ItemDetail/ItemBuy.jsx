@@ -59,7 +59,7 @@ const ItemBuy = () => {
 
     const formatNumber = (number) => number.toLocaleString('ko-KR');
 
-    const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
+    const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
 
     useEffect(() => {
         if (item && count) {
@@ -152,7 +152,7 @@ const ItemBuy = () => {
             const orderDto = {
                 // order_id,
                 user_id: user_id,
-                // order_date: today.toISOString(),
+                // order_date: formDate,
                 // order_status: "order_cd01", // 단일 문자열로 설정
                 postcode: userDetails.postcode,
                 oritem_address: userDetails.address,

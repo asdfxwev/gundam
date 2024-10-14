@@ -7,6 +7,9 @@ import Modal from 'react-modal';
 import { faStar as faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// 한국 단위로 바꿔주는거
+const formatNumber = (number) => number.toLocaleString('ko-KR');
+
 // 별점 UI 컴포넌트
 const StarRating = ({ rating, setRating }) => {
     const stars = [1, 2, 3, 4, 5];
@@ -41,7 +44,12 @@ const Cart = () => {
     const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
     const user_id = existingInquiries.user_id;
 
-
+    const convertToKST = (dateString) => {
+        const utcDate = new Date(dateString); // dateString을 Date 객체로 변환
+        const kstDate = new Date(utcDate.getTime() + 3240 * 10000); // 9시간 더함
+        return `${String(kstDate.getFullYear()).slice(-2)}-${String(kstDate.getMonth() + 1).padStart(2, '0')}-${String(kstDate.getDate()).padStart(2, '0')} ${String(kstDate.getHours()).padStart(2, '0')}:${String(kstDate.getMinutes()).padStart(2, '0')}:${String(kstDate.getSeconds()).padStart(2, '0')}`;
+    };
+    
     const fetchData = async () => {
         try {
             const response = await axios.post(`${API_BASE_URL}/api/orders/orderList`, { user_id });
@@ -210,7 +218,7 @@ const Cart = () => {
 
                             return (
                                 <div className="cart-item" key={item.order_id.order_id}>
-                                    <div>{item.order_id.order_date}</div>
+                                    <div>{convertToKST(item.order_id.order_date)}</div>
                                     <div>
                                         <a href={`ItemList/ItemDetail/${item.pro_id.pro_id}`}>
                                             {matchedImage ? (
@@ -222,8 +230,8 @@ const Cart = () => {
                                     </div>
                                     <div>{item.pro_id.pro_name}</div>
                                     <div>{item.order_id.oritem_count}</div>
-                                    <div>{item.pro_id.pro_price}원</div>
-                                    <div>{(item.pro_id.pro_price * item.oritem_quan)}원</div>
+                                    <div>{formatNumber(item.pro_id.pro_price)}원</div>
+                                    <div>{formatNumber(item.pro_id.pro_price * item.oritem_quan)}원</div>
                                     {matchedReview ? (
                                         <div>
                                             <span style={{cursor: 'pointer'}} onClick={() => reviewModifyPop(item.pro_id.pro_id, item.order_id.order_id, matchedReview.rev_id)}>리뷰수정</span>
