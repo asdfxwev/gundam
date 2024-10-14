@@ -18,6 +18,7 @@ import ItemBuy from '../ItemDetail/ItemBuy';
 import Order from '../Order/Order';
 import InquiryList from '../csc/InquiryList';
 import InquiryEdit from '../csc/InquiryEdit';
+import MyInfoUp from '../MyPage/MyInfoUp';
 
 
 
@@ -52,6 +53,7 @@ export default function Main() {
                 <Route path="/Cart/*" element={<Cart />} />
                 <Route path="/Order/*" element={<Order />} />
                 <Route path="/ItemBuy/*" element={<ItemBuy />} />
+                <Route path="/MyInfoUp" element={<MyInfoUp />} />
             </Routes>
         </>
     )
