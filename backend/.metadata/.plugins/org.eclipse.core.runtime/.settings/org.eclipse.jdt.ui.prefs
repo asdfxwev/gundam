@@ -12,12 +12,6 @@ content_assist_parameters_foreground=238,238,238
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0
 eclipse.preferences.version=1
-<<<<<<< HEAD
-org.eclipse.jdt.internal.ui.navigator.layout=2
-org.eclipse.jdt.internal.ui.navigator.librariesnode=true
-org.eclipse.jdt.ui.formatterprofiles.version=23
-semanticHighlighting.staticField.italic=false
-=======
 java_bracket=249,250,244
 java_comment_task_tag=154,140,124
 java_default=217,232,247
@@ -98,7 +92,6 @@ semanticHighlighting.typeParameter.bold=false
 semanticHighlighting.typeParameter.color=191,164,164
 semanticHighlighting.typeParameter.enabled=true
 sourceHoverBackgroundColor=68,68,68
->>>>>>> sb
 spelling_locale_initialized=true
 typefilter_migrated_2=true
 useAnnotationsPrefPage=true

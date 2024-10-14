@@ -1,25 +1,38 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.OrdersDTO;
+import com.example.demo.domain.OrderItemDTO;
+import com.example.demo.domain.OrderRequestDTO;
+import com.example.demo.entity.Cart;
 import com.example.demo.entity.Code;
 import com.example.demo.entity.Orders;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CodeDSLRepository;
+import com.example.demo.repository.CartDSLRepository;
+import com.example.demo.repository.ProductDSLRespository;
 import com.example.demo.entity.Img;
 import com.example.demo.entity.Orders;
+import com.example.demo.entity.Product;
 import com.example.demo.entity.Oritems;
 import com.example.demo.entity.Review;
 import com.example.demo.repository.OrdersRepository;
 import com.example.demo.repository.ReviewDSLRepository;
 import com.example.demo.repository.ImgDSLRepository;
 import com.example.demo.repository.OrdersDSLRepository;
+import com.example.demo.repository.OrdersItemDSLRepository;
 import com.example.demo.repository.OrdersRepository;
+import com.example.demo.repository.OritemsRepository;
+import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,38 +47,67 @@ public class OrdersServiceImpl implements OrdersService {
     private final CodeDSLRepository codeDSLRepository; 
     private final ImgDSLRepository imgDSLRepository;
     private final ReviewDSLRepository reDSLRepository;
+    private final OrdersItemDSLRepository oritemDSLRepository;
+    private final OritemsRepository oritemRepository;
+	private final ProductRepository prepository;
+	private final ProductDSLRespository pDSLrepository;
+	private final CartDSLRepository cartDSLrepository;
 
-    @Override
-    public List<OrdersDTO> getOrders(String userId, String orderStatus) {
-        List<Orders> ordersList = ordersDSLRepository.findOrdersByDynamicCondition(userId, orderStatus);
-        return ordersList.stream()
-            .map(order -> new OrdersDTO(
-                order.getOrder_id(),
-                order.getUser().getUser_id(),
-                order.getOrder_date(),
-                order.getOrder_status(),
-                order.getPostcode(),
-                order.getOritem_address(),
-                order.getOritem_dtladdress(),
-                order.getOritem_name(),
-                order.getOritem_number(),
-                order.getPay_method(),
-                order.getOritem_payment(),
-                order.getOritem_count()))
-            .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<OrdersDTO> getOrders(String userId, String orderStatus) {
+//        List<Orders> ordersList = ordersDSLRepository.findOrdersByDynamicCondition(userId, orderStatus);
+//        return ordersList.stream()
+//            .map(order -> new OrdersDTO(
+//                order.getOrder_id(),
+//                order.getUser().getUser_id(),
+//                order.getOrder_date(),
+//                order.getOrder_status(),
+//                order.getPostcode(),
+//                order.getOritem_address(),
+//                order.getOritem_dtladdress(),
+//                order.getOritem_name(),
+//                order.getOritem_number(),
+//                order.getPay_method(),
+//                order.getOritem_payment(),
+//                order.getOritem_count()))
+//            .collect(Collectors.toList());
+//    }
 
     @Transactional
     @Override
     public void createOrder(OrdersDTO orderDto) {
+    	
+    	List<String> orderIds = ordersRepository.findAllOrderIds();
+    	String year = Integer.toString( LocalDate.now().getYear()).substring(2);
+    	String month = Integer.toString(LocalDate.now().getMonthValue());
+    	String day = Integer.toString(LocalDate.now().getDayOfMonth());
+    	
+    	String orderId = orderIds.stream().map(id -> id.substring(16))
+    			.map(Integer::parseInt)
+    			.max(Comparator.naturalOrder())
+    			.map(String::valueOf)
+    			.orElse("NoData");
+    	System.out.println("orderId"+orderId);
+    	if (orderId == "NoData") {
+			orderDto.setOrder_id(year+month+day+orderDto.getUser_id()+"0001");
+		} else {
+			int nextOrderId = Integer.parseInt(orderId) + 1;
+			System.out.println("nextOrderId" +nextOrderId);
+			
+			String nextId = String.format("%04d", nextOrderId);
+			System.out.println("nextId"+nextId);
+			orderDto.setOrder_id(year+month+day+orderDto.getUser_id()+nextId);
+		}
+    	System.out.println("orderid = "+orderDto.getOrder_id());
+    	// order_id 처리, orderdate 처리
         User user = userRepository.findById(orderDto.getUser_id())
             .orElseThrow(() -> new RuntimeException("User not found"));
 
         Orders orders = Orders.builder()
             .order_id(orderDto.getOrder_id())
             .user(user)
-            .order_date(orderDto.getOrder_date())
-            .order_status(orderDto.getOrder_status())
+            .order_date(LocalDateTime.now())
+            .order_status("order_cd01")
             .postcode(orderDto.getPostcode())
             .oritem_address(orderDto.getOritem_address())
             .oritem_dtladdress(orderDto.getOritem_dtladdress())
@@ -77,6 +119,42 @@ public class OrdersServiceImpl implements OrdersService {
             .build();
 
         ordersRepository.save(orders);
+        System.out.println("orders = " +orders);
+        
+        
+        for (OrderItemDTO item : orderDto.getItems()) {
+            // 각 아이템을 처리하는 로직
+            // 예: orderItemService.createOrderItem(item);
+        	 Product product = prepository.findById(item.getPro_id())
+                     .orElseThrow(() -> new RuntimeException("Product not found")); // 적절한 예외 처리
+        	Oritems oritems = Oritems.builder()
+        			.order_id(orders)
+        			.pro_id(product)
+        			.oritem_quan(item.getOritem_quan())
+        			.build();
+        	
+//        	oritemDSLRepository.insertOrderItems(item);
+        	oritemRepository.save(oritems);
+        	
+        	Cart cart = Cart.builder()
+        			.user_id(orderDto.getUser_id())
+        			.pro_id(item.getPro_id())
+        			.build();
+        	cartDSLrepository.deleteCart(cart);
+        	
+//        	int pro_stock = pDSLrepository.findbyproStock(item.getPro_id());
+        	
+        	pDSLrepository.updateStock(oritems);
+        	
+        }
+        
+//        for (int i = 0; i < orderDto.getItems(); i++) {
+//			
+//		}
+        
+//        Oritems oritems = Oritems.builder()
+//        		.order_id(orderDto.getOrder_id())
+//        		.pro_id(null);
     }
 
     

@@ -3,9 +3,6 @@ package com.example.demo.repository;
 import com.example.demo.domain.CartDTO;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.User;  // User 엔티티 추가
-import com.example.demo.entity.QCart;
-import com.example.demo.entity.QProduct;
-import com.example.demo.entity.QImg;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.PersistenceContext;
@@ -56,4 +53,16 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
                 .where(user.user_id.eq(loginId)) 
                 .fetchOne();
     }
+    
+    
+    @Override
+    public void deleteCart(Cart carts) {
+    	System.out.println("carts = "+carts);
+    	jpaQueryFactory.delete(cart)
+    	.where(cart.user_id.eq(carts.getUser_id()).and(cart.pro_id.eq(carts.getPro_id())))
+    	.execute();
+    }
+    
+    
+    
 }

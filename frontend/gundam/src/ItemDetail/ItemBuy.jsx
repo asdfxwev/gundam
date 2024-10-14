@@ -10,7 +10,7 @@ import { API_BASE_URL } from "../service/app-config";
 const ItemBuy = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { item, count } = location.state || {};
+    const { item, count, imgList } = location.state || {};
     const [total, setTotal] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
     const { loginInfo, isLoggedIn, onLogout } = useLogin();
@@ -59,7 +59,10 @@ const ItemBuy = () => {
 
     const formatNumber = (number) => number.toLocaleString('ko-KR');
 
-    const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
+    const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
+    // console.log("item = " + item);
+    // console.log("imgList = " + imgList);
+    // console.log("count = " + count);
 
     useEffect(() => {
         if (item && count) {
@@ -69,10 +72,15 @@ const ItemBuy = () => {
         }
     }, [item, count]);
 
+    // 유저정보가져오기
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/cart/user/${user_id}`);
+                const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
+                const response = await axios.get(`${API_BASE_URL}/cart/user`, {
+                    params: { user_id } // 쿼리 파라미터로 user_id 전달
+                });
+                console.log(response.data);
                 setUserDetails(response.data);
             } catch (error) {
                 console.error('사용자 정보 로드 중 오류 발생:', error);
@@ -80,7 +88,7 @@ const ItemBuy = () => {
         };
 
         fetchUserDetails();
-    }, [user_id]);
+    }, []);
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -118,25 +126,25 @@ const ItemBuy = () => {
             alert('배송 정보를 입력해주세요.');
             return;
         }
-    
+
         try {
             // const today = new Date();
             // const year = today.getFullYear().toString().slice(-2); // 마지막 두 자리 연도
             // const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (1~12)
             // const day = String(today.getDate()).padStart(2, '0'); // 일 (1~31)
             // const formattedDate = `${year}${month}${day}`; // yyMMdd 형식
-    
+
             // 유저의 주문 정보 생성
             const orderCountResponse = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
-            console.log('ordercountresponse : ',orderCountResponse);
+            console.log('ordercountresponse : ', orderCountResponse);
             const orderCount = orderCountResponse.data.length;
-            console.log('ordercount : ',orderCount);
+            console.log('ordercount : ', orderCount);
             // 주문 ID 생성
             // const order_id = `${formattedDate}${user_id}${String(orderCount + 1).padStart(4, '0')}`;
             // console.log('order_id : ',order_id);
             // 체크된 아이템만 포함
             const allItemsToBuy = checkedTrueItems.length > 0 ? checkedTrueItems : [];
-            
+
             // 배송 정보 설정
             const deliveryInfo = showUser ? {
                 deliveryUser: userDetails.user_name,
@@ -147,7 +155,7 @@ const ItemBuy = () => {
                 deliveryPhone,
                 deliveryAddress
             };
-    
+
             // 주문 데이터 생성
             const orderDto = {
                 // order_id,
@@ -167,27 +175,28 @@ const ItemBuy = () => {
                     oritem_quan: item.cart_quantity // 각 아이템의 수량 추가
                 }))
             };
-            console.log('orderdto : ',orderDto);
+
+            console.log('orderdto : ', orderDto);
             // 주문 정보를 백엔드로 전송
             await axios.post(`${API_BASE_URL}/api/orders`, orderDto);
-    
-            // 주문 아이템을 oritems 테이블에 추가
-            const orderItemsDto = allItemsToBuy.map(item => ({
-                // order_id,
-                pro_id: item.pro_id,
-                oritem_quan: item.cart_quantity // 각 아이템의 수량
-            }));
-    
-            // oritems 테이블에 아이템 추가
-            for (const orderItem of orderItemsDto) {
-                await axios.post(`${API_BASE_URL}/api/oritems`, orderItem);
-            }
-    
-            // 장바구니에서 모든 체크된 아이템 삭제
-            for (const item of allItemsToBuy) {
-                await axios.delete(`${API_BASE_URL}/cart/${user_id}/${item.pro_id}`);
-            }
-    
+
+            // // 주문 아이템을 oritems 테이블에 추가
+            // const orderItemsDto = allItemsToBuy.map(item => ({
+            //     // order_id,
+            //     pro_id: item.pro_id,
+            //     oritem_quan: item.cart_quantity // 각 아이템의 수량
+            // }));
+
+            // // oritems 테이블에 아이템 추가
+            // for (const orderItem of orderItemsDto) {
+            //     await axios.post(`${API_BASE_URL}/api/oritems`, orderItem);
+            // }
+
+            // // 장바구니에서 모든 체크된 아이템 삭제
+            // for (const item of allItemsToBuy) {
+            //     await axios.delete(`${API_BASE_URL}/cart/${user_id}/${item.pro_id}`);
+            // }
+
             alert('결제가 완료되었습니다.');
             navigate('../Order');
         } catch (error) {
@@ -195,7 +204,7 @@ const ItemBuy = () => {
             alert('결제 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
-    
+
     return (
         <div className="buy_main_box">
             <div className="buy_titlebar">
@@ -207,6 +216,9 @@ const ItemBuy = () => {
                         <div className="subtitle_left"><h3>상품 정보</h3></div>
                     </div>
                     <ItemBuyCartList
+                        item={item}
+                        imgList={imgList}
+                        count={count}
                         setTotal={setTotal}
                         setTotalQuantity={setTotalQuantity}
                         setCheckedTrueItems={setCheckedTrueItems} // 체크된 아이템을 설정할 수 있도록 props 추가
@@ -230,7 +242,9 @@ const ItemBuy = () => {
                                     <p>e-Mail</p>
                                     <p>{userDetails.email}</p>
                                     <p>배송지</p>
-                                    <p className='buy_user_address_box'>{userDetails.address}</p>
+                                    <span className='buy_user_address_box'>&nbsp;&nbsp;주소 : {userDetails.address}</span>
+                                    <span className='buy_user_address_boxs'>&nbsp;&nbsp;상세주소 : {userDetails.dtl_address}</span>
+
                                 </div>
                             ) : (
                                 <div id='delivery' className='delivery_info'>

@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import java.util.List;
 
 import com.example.demo.domain.ImgDTO;
+import com.example.demo.entity.Oritems;
 import com.example.demo.entity.Product;
 
 import org.springframework.data.domain.Page;
@@ -23,4 +24,10 @@ public interface ProductDSLRespository {
 	List<ImgDTO> searchList(String productname);
 	
 	Long countAllProduct(String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price);
+	
+	void updateStock(Oritems oritems);
+	
+//	int findbyproStock(String proId);
+	
+	
 }

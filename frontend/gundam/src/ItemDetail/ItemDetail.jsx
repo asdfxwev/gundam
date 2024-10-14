@@ -40,7 +40,7 @@ export default function ItemDetail() {
         if (productList) {
             setTotalPrice(count * productList.pro_price);
         }
-    }, [count, productList]);
+    }, [count]);
 
     const formatNumber = (number) => {
         return number.toLocaleString('ko-KR');
