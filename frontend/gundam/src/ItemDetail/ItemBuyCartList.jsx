@@ -9,8 +9,10 @@ import { API_BASE_URL } from "../service/app-config";
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
     console.log(item);
     const handleQuantityChange = (newQuantity) => {
-        if (newQuantity >= 1) {
+        if (newQuantity >= 1 && newQuantity <= item.pro_stock) {
             onQuantityChange(item.pro_id, newQuantity);
+        } else if (newQuantity > item.pro_stock) {
+            alert(`재고가 부족합니다. 현재 재고는 ${item.pro_stock}개입니다.`);
         }
     };
 

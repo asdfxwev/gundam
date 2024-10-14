@@ -21,6 +21,7 @@ public class CartDTO {
     private String user_name;   
     private String email;      
     private String phone_num;
+    private int pro_stock;
 
     @Override
     public String toString() {
@@ -32,6 +33,7 @@ public class CartDTO {
                ", total_price=" + (cart_quantity * pro_price) + 
                ", user_name=" + user_name + 
                ", phone_num=" + phone_num + 
-               ", email=" + email + "]";
+               ", email=" + email +
+               ", pro_stock=" +pro_stock +"]";
     }
 }
