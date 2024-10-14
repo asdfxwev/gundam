@@ -79,19 +79,6 @@ public class OrdersServiceImpl implements OrdersService {
         ordersRepository.save(orders);
     }
 
-    @Transactional
-    @Override
-    public void updateOrder(String orderId, OrdersDTO orderDto) {
-        Orders order = ordersRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
-        ordersRepository.save(order);
-    }
-
-    @Transactional
-    @Override
-    public void deleteOrder(String orderId) {
-        ordersRepository.deleteById(orderId);
-    }
-    
     
     @Override
     public Map<String, Object> orderList(String userId) {
@@ -132,11 +119,5 @@ public class OrdersServiceImpl implements OrdersService {
             .map(Code::getCode_id)
             .collect(Collectors.toList());
     }
-
-    @Override
-    public int findMaxOrderCountByUserId(String userId) {
-    	return ordersDSLRepository.findMaxOrderCountByUserId(userId);
-    }
-
 
 }

@@ -45,17 +45,9 @@ public class OrdersController {
         return ResponseEntity.ok(orderStatusCodes);
     }
 
-
-    @DeleteMapping("/{orderId}")
-    public ResponseEntity<String> deleteOrder(@PathVariable String orderId) {
-        ordersService.deleteOrder(orderId);
-        return ResponseEntity.ok("Order deleted successfully");
-    }
-    
     @PostMapping("/orderList")
     public ResponseEntity<?> orderList(@RequestBody UserDTO dto){
 //    	System.out.println("userid = "+dto.getUser_id());
-    	
     	
     	Map<String, Object> list = ordersService.orderList(dto.getUser_id());
 //    	System.out.println(list);

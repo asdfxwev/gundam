@@ -35,8 +35,6 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
                 .fetch();
     }
     
-    
-    
     @Override
     public List<String> searchOrderId(String userId) {
     	return queryFactory.select(orders.order_id)
