@@ -1,16 +1,23 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.OrdersDTO;
+
+import com.example.demo.domain.UserDTO;
+import com.example.demo.entity.Orders;
+import com.example.demo.entity.Oritems;
 import com.example.demo.service.OrdersService;
+
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/orders")
+@AllArgsConstructor
 public class OrdersController {
 
     private final OrdersService ordersService;
@@ -38,4 +45,24 @@ public class OrdersController {
         return ResponseEntity.ok(orderStatusCodes);
     }
 
+
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<String> deleteOrder(@PathVariable String orderId) {
+        ordersService.deleteOrder(orderId);
+        return ResponseEntity.ok("Order deleted successfully");
+    }
+    
+    @PostMapping("/orderList")
+    public ResponseEntity<?> orderList(@RequestBody UserDTO dto){
+//    	System.out.println("userid = "+dto.getUser_id());
+    	
+    	
+    	Map<String, Object> list = ordersService.orderList(dto.getUser_id());
+//    	System.out.println(list);
+    	
+    	return ResponseEntity.ok(list);
+    }
+    
+    
+    
 }

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import com.example.demo.domain.ReviewDTO;
+import com.example.demo.domain.ReviewModifyDTO;
 import com.example.demo.domain.reviewanswerDTO;
 import com.example.demo.entity.Review;
 
@@ -12,9 +13,13 @@ public interface ReviewService {
 	
 	Review save(ReviewDTO dto);
 	
+	void reviewUpdate(ReviewModifyDTO dto);
+	
 	List<Review> selectList(String proId);
 	List<Review> selectList();
 	
 	void update(reviewanswerDTO dto);
+	
+	void reviewDelete(ReviewDTO dto);
 
 }
