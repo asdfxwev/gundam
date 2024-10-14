@@ -20,44 +20,46 @@ const ItemBuy = () => {
     const [deliveryUser, setDeliveryUser] = useState('');
     const [deliveryPhone, setDeliveryPhone] = useState('');
     const [userDetails, setUserDetails] = useState({});
-    const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
+    // const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
     const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
     const [payMethod, setPayMethod] = useState('신용카드');
     const addressKakaoRef = useRef(null);
     // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
     // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
-    useEffect(() => {
-        if (isLoggedIn) {
-            let url = `/user/token_info`;
+    // useEffect(() => {
+    //     if (isLoggedIn) {
+    //         let url = `/user/token_info`;
 
-            const response = apiCall(url, 'POST', null, loginInfo)
-                .then((response) => {
-                    // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
-                    setUser_id(response);
+    //         const response = apiCall(url, 'POST', null, loginInfo)
+    //             .then((response) => {
+    //                 // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
+    //                 setUser_id(response);
 
-                }).catch((err) => {
-                    onLogout(); // 로그아웃 상태로 처리
-                    alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
-                });
-        }
+    //             }).catch((err) => {
+    //                 onLogout(); // 로그아웃 상태로 처리
+    //                 alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+    //             });
+    //     }
 
-    }, [isLoggedIn, loginInfo, onLogout]);
+    // }, [isLoggedIn, loginInfo, onLogout]);
 
-    useEffect(() => {
-        if (user_id && user_id.length > 0) {
-            let url = `/user/user_info`;
+    // useEffect(() => {
+    //     if (user_id && user_id.length > 0) {
+    //         let url = `/user/user_info`;
 
-            const data = { user_id: user_id };
+    //         const data = { user_id: user_id };
 
-            const response = apiCall(url, 'POST', data, null)
-                .then((response) => {
-                    // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
-                    setUserInfo(response);
-                });
-        }
-    }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
+    //         const response = apiCall(url, 'POST', data, null)
+    //             .then((response) => {
+    //                 // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
+    //                 setUserInfo(response);
+    //             });
+    //     }
+    // }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
 
     const formatNumber = (number) => number.toLocaleString('ko-KR');
+
+    const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
 
     useEffect(() => {
         if (item && count) {
@@ -118,11 +120,11 @@ const ItemBuy = () => {
         }
     
         try {
-            const today = new Date();
-            const year = today.getFullYear().toString().slice(-2); // 마지막 두 자리 연도
-            const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (1~12)
-            const day = String(today.getDate()).padStart(2, '0'); // 일 (1~31)
-            const formattedDate = `${year}${month}${day}`; // yyMMdd 형식
+            // const today = new Date();
+            // const year = today.getFullYear().toString().slice(-2); // 마지막 두 자리 연도
+            // const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (1~12)
+            // const day = String(today.getDate()).padStart(2, '0'); // 일 (1~31)
+            // const formattedDate = `${year}${month}${day}`; // yyMMdd 형식
     
             // 유저의 주문 정보 생성
             const orderCountResponse = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
@@ -130,8 +132,8 @@ const ItemBuy = () => {
             const orderCount = orderCountResponse.data.length;
             console.log('ordercount : ',orderCount);
             // 주문 ID 생성
-            const order_id = `${formattedDate}${user_id}${String(orderCount + 1).padStart(4, '0')}`;
-            console.log('order_id : ',order_id);
+            // const order_id = `${formattedDate}${user_id}${String(orderCount + 1).padStart(4, '0')}`;
+            // console.log('order_id : ',order_id);
             // 체크된 아이템만 포함
             const allItemsToBuy = checkedTrueItems.length > 0 ? checkedTrueItems : [];
             
@@ -148,10 +150,10 @@ const ItemBuy = () => {
     
             // 주문 데이터 생성
             const orderDto = {
-                order_id,
+                // order_id,
                 user_id: user_id,
-                order_date: today.toISOString(),
-                order_status: "order_cd01", // 단일 문자열로 설정
+                // order_date: today.toISOString(),
+                // order_status: "order_cd01", // 단일 문자열로 설정
                 postcode: userDetails.postcode,
                 oritem_address: userDetails.address,
                 oritem_dtladdress: userDetails.dtl_address,
@@ -171,7 +173,7 @@ const ItemBuy = () => {
     
             // 주문 아이템을 oritems 테이블에 추가
             const orderItemsDto = allItemsToBuy.map(item => ({
-                order_id,
+                // order_id,
                 pro_id: item.pro_id,
                 oritem_quan: item.cart_quantity // 각 아이템의 수량
             }));
