@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	// => JPQL 적용
 	@Modifying
 	@Transactional
-	@Query("Update User u set u.password=:password where u.login_id=:login_id")
+	@Query("UPDATE User u SET u.password=:password WHERE u.login_id=:login_id")
 	void updatePassword(@Param("login_id") String login_id, @Param("password") String password);
 	
 	// => NativeQuery 적용
@@ -28,9 +28,19 @@ public interface UserRepository extends JpaRepository<User, String> {
 	//		value = "Update User set password=:password where login_id=:login_id")
 	//void updatePassword2(@Param("login_id") String login_id, @Param("password") String password);
 	
-	@Query("select u from User u where u.login_id = :login_id")
+	// 로그인, ID중복체크
+	@Query("SELECT u FROM User u WHERE u.login_id = :login_id")
     User UserDetail(@Param("login_id") String login_id);
+
+	// user정보 select
+	@Query("SELECT u FROM User u WHERE u.user_id = :user_id")
+	User UserInfo(@Param("user_id") String user_id);
 	
+	// token 값으로 user_id get
+	@Query("SELECT u.user_id FROM User u WHERE u.login_id = :login_id")
+	String UserId(@Param("login_id") String login_id);
+	
+	// 회원가입시 user_id 값 순차증가를 위한 select
 	@Query("SELECT u.user_id FROM User u")
     List<String> findAllUserId();
 	

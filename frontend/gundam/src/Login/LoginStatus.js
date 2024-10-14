@@ -57,7 +57,7 @@ export function LoginProvider({ children }) {
     // 로그아웃 함수
     const onLogout = () => {
         let url = "/user/logout";
-        alert(`** 로그아웃 토큰 확인: ${loginInfo.token}`);
+        // alert(`** 로그아웃 토큰 확인: ${loginInfo.token}`);
         apiCall(url, 'GET', null, loginInfo.token)
             .then(() => {
                 sessionStorage.clear();

@@ -31,6 +31,17 @@ public class UserServiceImpl implements UserService {
 	public User selectOne(String login_id) {
 		return urepository.UserDetail(login_id);
 	}
+
+	@Override
+	public User UserInfo(String user_id) {
+		return urepository.UserInfo(user_id);
+	}
+	
+	// user_id 찾기
+	@Override
+	public String getUserId(String login_id) {
+		return urepository.UserId(login_id);
+	}
 	
 	// ** insert, update
 	@Override
@@ -55,16 +66,16 @@ public class UserServiceImpl implements UserService {
 	        entity.setRetry(0);
 	    }
 		
-		// 입력받은 생년월일(yyyy-mm-dd)을 yymmdd형태로 저장
-		// yymmdd 형태로 변환할 포맷터 정의
-//	    DateTimeFormatter birth_format = DateTimeFormatter.ofPattern("yyMMdd");
-//	    
-//        String birth = entity.getBirth();
-//
-//		// String을 LocalDate로 변환
-//        LocalDate birthDate = LocalDate.parse(birth);
-//		
-//        entity.setBirth(birthDate.format(birth_format));
+		//입력받은 생년월일(yyyy-mm-dd)을 yymmdd형태로 저장
+		//yymmdd 형태로 변환할 포맷터 정의
+	    //DateTimeFormatter birth_format = DateTimeFormatter.ofPattern("yyMMdd");
+	    
+        //String birth = entity.getBirth();
+
+		// String을 LocalDate로 변환
+        //LocalDate birthDate = LocalDate.parse(birth);
+		
+        //entity.setBirth(birthDate.format(birth_format));
 		
 		return urepository.save(entity);
 	}
