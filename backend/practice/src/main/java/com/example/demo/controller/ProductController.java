@@ -91,52 +91,6 @@ public class ProductController {
 	}
 	
 	
-	// 상품 구매한 것인지 확인하는거
-	@PostMapping("productReviewId")
-	public ResponseEntity<?> productReviewId(@RequestBody ReviewFirstDTO reviewdto) {
-		System.out.println("userId = "+reviewdto.getUser_id());
-		System.out.println("proId = "+reviewdto.getPro_id());
-		String userId =  reviewdto.getUser_id();
-		String proId = reviewdto.getPro_id();
-		// 유저 아이디로 orderid찾기
-		List<String> userorderId = orservice.searchOrderId(userId);
-		System.out.println("userorderId = " +userorderId);
-		// proid로 상품
-		List<String> productOrderId = oriservice.searchOrderId(proId);
-		System.out.println("productOrderId = " +productOrderId);
-		
-		// userId와 proId로 review에서 가져오기
-		List<String> orderOrderId = reservice.searchOrderId(userId, proId);
-		System.out.println("orderOrderId = " +orderOrderId);
-		
-		
-		for(String uo : userorderId ) {
-			System.out.println("uo = " +uo);
-			for(String po : productOrderId) {
-				System.out.println("po = " +po);
-				System.out.println("a"+uo.equals(po));
-				System.out.println("b"+orderOrderId.isEmpty());
-				if (uo.equals(po) && orderOrderId.isEmpty()) {
-					System.out.println(3);
-					return ResponseEntity.ok(uo);
-				}
-				for(String oo : orderOrderId) {
-					System.out.println("oo = " +oo);
-					if ((uo.equals(po) && !uo.equals(oo) && !po.equals(oo)) || (uo.equals(po) && !uo.equals(oo) && !po.equals(oo) && oo.isEmpty())) {
-						System.out.println(1);
-						return ResponseEntity.ok(uo);
-					}
-				}
-
-			}
-		}
-		System.out.println(2);
-		return ResponseEntity.ok(false);
-	}
-	
-	
-	
-	
 	
 	
 	@PostMapping("productReview")
