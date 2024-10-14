@@ -38,5 +38,30 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
                 .where(orders.user.user_id.eq(userId))
                 .fetch();
     }
+    
+    @Override
+    public int findMaxOrderCountByUserId(String userId) {
+        try {
+            System.out.println("Fetching max order count for userId: " + userId);
+            String maxOrderId = queryFactory
+                .select(orders.order_id.max())
+                .from(orders)
+                .where(orders.user.user_id.eq(userId))
+                .fetchOne();
+
+            if (maxOrderId == null) {
+                System.out.println("No orders found for userId: " + userId);
+                return 0;
+            }
+
+            String numericPart = maxOrderId.replaceAll("\\D", "");
+            return numericPart.isEmpty() ? 0 : Integer.parseInt(numericPart);
+        } catch (Exception e) {
+            System.err.println("Error fetching max order count for userId: " + userId);
+            e.printStackTrace();
+            throw new RuntimeException("Failed to fetch max order count for userId: " + userId);
+        }
+    }
+
 
 }

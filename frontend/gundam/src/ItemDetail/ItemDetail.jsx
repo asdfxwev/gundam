@@ -9,6 +9,8 @@ import axios from 'axios';
 import TopBtn from '../header/topBtn.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { useLogin } from '../Login/LoginStatus';
+import { apiCall } from '../service/apiService';
 import { API_BASE_URL } from "../service/app-config";
 
 export default function ItemDetail() {
@@ -16,16 +18,19 @@ export default function ItemDetail() {
     const [isAdded, setIsAdded] = useState(false);
     const [productList, setProductList] = useState(null);
     const [imgList, setImgList] = useState([]);
+    const { loginInfo, isLoggedIn, onLogout } = useLogin();
     const [totalprice, setTotalPrice] = useState(0);
     const [mainImage, setMainImage] = useState(null);
     const [count, setCount] = useState(1);
     const location = useLocation();
     const { id } = useParams();
     const [reviewList, setReviewList] = useState([]);
+    const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
+    const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
     const proId = location.pathname.split('/').pop();
 
-    const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
-    const userId = existingInquiries ? existingInquiries.user_id : null;
+    // const existingInquiries = JSON.parse(sessionStorage.getItem('loginInfo'));
+    // const userId = existingInquiries ? existingInquiries.user_id : null;
 
     const handleImageClick = (src) => {
         setMainImage(src);
@@ -58,7 +63,6 @@ export default function ItemDetail() {
             try {
                 const params = { proId };
                 const response = await axios.get(`${API_BASE_URL}/product/productDetail`, { params });
-                console.log('response ? ',response);
                 const { productList, imgList, reviewList } = response.data;
                 setProductList(productList);
                 setImgList(imgList);
@@ -75,8 +79,41 @@ export default function ItemDetail() {
         fetchData();
     }, [proId]);
 
+    // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
+    // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
+    useEffect(() => {
+        if (isLoggedIn) {
+            let url = `/user/token_info`;
+
+            const response = apiCall(url, 'POST', null, loginInfo)
+                .then((response) => {
+                    // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUser_id(response);
+
+                }).catch((err) => {
+                    onLogout(); // 로그아웃 상태로 처리
+                    alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+                });
+        }
+
+    }, [isLoggedIn, loginInfo, onLogout]);
+
+    useEffect(() => {
+        if (user_id && user_id.length > 0) {
+            let url = `/user/user_info`;
+
+            const data = { user_id: user_id };
+            
+            const response = apiCall(url, 'POST', data, null)
+                .then((response) => {
+                    // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUserInfo(response);
+                });
+        }
+    }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
+
     const handleBuyClick = (e) => {
-        if (existingInquiries) {
+        if (isLoggedIn) {
             e.preventDefault();
             console.log('productList:', productList, 'imgList:', imgList, 'count:', count);
             navigate('/ItemBuy', { state: { item: productList, imgList, count } });
@@ -84,9 +121,9 @@ export default function ItemDetail() {
             navigate('/Login');
         }
     };
-
+    
     const toCart = async (e) => {
-        if (existingInquiries) {
+        if (isLoggedIn) {
             e.preventDefault();
 
             const quantity = Number(count);
@@ -95,22 +132,17 @@ export default function ItemDetail() {
                 return;
             }
 
-            const loginInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-            const userId = loginInfo ? loginInfo.user_id : null;
-
-            if (!userId) {
+            if (!user_id) {
                 alert('로그인 정보가 없습니다.');
                 navigate('/Login');
                 return;
             }
 
             const cartData = {
-                user_id: userId,
+                user_id,
                 pro_id: proId,
                 cart_quantity: quantity,
             };
-
-            console.log('장바구니 추가 요청 데이터:', JSON.stringify(cartData, null, 2));
 
             try {
                 const response = await axios.post(`${API_BASE_URL}/cart`, cartData);

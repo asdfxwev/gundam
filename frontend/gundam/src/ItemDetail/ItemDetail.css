@@ -406,17 +406,20 @@
     padding: 0.5rem;
     transition: background-color 0.3s;
     position: relative;
-    overflow: hidden; /* 내용이 넘어가지 않도록 설정 */
+    overflow: hidden;
+    /* 내용이 넘어가지 않도록 설정 */
 }
 
 .qna_list_row .qna_state {
     color: red;
     font-weight: 600;
-    width: 200px; /* 적절한 크기 설정 */
+    width: 200px;
+    /* 적절한 크기 설정 */
 }
 
 .qna_list_row div:last-of-type {
-    flex-grow: 1; /* 확장될 수 있는 공간 */
+    flex-grow: 1;
+    /* 확장될 수 있는 공간 */
 }
 
 .qna_details {
@@ -428,7 +431,8 @@
 }
 
 .qna_details.show {
-    max-height: 1000px; /* 충분히 큰 값으로 설정, 내용에 맞게 조정 */
+    max-height: 1000px;
+    /* 충분히 큰 값으로 설정, 내용에 맞게 조정 */
     padding: 1rem;
     margin-top: 0.5rem;
 }
@@ -942,7 +946,13 @@
     height: 30px;
     border: none;
     border-radius: 10px;
-    
+
+}
+
+.pay_method_box {
+    display: flex;
+    flex-direction: row; 
+    gap: 15px; 
 }
 
 .address_search_btn:hover {
@@ -950,8 +960,9 @@
     background-color: blue;
 }
 
-.buy_delivery_address_box {
+.buy_delivery_address {
     height: 80px;
+    width: 100%;
     grid-area: 4/1/5/3;
 }
 

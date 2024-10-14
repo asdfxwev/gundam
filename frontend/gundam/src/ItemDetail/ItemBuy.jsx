@@ -3,6 +3,8 @@ import './ItemDetail.css';
 import ItemBuyCartList from './ItemBuyCartList';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useLogin } from '../Login/LoginStatus';
+import { apiCall } from '../service/apiService';
 import { API_BASE_URL } from "../service/app-config";
 
 const ItemBuy = () => {
@@ -11,15 +13,49 @@ const ItemBuy = () => {
     const { item, count } = location.state || {};
     const [total, setTotal] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
+    const { loginInfo, isLoggedIn, onLogout } = useLogin();
     const [showUser, setShowUser] = useState(true);
     const [checkedTrueItems, setCheckedTrueItems] = useState([]);
     const [deliveryAddress, setDeliveryAddress] = useState('');
     const [deliveryUser, setDeliveryUser] = useState('');
     const [deliveryPhone, setDeliveryPhone] = useState('');
     const [userDetails, setUserDetails] = useState({});
+    const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
+    const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
     const [payMethod, setPayMethod] = useState('신용카드');
-    const loginId = JSON.parse(sessionStorage.getItem('userId')).user_id;
     const addressKakaoRef = useRef(null);
+    // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
+    // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
+    useEffect(() => {
+        if (isLoggedIn) {
+            let url = `/user/token_info`;
+
+            const response = apiCall(url, 'POST', null, loginInfo)
+                .then((response) => {
+                    // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUser_id(response);
+
+                }).catch((err) => {
+                    onLogout(); // 로그아웃 상태로 처리
+                    alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+                });
+        }
+
+    }, [isLoggedIn, loginInfo, onLogout]);
+
+    useEffect(() => {
+        if (user_id && user_id.length > 0) {
+            let url = `/user/user_info`;
+
+            const data = { user_id: user_id };
+
+            const response = apiCall(url, 'POST', data, null)
+                .then((response) => {
+                    // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUserInfo(response);
+                });
+        }
+    }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
 
     const formatNumber = (number) => number.toLocaleString('ko-KR');
 
@@ -34,7 +70,7 @@ const ItemBuy = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/cart/user/${loginId}`);
+                const response = await axios.get(`${API_BASE_URL}/cart/user/${user_id}`);
                 setUserDetails(response.data);
             } catch (error) {
                 console.error('사용자 정보 로드 중 오류 발생:', error);
@@ -42,7 +78,7 @@ const ItemBuy = () => {
         };
 
         fetchUserDetails();
-    }, [loginId]);
+    }, [user_id]);
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -80,39 +116,25 @@ const ItemBuy = () => {
             alert('배송 정보를 입력해주세요.');
             return;
         }
-
+    
         try {
             const today = new Date();
             const year = today.getFullYear().toString().slice(-2); // 마지막 두 자리 연도
             const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (1~12)
             const day = String(today.getDate()).padStart(2, '0'); // 일 (1~31)
             const formattedDate = `${year}${month}${day}`; // yyMMdd 형식
-
+    
             // 유저의 주문 정보 생성
-            const orderCountResponse = await axios.get(`${API_BASE_URL}/cart/${loginId}`);
+            const orderCountResponse = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
+            console.log('ordercountresponse : ',orderCountResponse);
             const orderCount = orderCountResponse.data.length;
-            const order_id = `${formattedDate}${loginId}${String(orderCount + 1).padStart(4, '0')}`;
-
-            // 코드 테이블에서 order_status 가져오기 (order_cd01)
-            const orderStatusResponse = await axios.get(`${API_BASE_URL}/api/orders/status`);
-            const order_status = "order_cd01"; // 단일 문자열로 설정
-
-            // 유저 정보에서 우편번호, 주소, 상세주소 가져오기
-            const { postcode, address, dtl_address } = userDetails;
-
-            // 장바구니의 아이템을 불러옴
-            const itemsToBuyFromCart = (await axios.get(`${API_BASE_URL}/cart/${loginId}`)).data;
-
-            const itemDetailToBuy = item ? {
-                ...item,
-                quantity: item.quantity,
-                pro_id: item.pro_id,
-                order_id: order_id
-            } : null;
-
+            console.log('ordercount : ',orderCount);
+            // 주문 ID 생성
+            const order_id = `${formattedDate}${user_id}${String(orderCount + 1).padStart(4, '0')}`;
+            console.log('order_id : ',order_id);
             // 체크된 아이템만 포함
-            const allItemsToBuy = checkedTrueItems.length > 0 ? checkedTrueItems : itemDetailToBuy ? [itemDetailToBuy] : itemsToBuyFromCart;
-
+            const allItemsToBuy = checkedTrueItems.length > 0 ? checkedTrueItems : [];
+            
             // 배송 정보 설정
             const deliveryInfo = showUser ? {
                 deliveryUser: userDetails.user_name,
@@ -123,57 +145,55 @@ const ItemBuy = () => {
                 deliveryPhone,
                 deliveryAddress
             };
-
+    
             // 주문 데이터 생성
             const orderDto = {
                 order_id,
-                user_id: loginId,
+                user_id: user_id,
                 order_date: today.toISOString(),
-                order_status,
-                postcode: postcode,
-                oritem_address: address,
-                oritem_dtladdress: dtl_address,
+                order_status: "order_cd01", // 단일 문자열로 설정
+                postcode: userDetails.postcode,
+                oritem_address: userDetails.address,
+                oritem_dtladdress: userDetails.dtl_address,
                 oritem_name: deliveryInfo.deliveryUser, // 수령자 정보
                 oritem_number: deliveryInfo.deliveryPhone, // 연락처 정보
                 pay_method: payMethod,
                 oritem_payment: total,
-                oritem_count: allItemsToBuy.length, // 최종 결제된 pro_id 갯수
+                oritem_count: allItemsToBuy.length, // 체크된 아이템의 수량
                 items: allItemsToBuy.map(item => ({
                     pro_id: item.pro_id,
                     oritem_quan: item.cart_quantity // 각 아이템의 수량 추가
                 }))
             };
-            console.log('orderdto', orderDto);
+            console.log('orderdto : ',orderDto);
             // 주문 정보를 백엔드로 전송
             await axios.post(`${API_BASE_URL}/api/orders`, orderDto);
-
+    
             // 주문 아이템을 oritems 테이블에 추가
             const orderItemsDto = allItemsToBuy.map(item => ({
                 order_id,
                 pro_id: item.pro_id,
                 oritem_quan: item.cart_quantity // 각 아이템의 수량
             }));
-            console.log('orderitemsdto', orderItemsDto);
-
+    
             // oritems 테이블에 아이템 추가
             for (const orderItem of orderItemsDto) {
                 await axios.post(`${API_BASE_URL}/api/oritems`, orderItem);
             }
-
-            // 장바구니에서 모든 아이템 삭제
+    
+            // 장바구니에서 모든 체크된 아이템 삭제
             for (const item of allItemsToBuy) {
-                await axios.delete(`${API_BASE_URL}/cart/${loginId}/${item.pro_id}`);
+                await axios.delete(`${API_BASE_URL}/cart/${user_id}/${item.pro_id}`);
             }
-
+    
             alert('결제가 완료되었습니다.');
             navigate('../Order');
         } catch (error) {
             console.error('결제 처리 중 오류 발생:', error);
-            alert(`오류 발생: ${error.response?.data || error.message}`);
+            alert('결제 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
-
-
+    
     return (
         <div className="buy_main_box">
             <div className="buy_titlebar">

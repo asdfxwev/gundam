@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './ItemDetail.css';
 import axios from 'axios';
+import { useLogin } from '../Login/LoginStatus';
+import { apiCall } from '../service/apiService';
 import { API_BASE_URL } from "../service/app-config";
 
 // CartItem 컴포넌트
@@ -45,8 +47,42 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
     const [cartItems, setCartItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState([]);
     const [isAllChecked, setIsAllChecked] = useState(false);
-    const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
+    const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
+    const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
+    const { loginInfo, isLoggedIn, onLogout } = useLogin();
 
+       // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
+    // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
+    useEffect(() => {
+        if (isLoggedIn) {
+            let url = `/user/token_info`;
+
+            const response = apiCall(url, 'POST', null, loginInfo)
+                .then((response) => {
+                    // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUser_id(response);
+
+                }).catch((err) => {
+                    onLogout(); // 로그아웃 상태로 처리
+                    alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+                });
+        }
+
+    }, [isLoggedIn, loginInfo, onLogout]);
+
+    useEffect(() => {
+        if (user_id && user_id.length > 0) {
+            let url = `/user/user_info`;
+
+            const data = { user_id: user_id };
+            
+            const response = apiCall(url, 'POST', data, null)
+                .then((response) => {
+                    // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUserInfo(response);
+                });
+        }
+    }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
     // 데이터 로드 및 장바구니 아이템 설정
     useEffect(() => {
         const fetchData = async () => {

@@ -10,4 +10,5 @@ public interface OrdersService {
     void createOrder(OrdersDTO orderDto);    
     List<String> searchOrderId(String userId);
     List<String> getOrderStatusCodes();
+    int findMaxOrderCountByUserId(String uerId);
 }

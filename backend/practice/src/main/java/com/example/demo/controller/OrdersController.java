@@ -37,5 +37,11 @@ public class OrdersController {
         System.out.println("orderstatuscode : "+orderStatusCodes);
         return ResponseEntity.ok(orderStatusCodes);
     }
+    @GetMapping("/maxOrderCount/{userId}")
+    public ResponseEntity<Integer> getMaxOrderCount(@PathVariable("userId") String userId) {
+        int maxOrderCount = ordersService.findMaxOrderCountByUserId(userId);
+        System.out.println("maxOrdercount : "+maxOrderCount);
+        return ResponseEntity.ok(maxOrderCount);
+       }
+    }
 
-}

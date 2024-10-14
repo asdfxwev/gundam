@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './cart.css';
 import axios from 'axios';
+import { useLogin } from '../Login/LoginStatus';
+import { apiCall } from '../service/apiService';
 import MypageLeft from '../MyPage/MypageLeft';
 import { API_BASE_URL } from '../service/app-config';
 
@@ -47,21 +49,57 @@ const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
 // Cart 컴포넌트 정의
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
+    const { loginInfo, isLoggedIn, onLogout } = useLogin();
     const [checkedItems, setCheckedItems] = useState([]);
     const [isAllChecked, setIsAllChecked] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
+    const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
+    const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
     const navigate = useNavigate();
+
+    // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
+    // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
+    useEffect(() => {
+        if (isLoggedIn) {
+            let url = `/user/token_info`;
+
+            const response = apiCall(url, 'POST', null, loginInfo)
+                .then((response) => {
+                    // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUser_id(response);
+
+                }).catch((err) => {
+                    onLogout(); // 로그아웃 상태로 처리
+                    alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+                });
+        }
+
+    }, [isLoggedIn, loginInfo, onLogout]);
+
+    useEffect(() => {
+        if (user_id && user_id.length > 0) {
+            let url = `/user/user_info`;
+
+            const data = { user_id: user_id };
+            
+            const response = apiCall(url, 'POST', data, null)
+                .then((response) => {
+                    // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUserInfo(response);
+                });
+        }
+    }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log('user_id ?',user_id);
             try {
                 const response = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
                 setCartItems(response.data);
                 setCheckedItems(response.data.map(item => item.pro_id));
                 setIsAllChecked(response.data.length > 0);
             } catch (error) {
-                setErrorMessage('카트 데이터를 가져오는 데 실패했습니다.');
+                // setErrorMessage('카트 데이터를 가져오는 데 실패했습니다.');
             }
         };
         fetchData();

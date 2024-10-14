@@ -83,7 +83,10 @@ public class OrdersServiceImpl implements OrdersService {
             .collect(Collectors.toList());
     }
 
-
+    @Override
+    public int findMaxOrderCountByUserId(String userId) {
+    	return ordersDSLRepository.findMaxOrderCountByUserId(userId);
+    }
 
 
 }
