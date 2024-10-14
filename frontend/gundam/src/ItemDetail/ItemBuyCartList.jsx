@@ -45,7 +45,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
     const [cartItems, setCartItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState([]);
     const [isAllChecked, setIsAllChecked] = useState(false);
-    const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
+    const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
 
     // 데이터 로드 및 장바구니 아이템 설정
     useEffect(() => {

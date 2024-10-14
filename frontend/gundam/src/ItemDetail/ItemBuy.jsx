@@ -18,7 +18,7 @@ const ItemBuy = () => {
     const [deliveryPhone, setDeliveryPhone] = useState('');
     const [userDetails, setUserDetails] = useState({});
     const [payMethod, setPayMethod] = useState('신용카드');
-    const loginId = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
+    const loginId = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
     const addressKakaoRef = useRef(null);
 
     const formatNumber = (number) => number.toLocaleString('ko-KR');

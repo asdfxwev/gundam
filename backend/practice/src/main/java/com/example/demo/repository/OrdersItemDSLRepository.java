@@ -1,9 +1,9 @@
 package com.example.demo.repository;
 
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
-import com.querydsl.jpa.impl.JPAQuery;
-
+@Repository
 public interface OrdersItemDSLRepository {
 	
 	List<String> searchOrderId(String proId);

@@ -2,16 +2,12 @@ package com.example.demo.repository;
 
 import static com.example.demo.entity.QOrders.orders;
 
-import com.example.demo.domain.ImgDTO;
 import com.example.demo.entity.Orders;
-import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.example.demo.entity.QOrders;
 import lombok.RequiredArgsConstructor;
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,8 +17,6 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
 
     @Override
     public List<Orders> findOrdersByDynamicCondition(String userId, String orderStatus) {
-        QOrders orders = QOrders.orders;
-
         return queryFactory.selectFrom(orders)
                 .where(
                     (userId != null) ? orders.user.user_id.eq(userId) : null,
@@ -30,22 +24,19 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
                 )
                 .fetch();
     }
-    
-    
-    
+
     @Override
     public List<String> searchOrderId(String userId) {
-    	return queryFactory.select(orders.order_id)
-    			.from(orders)
-    			.where(orders.user.user_id.eq(userId))
-    			.fetch();
+        return queryFactory.select(orders.order_id)
+                .from(orders)
+                .where(orders.user.user_id.eq(userId))
+                .fetch();
     }
-    
-    
-//    @Override
-//    public List<Orders> orderList(String user_id) {
-//    	return queryFactory.;
-//    }
-    
-    
+    @Override
+    public List<Orders> orderList(String userId) {
+        return queryFactory.selectFrom(orders)
+                .where(orders.user.user_id.eq(userId))
+                .fetch();
+    }
+
 }

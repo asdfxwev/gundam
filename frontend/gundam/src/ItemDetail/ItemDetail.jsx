@@ -24,7 +24,7 @@ export default function ItemDetail() {
     const [reviewList, setReviewList] = useState([]);
     const proId = location.pathname.split('/').pop();
 
-    const existingInquiries = JSON.parse(sessionStorage.getItem('loginInfo'));
+    const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
     const userId = existingInquiries ? existingInquiries.user_id : null;
 
     const handleImageClick = (src) => {
@@ -58,6 +58,7 @@ export default function ItemDetail() {
             try {
                 const params = { proId };
                 const response = await axios.get(`${API_BASE_URL}/product/productDetail`, { params });
+                console.log('response ? ',response);
                 const { productList, imgList, reviewList } = response.data;
                 setProductList(productList);
                 setImgList(imgList);
@@ -94,7 +95,7 @@ export default function ItemDetail() {
                 return;
             }
 
-            const loginInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
+            const loginInfo = JSON.parse(sessionStorage.getItem('userInfo'));
             const userId = loginInfo ? loginInfo.user_id : null;
 
             if (!userId) {
