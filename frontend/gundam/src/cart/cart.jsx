@@ -50,7 +50,7 @@ const Cart = () => {
     const [checkedItems, setCheckedItems] = useState([]);
     const [isAllChecked, setIsAllChecked] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
+    const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
     const navigate = useNavigate();
 
     useEffect(() => {
