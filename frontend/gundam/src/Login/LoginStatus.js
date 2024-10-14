@@ -14,8 +14,8 @@ export function LoginProvider({ children }) {
     // 로그인 정보 확인 (sessionStorage에서 로그인 상태 확인)
     useEffect(() => {
         const loginCheck = JSON.parse(sessionStorage.getItem("loginInfo"));
-        // if (loginCheck !== null && loginCheck.length > 0) {  // 세션스토리지에서 토큰만 사용할때
-        if (loginCheck !== null && loginCheck.token != null) {
+        if (loginCheck !== null && loginCheck.length > 0) {  // 세션스토리지에서 토큰만 사용할때
+        // if (loginCheck !== null && loginCheck.token != null) {
             setIsLoggedIn(true);
             setLoginInfo(loginCheck);
             //alert(`** sessionStorage 로그인 확인 token=${loginCheck}`);
@@ -34,7 +34,7 @@ export function LoginProvider({ children }) {
                 alert('로그인 성공');
                 setIsLoggedIn(true);
                 setLoginInfo(response);
-                alert("로그인 토큰값 확인 => " + response.token);
+                alert("로그인 토큰값 확인 => " + response);
                 navigate("/");
             }).catch((err) => {
                 setIsLoggedIn(false);

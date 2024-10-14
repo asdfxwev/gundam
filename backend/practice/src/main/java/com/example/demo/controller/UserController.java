@@ -165,8 +165,8 @@ public class UserController {
     		service.save(entity);
     		
     		log.info("로그인 성공 => " + HttpStatus.OK);
-    		return ResponseEntity.ok(userDTO);
-//    		return ResponseEntity.ok(token);	// 세션스토리지에서 토큰만 사용할때
+//    		return ResponseEntity.ok(userDTO);
+    		return ResponseEntity.ok(token);	// 세션스토리지에서 토큰만 사용할때
     		
     		
     	} else if(entity != null && passwordEncoder.matches(password, entity.getPassword()) && logintry >= 5) {
