@@ -42,8 +42,8 @@ export default function Menu() {
         if (isLoggedIn) {
             let url = `/user/token_info`;
 
-            // const response = apiCall(url, 'POST', null, loginInfo)   // 세션스토리지에서 토큰만 사용할때
-            const response = apiCall(url, 'POST', null, loginInfo.token)
+            const response = apiCall(url, 'POST', null, loginInfo)   // 세션스토리지에서 토큰만 사용할때
+            // const response = apiCall(url, 'POST', null, loginInfo.token)
                 .then((response) => {
                     // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
                     setUser_id(response);
@@ -64,7 +64,7 @@ export default function Menu() {
             
             const response = apiCall(url, 'POST', data, null)
                 .then((response) => {
-                    // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
                     setUserInfo(response);
                 });
         }

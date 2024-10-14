@@ -29,8 +29,8 @@ const MyInfoUp = () => {
         if (isLoggedIn) {
             let url = `/user/token_info`;
 
-            // const response = apiCall(url, 'POST', null, loginInfo)   // 세션스토리지에서 토큰만 사용할때
-            const response = apiCall(url, 'POST', null, loginInfo.token)
+            const response = apiCall(url, 'POST', null, loginInfo)   // 세션스토리지에서 토큰만 사용할때
+            // const response = apiCall(url, 'POST', null, loginInfo.token)
                 .then((response) => {
                     setUser_id(response);
                 }).catch((err) => {
