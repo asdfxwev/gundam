@@ -14,6 +14,12 @@ public interface UserService {
 	// ** selectOne (로그인)
 	public User selectOne(String login_id);
 
+	// ** user_id 로 user정보 select
+	public User UserInfo(String user_id);
+	
+	// ** get user_id
+	String getUserId(String login_id);
+
 	// ** insert, update
 	User save(User entity);
 	
