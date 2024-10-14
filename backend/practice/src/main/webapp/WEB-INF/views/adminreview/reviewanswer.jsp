@@ -96,15 +96,16 @@ body {
 			</ul>
 		</div>
 
-		<c:forEach var="review" items="${reviewList}">
-			<div class="review-container">
-				<div class="review-title">${review.rev_title}</div>
-				<div class="review-content">${review.rev_com}</div>
+		<div class="review-container">
+			<c:forEach var="review" items="${reviewList}">
+				<div class="review-title">리뷰 제목 : ${review.rev_title} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상품이름 : ${review.product.pro_name}</div>
+				<div class="review-content">리뷰 내용 : ${review.rev_com}</div>
 
 				<h4>답변:</h4>
 
 				<div class="answer-form">
-					<form action="${pageContext.request.contextPath}/adminreview/reviewanswer"
+					<form
+						action="${pageContext.request.contextPath}/adminreview/reviewanswer"
 						method="post">
 						<input type="hidden" name="rev_id" value="${review.rev_id}" />
 						<textarea class="answer-input" name="rev_answer"
@@ -112,8 +113,9 @@ body {
 						<button type="submit" class="submit-answer">답변하기</button>
 					</form>
 				</div>
-			</div>
-		</c:forEach>
+				<hr>
+			</c:forEach>
+		</div>
 	</div>
 </body>
 </html>

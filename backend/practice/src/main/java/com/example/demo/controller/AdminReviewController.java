@@ -25,7 +25,7 @@ public class AdminReviewController {
 	
 	@GetMapping("/reviewanswer")
 	public void reviewanswer(Model model) {
-		System.out.println(reservice.selectList());
+		System.out.println("reviewList = "+reservice.selectList());
 		model.addAttribute("reviewList", reservice.selectList());
 	}
 	
