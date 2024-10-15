@@ -285,7 +285,7 @@ public class UserController {
  			return ResponseEntity.ok(entity);
  		} else {
  			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
- 					.body("회원정보가 입치하지 않습니다.");
+ 					.body("회원정보가 일치하지 않습니다.");
  		}
 	} //pwUpdate
 

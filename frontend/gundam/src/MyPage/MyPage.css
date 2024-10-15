@@ -246,11 +246,29 @@
     color: white;
 }
 
-
-
-
-
 /* 회원정보수정 END */
+
+/* pw변경 팝업 START */
+
+.pop_btn_box {
+    display: flex;
+    justify-content: center;
+}
+
+.pop_btn {
+    width: 70px;
+    height: 30px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+}
+
+.pop_btn:hover {
+    color: white;
+    background-color: #004a99;
+}
+
+/* pw변경 팝업 END */
 
 
 /* font-family: 'GmarketSansMedium'; */
