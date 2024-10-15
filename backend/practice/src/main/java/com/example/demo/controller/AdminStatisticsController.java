@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/adminstatistics")
+@RequestMapping("/statistics")
 public class AdminStatisticsController {
 	
 	@GetMapping("/statisticsList")

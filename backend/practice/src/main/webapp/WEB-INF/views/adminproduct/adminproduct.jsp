@@ -88,10 +88,10 @@ h1, h2 {
             <h2>관리자 페이지</h2>
             <ul>
                 <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
-                <li><a href='adminproduct/adminproduct'>상품 등록/수정/삭제</a></li>
+                <li><a href="adminproduct/productList">상품 등록/수정/삭제</a></li>
                 <li><a href="<c:url value='/codeTable' />">코드테이블 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/notice' />">공지사항 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/faq' />">FAQ 등록/수정/삭제</a></li>
+                <li><a href="adminreview/reviewanswer">리뷰답변달기</a></li>
+                <li><a href="statistics/statisticsList">통계</a></li>
             </ul>
         </div>
 

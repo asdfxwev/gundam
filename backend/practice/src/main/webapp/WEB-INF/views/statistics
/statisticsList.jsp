@@ -87,61 +87,57 @@
             <h2>관리자 페이지</h2>
             <ul>
                 <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
-                <li><a href="<c:url value='/productList' />">상품 등록/수정/삭제</a></li>
+                <li><a href="adminproduct/productList">상품 등록/수정/삭제</a></li>
                 <li><a href="<c:url value='/codeTable' />">코드테이블 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/notice' />">공지사항 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/faq' />">FAQ 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/adminstatistics' />">통계</a></li>
+                <li><a href="adminreview/reviewanswer">리뷰답변달기</a></li>
+                <li><a href="statistics/statisticsList">통계</a></li>
             </ul>
         </div>
 
-       <%--  <!-- Content -->
-        <div class="data">
-    <div class="data-summary">
-        <dl>
-            <dt>오늘 작성글</dt>
-            <dd>${countToday}</dd>
-        </dl>
-        <dl>
-            <dt>어제 작성글</dt>
-            <dd>${countYesterday}</dd>
-        </dl>
-        <dl>
-            <dt>누적 작성글</dt>
-            <dd>${countTotal}</dd>
-        </dl>
-    </div>
+        <!-- Content -->
+        <!-- Content -->
+        <div class="content">
+            <h1>Admin product</h1>
 
-    <div class="data-summary">
-        <dl>
-            <dt style="color: red;">자유 게시판</dt>
-            <dd>${countNone}</dd>
-        </dl>
-        <dl>
-            <dt style="color: orange;">비밀 게시판</dt>
-            <dd>${countSecret}</dd>
-        </dl>
-        <dl>
-            <dt style="color: green;">스크린샷 게시판</dt>
-            <dd>${countScreenshot}</dd>
-        </dl>
-        <dl>
-            <dt style="color: purple;">질문과 답변</dt>
-            <dd>${countQuestion}</dd>
-        </dl>
-    </div><br><br>
-
-    <div class="chart-title">최근 7일 통계</div>
-    <div id="Line_Controls_Chart">
-        <!-- 라인 차트 생성할 영역 -->
-        <div id="lineChartArea" class="chart"></div>
-        <!-- 컨트롤바를 생성할 영역 -->
-        <div id="controlsArea" style="display: none;"></div>
-    </div>
+            <!-- User List Table -->
+            <h2>User List</h2>
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>상품이름</th>
+                        <th>가격</th>
+                        <th>재고</th>
+                        <th>등록일</th>
+                        <th>브랜드</th>
+                        <th>카테고리</th>
+                        <th>품절유무</th>
+                        <th>이미지</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<c:forEach var="orderList" items="${orderList}">
+                        <tr>
+                            <td>${orderList.order_id}</td>
+                            <td>${orderList.pro_name}</td>
+                            <td>${orderList.pro_name}</td>
+                            <td>${orderList.pro_name}</td>
+                            <td>${orderList.pro_name}</td>
+                    
+                            <td><img alt="productImg" src="/resources/productImg/${productJoinList.pro_id}/${productJoinList.pro_imgs}"></td>
+                            <td>${user.phone_num}</td>
+                            <td>
+                                <a href="/adminproduct/productModify?proId=${productJoinList.pro_id}">수정</a> |
+                                <a href="/product/productDelete?proId=${productJoinList.pro_id}" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
             <div>
                 <a class="back-link" href="<c:url value='/api/orders' />">주문 목록으로 돌아가기</a>
             </div>
-        </div> --%>
+        </div>
     </div>
 </body>
 </html>
