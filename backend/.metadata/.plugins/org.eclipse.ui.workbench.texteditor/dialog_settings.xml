@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="OrderItemDTO"/>
+		<item key="selection" value="prepository"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="prepository"/>
+			<item value="carts"/>
 			<item value="OrderItemDTO"/>
 			<item value="OrderItem"/>
 			<item value="items = "/>
@@ -21,8 +23,6 @@
 			<item value="orderid"/>
 			<item value="localdataetime"/>
 			<item value="localdatetime"/>
-			<item value="전달된"/>
-			<item value="아이디"/>
 		</list>
 		<list key="replacehistory">
 		</list>
