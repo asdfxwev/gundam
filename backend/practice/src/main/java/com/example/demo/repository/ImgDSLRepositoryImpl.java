@@ -160,4 +160,11 @@ public class ImgDSLRepositoryImpl implements ImgDSLRepository {
 	            .fetch();
 	}
 	
+	@Override
+	public void deleteImage(String pro_id, String pro_imgs) {
+		jpaQueryFactory.delete(img)
+		.where(img.pro_id.pro_id.eq(pro_id).and(img.pro_imgs.eq(pro_imgs)))
+		.execute();
+	}
+	
 }

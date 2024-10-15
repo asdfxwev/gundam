@@ -19,6 +19,7 @@ const ItemBuy = () => {
     const [deliveryAddress, setDeliveryAddress] = useState('');
     const [deliveryUser, setDeliveryUser] = useState('');
     const [deliveryPhone, setDeliveryPhone] = useState('');
+    const [deliverDtlAddress, setDeliverDtlAddress] = useState('');
     const [userDetails, setUserDetails] = useState({});
     // const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
     const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
@@ -149,11 +150,13 @@ const ItemBuy = () => {
             const deliveryInfo = showUser ? {
                 deliveryUser: userDetails.user_name,
                 deliveryPhone: userDetails.phone_num,
-                deliveryAddress: userDetails.address
+                deliveryAddress: userDetails.address,
+                deliverDtlAddress: userDetails.dtl_address
             } : {
                 deliveryUser,
                 deliveryPhone,
-                deliveryAddress
+                deliveryAddress,
+                deliverDtlAddress
             };
 
             // 주문 데이터 생성
@@ -261,6 +264,9 @@ const ItemBuy = () => {
                                     <input type='text' name='delivery_address' className='buy_delivery_address'
                                         placeholder='주소를 입력하세요.' value={deliveryAddress}
                                         readOnly />
+                                    <p>상세주소</p>
+                                    <input type='text' name='delivery_dtladdress' placeholder='상세주소를 알려주세요.'
+                                        onChange={(e) => setDeliverDtlAddress(e.target.value)}  />
                                 </div>
                             )}
                         </div>
