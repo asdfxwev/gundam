@@ -14,5 +14,5 @@ public interface OrdersService {
     List<String> searchOrderId(String userId);
     List<String> getOrderStatusCodes();
     Map<String, Object> orderList(String userId);
-	List<OrdersDTO> findAllOrders();
+	List<OrdersDTO> getAllOrdersWithItems();
 }
