@@ -139,7 +139,7 @@ const MyInfoUp = () => {
     const onUpSubmit = () => {
 
         if (validation) {
-            let url = "/user/myinfoupdate";
+            let url = "/user/myinfo_update";
 
             const data = {
                 user_id: user_id, login_id: userInfo.login_id, user_name: userName, phone_num: phoneNumber,

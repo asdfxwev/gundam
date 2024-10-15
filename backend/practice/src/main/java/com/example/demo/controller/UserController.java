@@ -260,7 +260,7 @@ public class UserController {
   	} //checkid
  	
 //  ** User Detail
- 	@PostMapping("/myinfoupdate")
+ 	@PostMapping("/myinfo_update")
  	public ResponseEntity<?> myinfoupdate(@RequestBody User entity) {
  		
  		log.info("회원정보 수정 전 return 값 => "+entity);
@@ -275,5 +275,38 @@ public class UserController {
  		}
  		
  	} //userdetail
+ 	
+ 	@PostMapping("/pwUserCheck")
+	public ResponseEntity<?> pwUserCheck(@RequestBody User entity) {
+		
+ 		entity = service.pwUserCheck(entity.getLogin_id(), entity.getPhone_num());
+		
+		if( entity != null ) {
+ 			return ResponseEntity.ok(entity);
+ 		} else {
+ 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+ 					.body("회원정보가 입치하지 않습니다.");
+ 		}
+	} //pwUpdate
+
+ 	@PostMapping("/pwUpdate")
+ 	public String pwUpdate(@RequestBody User entity, Model model) {
+ 		
+ 		// password 암호화
+ 		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+ 		
+ 		String pwupdateYn = "Password 수정 성공.";
+ 		
+ 		try {
+ 			service.updatePassword(entity.getUser_id(), entity.getPhone_num());
+ 			log.info("Password Update 성공 => "+entity.getUser_name());
+ 			
+		} catch (Exception e) {
+			log.error("Password Update Exception => "+e.toString());
+			pwupdateYn = "Password 수정 실패. 다시 시도하세요.";
+		}
+ 		
+ 		return pwupdateYn;
+ 	} //pwUpdate
 	
 } //class
