@@ -91,6 +91,7 @@ h1, h2 {
                 <li><a href="adminproduct/productList">상품 등록/수정/삭제</a></li>
                 <li><a href="<c:url value='/codeTable' />">코드테이블 등록/수정/삭제</a></li>
                 <li><a href="adminreview/reviewanswer">리뷰답변달기</a></li>
+                <li><a href="/api/orders/statistics">통계</a></li>
             </ul>
         </div>
 

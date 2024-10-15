@@ -135,5 +135,10 @@
         height: 10px; 
         margin-right: 10px;
     }
+    .pagination {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+    }
 }
 

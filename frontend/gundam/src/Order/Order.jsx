@@ -6,6 +6,12 @@ import { API_BASE_URL } from "../service/app-config";
 import Modal from 'react-modal';
 import { faStar as faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import qs from 'qs';
+import { useLocation } from 'react-router-dom';
+import Paging from '../page/Paging';
+import { debounce } from 'lodash';
+
+
 
 // 한국 단위로 바꿔주는거
 const formatNumber = (number) => number.toLocaleString('ko-KR');
@@ -27,7 +33,7 @@ const StarRating = ({ rating, setRating }) => {
     );
 };
 
-const Cart = () => {
+const Order = () => {
     const [orderList, setOrderList] = useState([]); // 주문 목록 상태
     const [mainImage, setMainImage] = useState([]); // 상품 이미지 상태
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰 작성 모달 상태
@@ -39,6 +45,24 @@ const Cart = () => {
     const [selectedOrderId, setSelectedOrderId] = useState(''); // 선택된 주문 ID
     const [reviewExist, setReviewExist] = useState([]); // 기존 리뷰 상태
     const [selectedRevId, setSelectedRevId] = useState('');
+    const [pageProduct, setPageProduct] = useState();
+    const [page, setPage] = useState(1);
+    const [productList, setProductList] = useState(null);
+    const [brandList, setBrandList] = useState(null);
+    const [cateList, setCateList] = useState(null);
+    const [pieceList, setPieceList] = useState(null);
+    const [stateList, setStateList] = useState(null);
+    const location = useLocation();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [inputValue, setInputValue] = useState('');
+    const [width, setWidth] = useState(window.innerWidth);
+    const [proCate, setProCate] = useState([]);
+    const [cateBrand, setcateBrand] = useState([]);
+    const [catePiece, setcatePiece] = useState([]);
+    const [proStateCd, setProStateCd] = useState([]);
+    const [price, setPrice] = useState(0);
+    const maxPagesToShow = 10;
 
     // 로그인한 사용자 정보
     const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -49,7 +73,7 @@ const Cart = () => {
         const kstDate = new Date(utcDate.getTime() + 3240 * 10000); // 9시간 더함
         return `${String(kstDate.getFullYear()).slice(-2)}-${String(kstDate.getMonth() + 1).padStart(2, '0')}-${String(kstDate.getDate()).padStart(2, '0')} ${String(kstDate.getHours()).padStart(2, '0')}:${String(kstDate.getMinutes()).padStart(2, '0')}:${String(kstDate.getSeconds()).padStart(2, '0')}`;
     };
-    
+
     const fetchData = async () => {
         try {
             const response = await axios.post(`${API_BASE_URL}/api/orders/orderList`, { user_id });
@@ -168,11 +192,11 @@ const Cart = () => {
 
     const reviewDelete = async (rev_id) => {
         const confirmDelete = window.confirm("정말로 이 리뷰를 삭제하시겠습니까?");
-    
+
         if (!confirmDelete) {
             return; // 사용자가 취소를 누르면 삭제 작업을 중단
         }
-    
+
         //e.preventDefault();
         const data = {
             rev_id
@@ -190,6 +214,55 @@ const Cart = () => {
         } catch (error) {
             console.error('리뷰 제출 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
         }
+    };
+    console.log(itemsPerPage);
+    useEffect(() => {
+        // 비동기 함수 정의
+        const fetchData = async () => {
+            try {
+                // 2.1) axios를 통해 API 호출
+                const params = {
+                    itemsPerPage,
+                    currentPage,
+                    inputValue,
+                    proCate: proCate.length > 0 ? proCate : undefined,
+                    cateBrand: cateBrand.length > 0 ? cateBrand : undefined,
+                    catePiece: catePiece.length > 0 ? catePiece : undefined,
+                    proStateCd: proStateCd.length > 0 ? proStateCd : undefined,
+                    price
+                };
+
+                // Axios 인스턴스를 생성하여 paramsSerializer 설정
+                const axiosInstance = axios.create({
+                    paramsSerializer: (params) => {
+                        return qs.stringify(params, { arrayFormat: 'brackets' });
+                    },
+                });
+                console.log(params);
+                const response = await axiosInstance.get(`/product/productList`, { params });
+                //const response = await axios.post(`/product/productList`, params );
+                //const response = await apiCall(`/product/productList`,'POST', params ,null);
+
+
+                // 2.2) 응답 데이터를 상태 변수에 저장
+                console.log("response.data = " + response.data);
+                setProductList(response.data.productList);
+                setBrandList(response.data.brandList);
+                setCateList(response.data.cateList);
+                setPieceList(response.data.pieceList);
+                setStateList(response.data.stateList);
+                setPageProduct(response.data.maxpage);
+
+            } catch (error) {
+                console.error("데이터를 가져오는 중 에러가 발생했습니다: ", error);
+            }
+        };
+        // 2.4) 비동기 함수 호출
+        fetchData();
+    }, [currentPage, itemsPerPage, proCate, inputValue, cateBrand, catePiece, proStateCd, price, width]);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
     };
 
     return (
@@ -213,9 +286,7 @@ const Cart = () => {
                             const matchedReview = reviewExist.find(review =>
                                 review.product.pro_id === item.pro_id.pro_id && review.order.order_id === item.order_id.order_id
                             );
-
-
-
+                            
                             return (
                                 <div className="cart-item" key={item.order_id.order_id}>
                                     <div>{convertToKST(item.order_id.order_date)}</div>
@@ -234,15 +305,15 @@ const Cart = () => {
                                     <div>{formatNumber(item.pro_id.pro_price * item.oritem_quan)}원</div>
                                     {matchedReview ? (
                                         <div>
-                                            <span style={{cursor: 'pointer'}} onClick={() => reviewModifyPop(item.pro_id.pro_id, item.order_id.order_id, matchedReview.rev_id)}>리뷰수정</span>
+                                            <span style={{ cursor: 'pointer' }} onClick={() => reviewModifyPop(item.pro_id.pro_id, item.order_id.order_id, matchedReview.rev_id)}>리뷰수정</span>
                                             &nbsp;&nbsp;&#124;&#124;&nbsp;&nbsp;
-                                            <span style={{cursor: 'pointer'}} onClick={() => reviewDelete(matchedReview.rev_id)}>리뷰삭제</span>
+                                            <span style={{ cursor: 'pointer' }} onClick={() => reviewDelete(matchedReview.rev_id)}>리뷰삭제</span>
                                         </div>
                                     ) : (
-                                        <div style={{cursor: 'pointer'}} onClick={() => reviewPop(item.pro_id.pro_id, item.order_id.order_id)}>리뷰작성</div>
+                                        <div style={{ cursor: 'pointer' }} onClick={() => reviewPop(item.pro_id.pro_id, item.order_id.order_id)}>리뷰작성</div>
                                     )}
                                 </div>
-
+                                    
                             );
                         })
                     ) : (
@@ -250,6 +321,11 @@ const Cart = () => {
                             <div>등록된 주문이 없습니다.</div>
                         </div>
                     )}
+                    <div className='pagination-container'>
+                        <div className='pagination'>
+                            {<Paging maxpage={pageProduct} currentPage={currentPage} onPageChange={handlePageChange} maxPagesToShow={maxPagesToShow} />}
+                        </div>
+                    </div>
 
                     <Modal
                         isOpen={modalIsOpen}
@@ -275,7 +351,7 @@ const Cart = () => {
                             </div>
                         </form>
                     </Modal>
-
+ 
                     <Modal
                         isOpen={modalModifyIsOpen}
                         onRequestClose={closeModalModify}
@@ -300,11 +376,10 @@ const Cart = () => {
                             </div>
                         </form>
                     </Modal>
-
                 </div>
             </div>
         </div>
     );
 };
 
-export default Cart;
+export default Order;

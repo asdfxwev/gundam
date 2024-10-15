@@ -92,6 +92,7 @@ h1, h2 {
                 <li><a href="<c:url value='/codeTable' />">코드테이블 등록/수정/삭제</a></li>
                 <li><a href="<c:url value='/notice' />">공지사항 등록/수정/삭제</a></li>
                 <li><a href="<c:url value='/faq' />">FAQ 등록/수정/삭제</a></li>
+                <li><a href="<c:url value='statistics' />">통계</a></li>
             </ul>
         </div>
 

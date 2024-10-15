@@ -13,8 +13,11 @@ import com.example.demo.repository.OrdersRepository;
 import com.example.demo.repository.ReviewDSLRepository;
 import com.example.demo.repository.ImgDSLRepository;
 import com.example.demo.repository.OrdersDSLRepository;
+import com.example.demo.repository.OrdersItemDSLRepository;
 import com.example.demo.repository.OrdersRepository;
 import com.example.demo.repository.UserRepository;
+import com.querydsl.core.Tuple;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +37,7 @@ public class OrdersServiceImpl implements OrdersService {
     private final CodeDSLRepository codeDSLRepository; 
     private final ImgDSLRepository imgDSLRepository;
     private final ReviewDSLRepository reDSLRepository;
+    private final OrdersItemDSLRepository ordersItemDSLRepository;
 
     @Override
     public List<OrdersDTO> getOrders(String userId, String orderStatus) {
@@ -119,5 +123,49 @@ public class OrdersServiceImpl implements OrdersService {
             .map(Code::getCode_id)
             .collect(Collectors.toList());
     }
+    @Override
+    public List<OrdersDTO> getAllOrders() {
+        List<Orders> ordersList = ordersRepository.findAll(); // 모든 주문 조회
+        return ordersList.stream()
+            .map(order -> new OrdersDTO(
+                order.getOrder_id(),
+                order.getUser().getUser_id(),
+                order.getOrder_date(),
+                order.getOrder_status(),
+                order.getPostcode(),
+                order.getOritem_address(),
+                order.getOritem_dtladdress(),
+                order.getOritem_name(),
+                order.getOritem_number(),
+                order.getPay_method(),
+                order.getOritem_payment(),
+                order.getOritem_count()))
+            .collect(Collectors.toList());
+    }
+        // 월별 통계 데이터를 가져오는 메서드
+        public Map<Integer, Double> getMonthlyOrderStats(String userId) {
+            List<Tuple> monthlyStats = ordersDSLRepository.findMonthlyOrderStats(userId);
 
-}
+            Map<Integer, Double> statsMap = new HashMap<>();
+            for (Tuple tuple : monthlyStats) {
+                Integer month = tuple.get(0, Integer.class);
+                Double totalPayment = tuple.get(1, Double.class);
+                statsMap.put(month, totalPayment);
+            }
+            return statsMap;
+        }
+        
+        @Override
+        public Map<String, Long> getGenderOrderStats(String userId) {
+            List<Tuple> genderStats = ordersDSLRepository.findGenderOrderStats(userId);
+            
+            Map<String, Long> statsMap = new HashMap<>();
+            for (Tuple tuple : genderStats) {
+                String gender = tuple.get(0, String.class);
+                Long count = tuple.get(1, Long.class);
+                statsMap.put(gender, count);
+            }
+            return statsMap;
+        }
+
+    }
