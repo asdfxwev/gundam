@@ -13,11 +13,7 @@ public interface ReviewService {
 	
 	Review save(ReviewDTO dto);
 	
-<<<<<<< Updated upstream
 	void reviewUpdate(ReviewModifyDTO dto);
-=======
-	void reviewUpdate(ReviewDTO dto);
->>>>>>> Stashed changes
 	
 	List<Review> selectList(String proId);
 	List<Review> selectList();

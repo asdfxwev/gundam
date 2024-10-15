@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.OrdersDTO;
-<<<<<<< Updated upstream
 import com.example.demo.domain.OrderItemDTO;
 import com.example.demo.domain.OrderRequestDTO;
 import com.example.demo.entity.Cart;
@@ -14,10 +13,6 @@ import com.example.demo.repository.ProductDSLRespository;
 import com.example.demo.entity.Img;
 import com.example.demo.entity.Orders;
 import com.example.demo.entity.Product;
-=======
-import com.example.demo.entity.Img;
-import com.example.demo.entity.Orders;
->>>>>>> Stashed changes
 import com.example.demo.entity.Oritems;
 import com.example.demo.entity.Review;
 import com.example.demo.repository.OrdersRepository;
@@ -33,15 +28,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-<<<<<<< Updated upstream
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-=======
-import java.util.HashMap;
->>>>>>> Stashed changes
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,7 +43,6 @@ public class OrdersServiceImpl implements OrdersService {
 
     private final OrdersRepository ordersRepository;
     private final OrdersDSLRepository ordersDSLRepository;
-<<<<<<< Updated upstream
     private final UserRepository userRepository;
     private final CodeDSLRepository codeDSLRepository; 
     private final ImgDSLRepository imgDSLRepository;
@@ -62,10 +52,6 @@ public class OrdersServiceImpl implements OrdersService {
 	private final ProductRepository prepository;
 	private final ProductDSLRespository pDSLrepository;
 	private final CartDSLRepository cartDSLrepository;
-=======
-    private final ImgDSLRepository imgDSLRepository;
-    private final ReviewDSLRepository reDSLRepository;
->>>>>>> Stashed changes
 
 //    @Override
 //    public List<OrdersDTO> getOrders(String userId, String orderStatus) {
@@ -90,7 +76,6 @@ public class OrdersServiceImpl implements OrdersService {
     @Transactional
     @Override
     public void createOrder(OrdersDTO orderDto) {
-<<<<<<< Updated upstream
     	
     	List<String> orderIds = ordersRepository.findAllOrderIds();
     	String year = Integer.toString( LocalDate.now().getYear()).substring(2);
@@ -170,48 +155,6 @@ public class OrdersServiceImpl implements OrdersService {
 //        Oritems oritems = Oritems.builder()
 //        		.order_id(orderDto.getOrder_id())
 //        		.pro_id(null);
-=======
-        Orders order = new Orders();
-        ordersRepository.save(order);
-    }
-
-    @Transactional
-    @Override
-    public void updateOrder(String orderId, OrdersDTO orderDto) {
-        Orders order = ordersRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
-        ordersRepository.save(order);
-    }
-
-    @Transactional
-    @Override
-    public void deleteOrder(String orderId) {
-        ordersRepository.deleteById(orderId);
-    }
-    
-    
-    @Override
-    public Map<String, Object> orderList(String userId) {
-    	
-    	List<String> orderlist = ordersDSLRepository.searchOrderId(userId);
-    	
-    	List<Oritems> list = ordersDSLRepository.orderList(orderlist);
-        // pro_id 추출
-        List<String> proId = list.stream()
-            .map(oritem -> oritem.getPro_id().getPro_id()) 
-            .collect(Collectors.toList());
-        
-    	System.out.println(proId);
-    	List<Img> imgList = imgDSLRepository.orderImgList(proId);
-    	List<Review> reviewList = reDSLRepository.booleanOne(userId);
-    	System.out.println("orderlist = "+list);
-    	System.out.println("reviewlist = "+reviewList);
-    	Map<String, Object> orderitems = new HashMap< >();
-    	orderitems.put("orderList", list);
-    	orderitems.put("imgList", imgList);
-    	orderitems.put("reviewList", reviewList);
-    	
-    	return orderitems;
->>>>>>> Stashed changes
     }
 
     

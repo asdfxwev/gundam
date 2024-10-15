@@ -30,14 +30,9 @@ public interface UserService {
 	void deleteById (String id);
 	
 	// ** Password 수정 하기
-<<<<<<< Updated upstream
 	void updatePassword(String user_id, String password);
 	
 	// ** Password 수정을 위한 정보 일치여부 확인
 	public User pwUserCheck(String login_id, String phone_num);
-=======
-	void updatePassword(String id, String password);
-	
->>>>>>> Stashed changes
 
 }

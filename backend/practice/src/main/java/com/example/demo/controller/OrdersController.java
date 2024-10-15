@@ -1,13 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.OrdersDTO;
-<<<<<<< Updated upstream
 
 import com.example.demo.domain.UserDTO;
 import com.example.demo.domain.OrderRequestDTO;
-=======
-import com.example.demo.domain.UserDTO;
->>>>>>> Stashed changes
 import com.example.demo.entity.Orders;
 import com.example.demo.entity.Oritems;
 import com.example.demo.service.OrdersService;
@@ -48,7 +44,6 @@ public class OrdersController {
         return ResponseEntity.ok("Order created successfully");
     }
     
-<<<<<<< Updated upstream
     @GetMapping("/status")
     public ResponseEntity<List<String>> getOrderStatus() {
         List<String> orderStatusCodes = ordersService.getOrderStatusCodes();
@@ -56,16 +51,10 @@ public class OrdersController {
         return ResponseEntity.ok(orderStatusCodes);
     }
 
-=======
->>>>>>> Stashed changes
     @PostMapping("/orderList")
     public ResponseEntity<?> orderList(@RequestBody UserDTO dto){
 //    	System.out.println("userid = "+dto.getUser_id());
     	
-<<<<<<< Updated upstream
-=======
-    	
->>>>>>> Stashed changes
     	Map<String, Object> list = ordersService.orderList(dto.getUser_id());
 //    	System.out.println(list);
     	

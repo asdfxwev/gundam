@@ -91,13 +91,9 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 		.set(review.rev_title, reviews.getRev_title())
 		.set(review.rev_com, reviews.getRev_com())
 		.set(review.rev_creat, reviews.getRev_creat())
-<<<<<<< Updated upstream
 		.set(review.order, reviews.getOrder())
 		.set(review.product, reviews.getProduct())
 		.where(review.rev_id.eq(reviews.getRev_id()))
-=======
-		.where(review.user.eq(reviews.getUser()).and(review.product.eq(reviews.getProduct()).and(review.order.eq(reviews.getOrder()))))
->>>>>>> Stashed changes
 		.execute();
 	}
 	
@@ -105,12 +101,8 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 	@Override
 	public void reviewDelete(Review reviews) {
 		queryFactory.delete(review)
-<<<<<<< Updated upstream
 		.where(review.rev_id.eq(reviews.getRev_id()))
 //		.where(review.order.eq(reviews.getOrder()).and(review.product.eq(reviews.getProduct())))
-=======
-		.where(review.order.eq(reviews.getOrder()).and(review.product.eq(reviews.getProduct())))
->>>>>>> Stashed changes
 		.execute();
 	}
 

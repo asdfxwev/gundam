@@ -160,7 +160,6 @@ public class ImgDSLRepositoryImpl implements ImgDSLRepository {
 	            .fetch();
 	}
 	
-<<<<<<< Updated upstream
 	@Override
 	public void deleteImage(String pro_id, String pro_imgs) {
 		jpaQueryFactory.delete(img)
@@ -176,6 +175,4 @@ public class ImgDSLRepositoryImpl implements ImgDSLRepository {
 		.execute();
 	}
 	
-=======
->>>>>>> Stashed changes
 }

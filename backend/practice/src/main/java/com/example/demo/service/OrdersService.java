@@ -12,10 +12,6 @@ public interface OrdersService {
 //    List<OrdersDTO> getOrders(String userId, String orderStatus);
     void createOrder(OrdersDTO ordersDTO);    
     List<String> searchOrderId(String userId);
-<<<<<<< Updated upstream
     List<String> getOrderStatusCodes();
-=======
-    
->>>>>>> Stashed changes
     Map<String, Object> orderList(String userId);
 }
