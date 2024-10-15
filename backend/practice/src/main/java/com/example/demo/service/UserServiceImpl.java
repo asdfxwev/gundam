@@ -92,8 +92,13 @@ public class UserServiceImpl implements UserService {
 	
 	// ** Password 수정 하기
 	@Override
-	public void updatePassword(String login_id, String password) {
-		urepository.updatePassword(login_id, password);
+	public void updatePassword(String user_id, String password) {
+		urepository.updatePassword(user_id, password);
+	}
+	
+	@Override
+	public User pwUserCheck(String login_id, String phone_num) {
+		return urepository.pwUserCheck(login_id, phone_num);
 	}
 	
 }

@@ -208,13 +208,13 @@ const SignupForm = () => {
                         if (err === 502) {
                             alert("입력정보를 확인하세요.");
                         } else {
-                            alert(`** 시스템 오류 발생: err=${err}`);
+                            alert(`** 회원가입을 실패했습니다 다시 시도해주세요.`);
                         }
                         navigate("/Login/Join");
                     });
 
-            } catch (error) {
-                console.error("회원가입 중 에러가 발생했습니다: ", error);
+            } catch (err) {
+                console.err("회원가입 중 오류가 발생했습니다: ", err);
             }
 
         }

@@ -5,6 +5,7 @@ import static com.example.demo.entity.QOritems.oritems;
 import static com.example.demo.entity.QProduct.product;
 
 import com.example.demo.domain.ImgDTO;
+import com.example.demo.domain.OrdersDTO;
 import com.example.demo.entity.Orders;
 import com.example.demo.entity.Oritems;
 import com.querydsl.core.BooleanBuilder;
@@ -88,5 +89,5 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
                 .groupBy(orders.user.gender)
                 .fetch();
     }
-
+    
 }

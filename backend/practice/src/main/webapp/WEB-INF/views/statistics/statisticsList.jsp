@@ -153,13 +153,13 @@
             <h1>주문 통계</h1>
             <label for="statsOption">통계 선택:</label>
             <select id="statsOption" onchange="toggleStats()">
-                <option value="monthly">월별 주문 통계</option>
+                <option value="monthly">주문 통계</option>
                 <option value="gender">성별 주문 통계</option>
             </select>
 
             <!-- 월별 주문 통계 섹션 -->
 			<div id="monthlyStatsSection" class="">
-			    <h2>월별 주문 통계</h2>
+			    <h2>주문 통계</h2>
 			    <div>
 			        <label for="startDate">시작 날짜:</label>
 			        <input type="date" id="startDate" name="startDate">
@@ -167,12 +167,17 @@
 			        <label for="endDate">종료 날짜:</label>
 			        <input type="date" id="endDate" name="endDate">
 			        
-			        <button id="searchButton" onclick="fetchDateStats()">검색</button> <!-- 검색 버튼 추가 -->
+			        <button id="searchButton" onclick="fetchDateStats()">검색</button>
+			           <!--             <form action="/adminproduct/productList" method="GET">
+                    <input type="text" name="inputValue" placeholder="상품 이름, 브랜드, 카테고리 등 검색">
+                    <button type="submit">검색</button>
+                </form> -->
+                 <!-- form 형식으로 수정해야 함 -->
 			    </div>
 			    <table id="monthlyStatsTable" class="stats-table">
 			        <thead>
 			            <tr>
-			                <th>주문 날짜</th>
+			                <th>상품 이름</th>
 			                <th>총 주문 수</th>
 			            </tr>
 			        </thead>
