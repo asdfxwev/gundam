@@ -27,4 +27,6 @@ public interface ImgDSLRepository {
 	
 	void deleteImage(String pro_id, String pro_imgs);
 	
+	void updateImage(String pro_imgs, String pro_id, int pro_num);
+	
 }

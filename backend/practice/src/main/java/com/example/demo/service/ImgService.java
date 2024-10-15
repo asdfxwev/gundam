@@ -35,6 +35,6 @@ public interface ImgService {
 	
 	void deleteImagesByIds(List<Long> imgId, HttpServletRequest request, String proId);
 	
-	void deleteImage(List<Map<String, String>> requestData, HttpServletRequest request);
+	void deleteImage(Map<String, List<Map<String, String>>> requestData, HttpServletRequest request);
 	
 }

@@ -310,7 +310,8 @@ public class AdiminProductController {
 	}
 	
 	@PostMapping("deleteImage")
-	public void deleteImage(@RequestBody List<Map<String, String>> requestData, HttpServletRequest request) {
+	public void deleteImage(@RequestBody Map<String, List<Map<String, String>>> requestData, HttpServletRequest request) {
+		System.out.println("requestData = " +requestData);
 		iservice.deleteImage(requestData, request);
 	}
 

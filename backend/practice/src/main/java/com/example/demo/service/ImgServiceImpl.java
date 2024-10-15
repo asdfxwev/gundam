@@ -123,7 +123,7 @@ public class ImgServiceImpl implements ImgService {
 	
 	@Transactional
 	@Override
-	public void deleteImage(List<Map<String, String>> requestData,  HttpServletRequest request) {
+	public void deleteImage(Map<String, List<Map<String, String>>> requestData,  HttpServletRequest request) {
 		
 		List<Map<String, String>> deleteData = (List<Map<String, String>>) requestData.get("deleteData");
         
@@ -151,6 +151,17 @@ public class ImgServiceImpl implements ImgService {
 
 	        // 이미지 삭제 로직 작성
 	        idslrepository.deleteImage(pro_id, pro_imgs);
+	    }
+	    
+	    int pro_num = 0;
+	    for(Map<String, String> remainImg : remainingImageData) {
+	    	System.out.println("remainImag = "+remainImg);
+	        String pro_imgs = remainImg.get("pro_imgs");
+	        String pro_id = remainImg.get("pro_id");
+	        System.out.println("pro_num = "+pro_num);
+	        idslrepository.updateImage(pro_imgs, pro_id, pro_num);
+	        pro_num++;
+	        
 	    }
 		
 	}
