@@ -9,9 +9,13 @@ import { API_BASE_URL } from '../service/app-config';
 
 // CartItem 컴포넌트 정의
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
+    console.log(item);
+    
     const handleQuantityChange = (newQuantity) => {
-        if (newQuantity >= 1) {
+        if (newQuantity >= 1 && newQuantity <= item.pro_stock) {
             onQuantityChange(item.pro_id, newQuantity);
+        } else if (newQuantity > item.pro_stock) {
+            alert(`재고가 부족합니다. 현재 재고는 ${item.pro_stock}개입니다.`);
         }
     };
 
@@ -81,7 +85,7 @@ const Cart = () => {
             let url = `/user/user_info`;
 
             const data = { user_id: user_id };
-            
+
             const response = apiCall(url, 'POST', data, null)
                 .then((response) => {
                     // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
@@ -92,9 +96,11 @@ const Cart = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log('user_id ?',user_id);
+            console.log('user_id ?', user_id);
             try {
                 const response = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
+                console.log(response.data);
+                
                 setCartItems(response.data);
                 setCheckedItems(response.data.map(item => item.pro_id));
                 setIsAllChecked(response.data.length > 0);

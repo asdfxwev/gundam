@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +23,5 @@ public class OrdersDTO extends ProductDTO {
     private String pay_method;
     private int oritem_payment;
     private int oritem_count;
+    private List<OrderItemDTO> items;
 }

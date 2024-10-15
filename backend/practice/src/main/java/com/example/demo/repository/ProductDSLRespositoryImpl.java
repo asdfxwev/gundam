@@ -14,11 +14,13 @@ import com.example.demo.domain.CodeDTO;
 import com.example.demo.domain.ImgDTO;
 import com.example.demo.domain.ProductDTO;
 import com.example.demo.entity.Img;
+import com.example.demo.entity.Oritems;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.QCode;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Pageable;
 
@@ -338,5 +340,57 @@ return new PageImpl<>(results, pageable, total);
 	            .where(builder)
 	            .fetchOne();
 	}
+	
+	
+//	@Override
+//	public void updateStock(Oritems oritems, int pro_stock) {
+//		
+//		if (product.pro_stock.subtract(Integer.parseInt(oritems.getOritem_quan())) == 0) {
+//			jpaQueryFactory.update(product)
+//			.set(product.pro_stock, product.pro_stock.subtract(Integer.parseInt(oritems.getOritem_quan())))
+//			.set(product.pro_state_cd, "psc01")
+//			.execute();
+//		} else {
+//			
+//			jpaQueryFactory.update(product)
+//			.set(product.pro_stock, product.pro_stock.subtract(Integer.parseInt(oritems.getOritem_quan())))
+//			.execute();
+//		}
+//		
+//	}
+	
+	@Override
+	public void updateStock(Oritems oritems) {
+	    // 주문 수량을 정수형으로 변환
+	    int quantityToSubtract = Integer.parseInt(oritems.getOritem_quan());
+	    System.out.println("productId1 = "+oritems.getPro_id());
+	    System.out.println("productId2 = "+oritems.getPro_id().getPro_id());
+
+	    // 새로운 재고 계산
+	    NumberExpression<Integer> newStock = product.pro_stock.subtract(quantityToSubtract);
+
+	    // 재고가 0 이하일 경우
+	    if (newStock.equals(0)) { // newStock이 0보다 크거나 같을 때
+	        jpaQueryFactory.update(product)
+	        	.set(product.pro_stock, 0)
+	        	.set(product.pro_state_cd, "psc01")
+	        	.where(product.pro_id.eq(oritems.getPro_id().getPro_id()))
+	            .execute();
+	    } else {
+	        jpaQueryFactory.update(product)
+	            .set(product.pro_stock, newStock) 
+	            .where(product.pro_id.eq(oritems.getPro_id().getPro_id()))
+	            .execute();
+	    }
+	}
+
+	
+//	@Override
+//	public int findbyproStock(String proId) {
+//		return jpaQueryFactory.select(product.pro_stock)
+//				.from(product)
+//				.where(product.pro_id.eq(proId))
+//				.fetchOne();
+//	}
 
 }
