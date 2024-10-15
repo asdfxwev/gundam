@@ -40,13 +40,21 @@ public class AdminStatisticsController {
 
 	@PostMapping("/statisticsList")
 	public void statisticsList(String startDate, String endDate, @RequestParam(required = false) List<String> pro_cate
-			, @RequestParam(required = false)List<String> cate_brand, @RequestParam(required = false)List<String> cate_piece) {
+			, @RequestParam(required = false)List<String> cate_brand, @RequestParam(required = false)List<String> cate_piece,
+			Model model) {
 		System.out.println("pro_cate = "+pro_cate);
 		System.out.println("cate_brand = "+cate_brand);
 		System.out.println("cate_piece = "+cate_piece);
 		System.out.println("startDate = "+startDate);
 		System.out.println("endDate = "+endDate);
 		ordersService.statisticLists(startDate, endDate, pro_cate, cate_brand, cate_piece);
+		//브랜드 1/100
+		model.addAttribute("codebrand", coservice.codeBrandOne());
+		//건담, 포켓몬
+		model.addAttribute("codecate", coservice.codeCateOne());
+		//카테고리 건담무사
+		model.addAttribute("codepiece", coservice.codePieceOne());
+		model.addAttribute("orderList", ordersService.statisticLists(startDate, endDate, pro_cate, cate_brand, cate_piece));
 //		return "redirect:/statistics/statisticsList";
 		
 	}
