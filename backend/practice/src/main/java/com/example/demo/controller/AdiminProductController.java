@@ -65,9 +65,13 @@ public class AdiminProductController {
 
 	@GetMapping("/productInsert")
 	public void productInsert(Model model) {
+		//브랜드 1/100
 		model.addAttribute("codebrand", coservice.codeBrandOne());
+		//건담, 포켓몬
 		model.addAttribute("codecate", coservice.codeCateOne());
+		//카테고리 건담무사
 		model.addAttribute("codepiece", coservice.codePieceOne());
+		// 품절유무
 		model.addAttribute("codestate",coservice.codeStateOne());
 	}
 
