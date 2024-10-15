@@ -140,7 +140,7 @@ const MyInfoUp = () => {
 
         if (validation) {
             let url = "/user/myinfoupdate";
-            
+
             const data = {
                 user_id: user_id, login_id: userInfo.login_id, user_name: userName, phone_num: phoneNumber,
                 email, postcode: postCode, address, dtl_address: dtlAddress, birth: userInfo.birth, gender: userInfo.gender
@@ -173,9 +173,6 @@ const MyInfoUp = () => {
                     }
                 }
             }} >
-                <input type='text' id='user_id' name='user_id' value={userInfo.user_id} />
-                <input type='text' id='birth' name='birth' value={userInfo.birth} />
-                <input type='text' id='birth' name='birth' value={userInfo.gender} />
                 <div className="user_info_up">
                     <h1>회원정보 변경</h1>
 
