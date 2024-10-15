@@ -197,27 +197,35 @@ public class OrdersServiceImpl implements OrdersService {
             .map(Code::getCode_id)
             .collect(Collectors.toList());
     }
- // OrdersServiceImpl.java
-    @Override
-    public List<OrdersDTO> findAllOrders() {
-        List<Orders> ordersList = ordersDSLRepository.findAllOrders();
-        return ordersList.stream()
-        		.map(order -> new OrdersDTO(
-        			    order.getOrder_id(),
-        			    order.getUser().getUser_id(),
-        			    order.getOrder_date(),
-        			    order.getOrder_status(),
-        			    order.getPostcode(),
-        			    order.getOritem_address(),
-        			    order.getOritem_dtladdress(),
-        			    order.getOritem_name(),
-        			    order.getOritem_number(),
-        			    order.getPay_method(),
-        			    order.getOritem_payment(),
-        			    order.getOritem_count(), null
-        				))
-        		.collect(Collectors.toList());
 
+    @Override
+    public List<OrdersDTO> getAllOrdersWithItems() {
+        List<Orders> ordersList = ordersDSLRepository.findAllOrders();
+        
+        // Convert Orders to OrdersDTO
+        return ordersList.stream()
+            .map(order -> {
+                List<OrderItemDTO> items = oritemDSLRepository.findItemsByOrderId(order.getOrder_id()); // Add this method in your repository
+                return new OrdersDTO(
+                    order.getOrder_id(),
+                    order.getUser().getUser_id(),
+                    order.getOrder_date(),
+                    order.getOrder_status(),
+                    order.getPostcode(),
+                    order.getOritem_address(),
+                    order.getOritem_dtladdress(),
+                    order.getOritem_name(),
+                    order.getOritem_number(),
+                    order.getPay_method(),
+                    order.getOritem_payment(),
+                    order.getOritem_count(),
+                    items 
+                );
+            })
+            .collect(Collectors.toList());
+    }
+    
+    
+    
     }
 
-}
