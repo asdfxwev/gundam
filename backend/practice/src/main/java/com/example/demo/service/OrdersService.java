@@ -14,7 +14,4 @@ public interface OrdersService {
     List<String> searchOrderId(String userId);
     List<String> getOrderStatusCodes();
     Map<String, Object> orderList(String userId);
-    Map<Integer, Double> getMonthlyOrderStats(String userId);
-    Map<String, Long> getGenderOrderStats(String userId);
-    List<OrdersDTO> getAllOrders();
 }

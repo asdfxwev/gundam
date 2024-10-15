@@ -95,7 +95,7 @@
             </ul>
         </div>
 
-        <!-- Content -->
+       <%--  <!-- Content -->
         <div class="data">
     <div class="data-summary">
         <dl>
@@ -141,7 +141,7 @@
             <div>
                 <a class="back-link" href="<c:url value='/api/orders' />">주문 목록으로 돌아가기</a>
             </div>
-        </div>
+        </div> --%>
     </div>
 </body>
 </html>
