@@ -55,12 +55,12 @@ const Login = () => {
                                 <strong>회원가입 ✔</strong>
                             </Link>
                         </div>
-                        <div>
-                            <IdFindingModal href="./Login/Findingid" />
-                            &nbsp;
-                            <SecurityModal href="./Login/Security" />
-                        </div>
                     </form>
+                    <div>
+                        <IdFindingModal href="./Login/Findingid" />
+                        &nbsp;
+                        <SecurityModal href="./Login/Security" />
+                    </div>
                 </div>
             </div>
         </div>

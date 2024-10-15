@@ -376,7 +376,7 @@
 
 .re_button:hover {
     color: white;
-    background-color: blue;
+    background-color: #004a99;
 }
 
 /* 별점 아이콘 기본 스타일 */
@@ -608,7 +608,7 @@
 }
 
 .count_right_box button:hover {
-    background-color: blue;
+    background-color: #004a99;
     color: white;
 }
 
@@ -813,7 +813,7 @@
 
 .buy_right_subtitle button:hover {
     color: white;
-    background-color: blue;
+    background-color: #004a99;
 }
 
 .buy_item_img {
@@ -898,7 +898,7 @@
 }
 
 .buy_count_box button:hover {
-    background-color: blue;
+    background-color: #004a99;
     color: white;
 }
 
@@ -951,6 +951,7 @@
     height: 30px;
     border: none;
     border-radius: 10px;
+<<<<<<< Updated upstream
 
 }
 
@@ -958,6 +959,9 @@
     display: flex;
     flex-direction: row; 
     gap: 15px; 
+=======
+    
+>>>>>>> Stashed changes
 }
 
 .address_search_btn:hover {
@@ -965,7 +969,11 @@
     background-color: blue;
 }
 
+<<<<<<< Updated upstream
 .buy_delivery_address {
+=======
+.buy_delivery_address_box {
+>>>>>>> Stashed changes
     height: 80px;
     width: 100%;
     grid-area: 4/1/5/3;

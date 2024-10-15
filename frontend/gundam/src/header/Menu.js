@@ -18,8 +18,12 @@ export default function Menu() {
     const [menuClosing, setMenuClosing] = useState(false); // 메뉴 닫기 애니메이션 상태 추가
     const location = useLocation();
     const { loginInfo, isLoggedIn, onLogout } = useLogin();
+<<<<<<< Updated upstream
     const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
     const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
+=======
+    const [userInfo, setUserInfo] = useState(''); // token 값으로 select한 user정보
+>>>>>>> Stashed changes
 
     const Menu = (menu) => {
         if (visibleMenu === menu) {
@@ -37,6 +41,7 @@ export default function Menu() {
         // scroll();
     };
 
+<<<<<<< Updated upstream
     // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
     useEffect(() => {
         if (isLoggedIn) {
@@ -48,11 +53,52 @@ export default function Menu() {
                     // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
                     setUser_id(response);
 
+=======
+
+    // if (isLoggedIn) {
+    //     let url = `/user/token_info`;
+
+    //     const data = {token: loginInfo.token};
+
+    //     const response = apiCall(url, 'POST', data, null)
+    //         .then((response) => {
+    //             setUserInfo(response);
+    //             alert("토큰으로 사용자 정보 가져왔음!"+userInfo);
+    //         }).catch((err) => {
+    //             onLogout(); // 로그아웃 상태로 처리
+    //             alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+    //         });
+    // }
+
+    // 화면 로드 시 토큰값이 있으면 user정보를 가져와야하는 부분
+    useEffect(() => {
+        // if (isLoggedIn) {
+        //     let url = `/user/token_info`;
+
+        //     const response = apiCall(url, 'POST', null, loginInfo.token)
+        //         .then((response) => {
+        //             setUserInfo(response);
+        //         }).catch((err) => {
+        //             // onLogout(); // 로그아웃 상태로 처리
+        //             alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+        //         });
+        // }
+
+
+        if (isLoggedIn) {
+            let url = `/user/token_info`;
+            alert(loginInfo);
+            const response = apiCall(url, 'POST', null, loginInfo)
+                .then((response) => {
+                    sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUserInfo(response);
+>>>>>>> Stashed changes
                 }).catch((err) => {
                     onLogout(); // 로그아웃 상태로 처리
                     alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
                 });
         }
+<<<<<<< Updated upstream
 
     }, [isLoggedIn, loginInfo, onLogout]);
 
@@ -70,6 +116,10 @@ export default function Menu() {
         }
     }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
 
+=======
+    }, [isLoggedIn, loginInfo, onLogout]);
+
+>>>>>>> Stashed changes
     useEffect(() => {
         const scroll = () => {
             if (window.scrollY > window.innerHeight * 0.3 && location.pathname === '/') {

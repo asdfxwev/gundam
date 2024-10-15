@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.example.demo.domain.ImgDTO;
 import com.example.demo.entity.Img;
@@ -33,5 +34,7 @@ public interface ImgService {
 	List<Img> imgList(String proId);
 	
 	void deleteImagesByIds(List<Long> imgId, HttpServletRequest request, String proId);
+	
+	void deleteImage(Map<String, List<Map<String, String>>> requestData, HttpServletRequest request);
 	
 }

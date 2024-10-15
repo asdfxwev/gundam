@@ -17,7 +17,7 @@
 }
 .admingrid-containers {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr); 
+	grid-template-columns: repeat(1, 1fr); 
 	gap: 10px;
 	background-color: #f2f2f2;
 	padding: 10px;
@@ -52,7 +52,6 @@
 /* 양쪽 그리드 항목을 가로로 배치 */
 .admingrid-inner {
     display: flex;
-    justify-content: space-between; /* 양쪽으로 정렬 */
     width: 100%; /* 전체 너비 사용 */
 }
 
@@ -114,6 +113,53 @@
 #deleteImg{
 	cursor: pointer;
 }
+
+.img-group {
+	display: flex;
+}
+
+.img-group div:nth-child(1) {
+    width: 150px; /* 원하는 크기 설정 */
+}
+  	/* 두 번째 항목 (이미지) */
+.img-group div:nth-child(2) {
+    width: 150px; /* 이미지 너비 설정 */
+    text-align: center;
+    padding: 10px;
+}
+
+   /* 세 번째 항목 (이미지 숫자) */
+.img-group div:nth-child(3) {
+    width: 250px; /* 셀렉트 박스 크기 설정 */
+    text-align: center;
+    padding: 10px;
+}
+
+.img-groups {
+	display: flex;
+}
+
+.img-groups div:nth-child(1) {
+    width: 150px; /* 원하는 크기 설정 */
+}
+  	/* 두 번째 항목 (이미지) */
+.img-groups div:nth-child(2) {
+    width: 150px; /* 이미지 너비 설정 */
+    text-align: center;
+    padding: 10px;
+}
+
+   /* 세 번째 항목 (이미지 숫자) */
+.img-groups div:nth-child(3) {
+    width: 250px; /* 셀렉트 박스 크기 설정 */
+    text-align: center;
+    padding: 10px;
+}
+
+.selectList select{
+	width: 70%;
+}
+
 </style>
 </head>
 <body>
@@ -182,31 +228,40 @@
                 </div>
                 
                 <div class="admingrid-containers"> 
-                    <div> 이미지이름</div>
-                    <div>이미지</div>
-                    <div>이미지 숫자(0이 대표이미지, 나머지 상세이미지)</div>
+                	<div class="img-groups">
+                    	<div>이미지이름</div>
+                    	<div>이미지</div>
+                    	<div>이미지 숫자(0이 대표이미지, 나머지 상세이미지)</div>
+                    </div>
                     <c:forEach var="imgall" items="${imgall}" varStatus="status">
-                        <div class="grid-item grid-header"><label><input  type="checkbox" name="img_id" value="${imgall.pro_num}"></label>${imgall.pro_imgs}</div>
-                        <img width="50" height="50" src="/resources/productImg/${productSelectOne.pro_id}/${imgall.pro_imgs}" alt="이미지" />
-                       
-                        
-                        <!-- Select box to choose image number -->
-                        <select name="pro_nums" id="select_${status.index}" onchange="selectChange(this, ${status.index})">
-                            <c:forEach var="imgnum" items="${imgnum}">
-                                <option value="${imgnum.pro_num}"
-                                    <c:if test="${imgall.pro_num == imgnum.pro_num}"> selected="selected"</c:if>
-                                >${imgnum.pro_num}</option>
-                            </c:forEach>
-                        </select>
-                        
-                        <!-- Hidden input to track the file name of the image -->
-                        <input type="hidden" name="pro_imgs_list" id="pros_img_${status.index}" value="${imgall.pro_imgs}" />
+                    <div class="img-group">
+                    	<div class="grid-item">
+	                        <label><input type="checkbox" name="img_id" value="${imgall.pro_num}">${imgall.pro_imgs}</label>
+                    	</div>
+                    	<div class="imgList">
+                        	<img width="70" height="70" src="/resources/productImg/${productSelectOne.pro_id}/${imgall.pro_imgs}" alt="이미지" />
+                    	</div>
+                    	<div class="selectList">
+                        	<select name="pro_nums" id="select_${status.index}" onchange="selectChange(this, ${status.index})">
+                            	<c:forEach var="imgnum" items="${imgnum}">
+                                	<option value="${imgnum.pro_num}"
+                                    	<c:if test="${imgall.pro_num == imgnum.pro_num}"> selected="selected"</c:if>
+                                	>${imgnum.pro_num}</option>
+                            	</c:forEach>
+                        	</select>
+                    	</div>
+                    <!-- Hidden input to track the file name of the image -->
+                    	<input type="hidden" name="pro_imgs_list" value="${imgall.pro_imgs}" />
+                    	<input type="hidden" name="pro_num" value="${imgall.pro_num}" />
+                	</div>
                     </c:forEach>
+                    <div class="img-groups">
 					<div class="delete-image">
                        <a id="deleteImg" onclick="submitDeleteForm()">선택한 이미지 삭제</a>
                     </div>
                     <label for="pro_imgs">상품 상세이미지추가:</label>
                     <input type="file" id="pros_imgs" name="pros_imgs" multiple>
+                    </div>
                     
                 </div>
             </div>
@@ -222,39 +277,124 @@
                         }
                     });
                 }
-                
-                const imgnumList = [...document.querySelectorAll('select[name="img_id"] option')].map(option => ({
-                    pro_num: option.value,
-                    pro_imgs: option.textContent
-                }));
-                
-                function submitDeleteForm() {
+                                
+/*                 function submitDeleteForm() {
                     const checkboxes = document.querySelectorAll('input[name="img_id"]:checked');
+                    console.log(checkboxes.length);
                     if (checkboxes.length === 0) {
                         alert('삭제할 이미지를 선택하세요.');
                         return;
                     }
 
-                    // 선택된 이미지가 있을 때 삭제 확인
-                    const confirmDelete = confirm('선택한 이미지를 지우시겠습니까?');
-                    if (confirmDelete) {
-                        // 선택된 이미지를 imgnumList에서 제거
-                        checkboxes.forEach(checkbox => {
-                            const imgId = checkbox.value;
-                            const index = imgnumList.findIndex(img => img.pro_num === imgId);
+                    const confirmDelete = confirm('선택한 이미지를 삭제하시겠습니까?');
+                    if (!confirmDelete) return;
 
-                            if (index !== -1) {
-                                imgnumList.splice(index, 1);  // imgnum에서 해당 이미지 제거
-                            }
+                    // 선택된 이미지의 pro_imgs와 pro_id 값 추출
+                    const deleteData = [];
+                    checkboxes.forEach(checkbox => {
+                        const imgGroup = checkbox.closest('.img-group');
+                        const pro_imgs = imgGroup.querySelector('input[name="pro_imgs_list"]').value;
+                        const pro_id = '${productSelectOne.pro_id}';  // pro_id는 JSP에서 받아온 값을 사용
 
-                            // 해당 이미지를 화면에서 삭제
-                            checkbox.closest('.grid-item').remove();
-                        });
+                        deleteData.push({ pro_imgs, pro_id });
+                    });
 
-                        // 삭제된 imgnum을 다시 렌더링
-                        updateImgnumOptions();
+                    const remainingImageData = []; // 삭제된 이미지를 제외한 나머지 이미지 데이터
+                    const allImgGroups = document.querySelectorAll('.img-group');
+                    allImgGroups.forEach(imgGroup => {
+                        const pro_imgs = imgGroup.querySelector('input[name="pro_imgs_list"]').value;
+                        const pro_id = '${productSelectOne.pro_id}'; // 동일한 pro_id 사용
+                        const pro_num = imgGroup.querySelector('input[name="pro_num"]').value;
+
+                        // 삭제할 이미지와 비교하여 제외
+                        if (!deleteData.some(data => data.pro_imgs === pro_imgs)) {
+                            remainingImageData.push({ pro_imgs, pro_id,  pro_num });
+                        }
+                    });
+
+                    // AJAX 요청으로 데이터를 백엔드에 전송
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "${pageContext.request.contextPath}/adminproduct/deleteImage", true); // 서버에 전송할 URL 설정
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            alert('이미지가 성공적으로 삭제되었습니다.');
+                            window.location.reload(); // 성공 시 페이지 새로고침
+                        } else {
+                            alert('이미지 삭제에 실패했습니다.');
+                        }
+                    };
+
+                    const requestData = {
+                        deleteData,
+                        remainingImageData // 삭제된 이미지를 제외한 데이터
+                    };
+
+                    xhr.send(JSON.stringify(requestData)); // requestData를 JSON 형태로 전송
+                } */
+                
+                function submitDeleteForm() {
+                    const checkboxes = document.querySelectorAll('input[name="img_id"]:checked');
+                    console.log(checkboxes.length);
+                    if (checkboxes.length === 0) {
+                        alert('삭제할 이미지를 선택하세요.');
+                        return;
                     }
+
+                    const confirmDelete = confirm('선택한 이미지를 삭제하시겠습니까?');
+                    if (!confirmDelete) return;
+
+                    // 선택된 이미지의 pro_imgs와 pro_id 값 추출
+                    const deleteData = [];
+                    checkboxes.forEach(checkbox => {
+                        const imgGroup = checkbox.closest('.img-group');
+                        const pro_imgs = imgGroup.querySelector('input[name="pro_imgs_list"]').value;
+                        const pro_id = '${productSelectOne.pro_id}';  // pro_id는 JSP에서 받아온 값을 사용
+
+                        deleteData.push({ pro_imgs, pro_id });
+                    });
+
+                    const remainingImageData = []; // 삭제된 이미지를 제외한 나머지 이미지 데이터
+                    const allImgGroups = document.querySelectorAll('.img-group');
+                    allImgGroups.forEach(imgGroup => {
+                    	console.log("gd1");
+                        const pro_imgs = imgGroup.querySelector('input[name="pro_imgs_list"]').value;
+                    	console.log("gd2");
+                        const pro_id = '${productSelectOne.pro_id}'; // 동일한 pro_id 사용
+                    	console.log("gd3");
+                        const pro_num = imgGroup.querySelector('input[name="pro_num"]').value; // 수정된 부분: pro_num을 올바르게 가져옴
+
+                        // 삭제할 이미지와 비교하여 제외
+                        if (!deleteData.some(data => data.pro_imgs === pro_imgs)) {
+                            remainingImageData.push({ pro_imgs, pro_id, pro_num }); // pro_num 추가
+                        }
+                    });
+
+                    // AJAX 요청으로 데이터를 백엔드에 전송
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "${pageContext.request.contextPath}/adminproduct/deleteImage", true); // 서버에 전송할 URL 설정
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            alert('이미지가 성공적으로 삭제되었습니다.');
+                            window.location.reload(); // 성공 시 페이지 새로고침
+                        } else {
+                            alert('이미지가 성공적으로 삭제되었습니다.');
+                        	window.location.reload(); // 성공 시 페이지 새로고침
+                        }
+                    };
+
+                    const requestData = {
+                        deleteData,
+                        remainingImageData // 삭제된 이미지를 제외한 데이터
+                    };
+
+                    xhr.send(JSON.stringify(requestData)); // requestData를 JSON 형태로 전송
                 }
+
+
+
+
             </script>
             
             <!-- 수정 및 삭제 버튼을 admingrid-wrapper 안에 중앙에 위치 -->

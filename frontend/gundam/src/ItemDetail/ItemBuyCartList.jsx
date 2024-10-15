@@ -9,10 +9,15 @@ import { API_BASE_URL } from "../service/app-config";
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
     console.log(item);
     const handleQuantityChange = (newQuantity) => {
+<<<<<<< Updated upstream
         if (newQuantity >= 1 && newQuantity <= item.pro_stock) {
             onQuantityChange(item.pro_id, newQuantity);
         } else if (newQuantity > item.pro_stock) {
             alert(`재고가 부족합니다. 현재 재고는 ${item.pro_stock}개입니다.`);
+=======
+        if (newQuantity >= 1) {
+            onQuantityChange(item.pro_id, newQuantity);
+>>>>>>> Stashed changes
         }
     };
 
@@ -46,7 +51,11 @@ const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
 };
 
 // ItemBuyCartList 컴포넌트
+<<<<<<< Updated upstream
 const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, initialItem, initialCount, item, imgList, count }) => {
+=======
+const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, initialItem, initialCount }) => {
+>>>>>>> Stashed changes
     const [cartItems, setCartItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState([]);
     const [isAllChecked, setIsAllChecked] = useState(false);
@@ -54,6 +63,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
     const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
     const { loginInfo, isLoggedIn, onLogout } = useLogin();
 
+<<<<<<< Updated upstream
     // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
     // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
     useEffect(() => {
@@ -88,11 +98,20 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
     }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
     // 데이터 로드 및 장바구니 아이템 설정
     useEffect(() => {
+=======
+    // 데이터 로드 및 장바구니 아이템 설정
+    useEffect(() => {
+>>>>>>> Stashed changes
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
+                console.log('responser ?',response);
                 const cartData = response.data || [];
+<<<<<<< Updated upstream
 
+=======
+                console.log('cartdata ?',cartData);
+>>>>>>> Stashed changes
                 // 장바구니에 initialItem 추가 및 수량 업데이트 처리
                 const updatedItems = [...cartData];
                 if (initialItem && initialCount) {
@@ -104,6 +123,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
                     }
                 }
 
+<<<<<<< Updated upstream
                 // 새로운 아이템(item)을 추가
                 if (item && count) {
                     const existingIndex = updatedItems.findIndex(cartItem => cartItem.pro_id === item.pro_id);
@@ -124,6 +144,8 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
                     }
                 }
 
+=======
+>>>>>>> Stashed changes
                 setCartItems(updatedItems);
                 const initiallyCheckedItems = updatedItems.filter(item => item.isChecked).map(item => item.pro_id);
                 setCheckedItems(initiallyCheckedItems);
@@ -181,6 +203,8 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
         setCheckedItems(newCheckedItems);
         setIsAllChecked(!isAllChecked);
     };
+
+
 
     return (
         <div>

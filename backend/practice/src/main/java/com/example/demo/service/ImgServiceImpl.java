@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.ImgDTO;
 import com.example.demo.entity.Img;
@@ -116,6 +118,51 @@ public class ImgServiceImpl implements ImgService {
 //	    } else {
 //	        log.info("Directory does not exist or is not a directory.");
 //	    }
+		
+	}
+	
+	@Transactional
+	@Override
+	public void deleteImage(Map<String, List<Map<String, String>>> requestData,  HttpServletRequest request) {
+		
+		List<Map<String, String>> deleteData = (List<Map<String, String>>) requestData.get("deleteData");
+        
+        // 나머지 이미지 데이터 가져오기
+        List<Map<String, String>> remainingImageData = (List<Map<String, String>>) requestData.get("remainingImageData");
+		
+	    for (Map<String, String> imageData : deleteData) {
+	        String pro_imgs = imageData.get("pro_imgs");
+	        String pro_id = imageData.get("pro_id");
+		    String realPath = request.getServletContext().getRealPath("/") + "resources\\productImg\\"+pro_id+"\\"+pro_imgs;
+	        File imageFile = new File(realPath);
+	        
+	        if (imageFile.exists() && imageFile.isFile()) {
+	            // 파일이 존재하고 파일일 경우 삭제
+	            boolean deleted = imageFile.delete();
+	            if (deleted) {
+	                log.info("이미지 파일이 삭제되었습니다: " + pro_imgs);
+	            } else {
+	                log.error("이미지 파일 삭제 실패: " + pro_imgs);
+	            }
+	        } else {
+	            log.error("파일이 존재하지 않거나 파일이 아닙니다: " + realPath);
+	        }
+
+
+	        // 이미지 삭제 로직 작성
+	        idslrepository.deleteImage(pro_id, pro_imgs);
+	    }
+	    
+	    int pro_num = 0;
+	    for(Map<String, String> remainImg : remainingImageData) {
+	    	System.out.println("remainImag = "+remainImg);
+	        String pro_imgs = remainImg.get("pro_imgs");
+	        String pro_id = remainImg.get("pro_id");
+	        System.out.println("pro_num = "+pro_num);
+	        idslrepository.updateImage(pro_imgs, pro_id, pro_num);
+	        pro_num++;
+	        
+	    }
 		
 	}
 	

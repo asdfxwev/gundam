@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+<<<<<<< HEAD
 		<item key="selection" value="stock"/>
+=======
+<<<<<<< HEAD
+		<item key="selection" value="productList"/>
+=======
+		<item key="selection" value="prepository"/>
+>>>>>>> main
+>>>>>>> 276babbd00b83f04ddb928e250217913a4c739fe
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+<<<<<<< HEAD
 			<item value="stock"/>
+=======
+<<<<<<< HEAD
+			<item value="productList"/>
+			<item value="token"/>
+			<item value="FROM"/>
+			<item value="selectOne"/>
+			<item value="validateAndGetUserId"/>
+			<item value="userDTO"/>
+			<item value="UserDTO"/>
+			<item value="joinDSL"/>
+			<item value="inputValue"/>
+			<item value="Pageable"/>
+			<item value="pageable"/>
+=======
+			<item value="prepository"/>
+			<item value="carts"/>
+>>>>>>> 276babbd00b83f04ddb928e250217913a4c739fe
 			<item value="OrderItemDTO"/>
 			<item value="OrderItem"/>
 			<item value="items = "/>
@@ -22,14 +48,23 @@
 			<item value="orderid"/>
 			<item value="localdataetime"/>
 			<item value="localdatetime"/>
+<<<<<<< HEAD
 			<item value="전달된"/>
+=======
+>>>>>>> main
+>>>>>>> 276babbd00b83f04ddb928e250217913a4c739fe
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+<<<<<<< HEAD
+		<item key="DIALOG_X_ORIGIN" value="1402"/>
+		<item key="DIALOG_Y_ORIGIN" value="229"/>
+=======
 		<item key="DIALOG_X_ORIGIN" value="1147"/>
 		<item key="DIALOG_Y_ORIGIN" value="221"/>
+>>>>>>> main
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
