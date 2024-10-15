@@ -92,46 +92,46 @@ const MyInfoUp = () => {
             document.querySelector("input[name='userName']").focus();
             return false;
         }
-    
+
         // 이름 입력길이 체크
         if (userName.length < 2 || userName.length > 10) {
             alert("이름은 2자 이상, 10자 이하로 입력하세요.");
             return false;
         }
-    
+
         // 연락처 필수입력 체크
         if (phoneNumber.trim() === "") {
             alert("연락처는 필수입력 항목입니다.");
             document.querySelector("input[name='phoneNumber']").focus();
             return false;
         }
-    
+
         // 연락처 입력길이 체크
         if (phoneNumber.length < 10 || phoneNumber.length > 11) {
             alert("연락처를 10자 이상, 11자 이하로 입력하세요.");
             return false;
         }
-    
+
         // 이메일 필수입력 체크
         if (email.trim() === "") {
             alert("이메일은 필수입력 항목입니다.");
             document.querySelector("input[name='email']").focus();
             return false;
         }
-    
+
         // 이메일 형식 체크
         if (!/^[0-9a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/i.test(email)) {
             alert("이메일 형식이 올바르지 않습니다.");
             document.querySelector("input[name='email']").focus();
             return false;
         }
-    
+
         // 주소 필수입력 체크
         if (postCode.trim() === "" || address.trim() === "") {
             alert("주소는 필수입력 항목입니다.");
             return false;
         }
-    
+
         return true;
     };
 
@@ -140,7 +140,11 @@ const MyInfoUp = () => {
 
         if (validation) {
             let url = "/user/myinfoupdate";
-            const data = { user_id: user_id, user_name: userName, phone_num: phoneNumber, email, postcode: postCode, address, dtl_address: dtlAddress };
+            
+            const data = {
+                user_id: user_id, login_id: userInfo.login_id, user_name: userName, phone_num: phoneNumber,
+                email, postcode: postCode, address, dtl_address: dtlAddress, birth: userInfo.birth, gender: userInfo.gender
+            };
 
             apiCall(url, 'POST', data, null)
                 .then((response) => {
@@ -148,7 +152,7 @@ const MyInfoUp = () => {
                     // setJoinInfo(response);
                     navigate("/MyInfoUp");
                 }).catch((err) => {
-                    alert(`** 회원정보 변경중 오류가 발생했습니다. 다시 시도해부세요.`);
+                    alert(`** 회원정보 변경중 오류가 발생했습니다. 다시 시도해주세요.`);
                     navigate("/MyInfoUp");
                 });
         }
@@ -160,8 +164,14 @@ const MyInfoUp = () => {
 
             <form onSubmit={(e) => {
                 e.preventDefault();
-                validation();
-                onUpSubmit(userName, phoneNumber, email, postCode, address, dtlAddress);
+
+                const isConfirmed = window.confirm("회원정보를 수정하시겠습니까?");
+
+                if (isConfirmed) {
+                    if (validation()) {
+                        onUpSubmit(userName, phoneNumber, email, postCode, address, dtlAddress);
+                    }
+                }
             }} >
                 <input type='text' id='user_id' name='user_id' value={userInfo.user_id} />
                 <input type='text' id='birth' name='birth' value={userInfo.birth} />
