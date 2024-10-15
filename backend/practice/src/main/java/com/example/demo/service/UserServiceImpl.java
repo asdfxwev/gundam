@@ -13,9 +13,10 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 
-
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -86,13 +87,14 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void deleteById(String id) {
-		urepository.deleteById(id);
+	public void deleteByuser_id(String user_id) {
+		urepository.deleteById(user_id);
 	}
 	
 	// ** Password 수정 하기
 	@Override
 	public void updatePassword(String user_id, String password) {
+		log.info("serviceImpl파일에 전달된 password값 => " + password);
 		urepository.updatePassword(user_id, password);
 	}
 	

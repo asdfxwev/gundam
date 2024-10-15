@@ -56,7 +56,7 @@ const Login = () => {
                             </Link>
                         </div>
                     </form>
-                    <div>
+                    <div className="id_pw_box">
                         <IdFindingModal href="./Login/Findingid" />
                         &nbsp;
                         <SecurityModal href="./Login/Security" />

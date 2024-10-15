@@ -27,7 +27,7 @@ public interface UserService {
 	List<String> findAllUserId();
 
 	// ** delete
-	void deleteById (String id);
+	void deleteByuser_id (String user_id);
 	
 	// ** Password 수정 하기
 	void updatePassword(String user_id, String password);

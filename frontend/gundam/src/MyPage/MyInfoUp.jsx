@@ -7,6 +7,7 @@ import MypageLeft from './MypageLeft';
 import SignupForm from '../join/join';
 import { useLogin } from '../Login/LoginStatus';
 import { apiCall } from '../service/apiService';
+import SecurityModal from '../Login/Security';
 
 
 const MyInfoUp = () => {
@@ -158,102 +159,153 @@ const MyInfoUp = () => {
         }
     };
 
+    // 회원 탈퇴
+    const userdelete = () => {
+
+        if (validation) {
+            let url = `/user/userdelete`;
+
+            const data = {
+                user_id: userInfo.user_id
+            };
+
+            axios.delete(url, data)
+                .then((response) => {
+                    alert('탈퇴가 완료됐습니다.');
+                    navigate("/");
+                }).catch((err) => {
+                    alert(`** 탈퇴중 오류가 발생했습니다.`);
+                    navigate("/MyInfoUp");
+                });
+        }
+    };
+
     return (
         <div className="mypageContainer">
             <MypageLeft />
+            <div className='MypageRight'>
+                {/* <form onSubmit={(e) => {
+                    e.preventDefault();
 
-            <form onSubmit={(e) => {
-                e.preventDefault();
+                    const isConfirmed = window.confirm("회원정보를 수정하시겠습니까?");
 
-                const isConfirmed = window.confirm("회원정보를 수정하시겠습니까?");
-
-                if (isConfirmed) {
-                    if (validation()) {
-                        onUpSubmit(userName, phoneNumber, email, postCode, address, dtlAddress);
+                    if (isConfirmed) {
+                        if (validation()) {
+                            onUpSubmit(userName, phoneNumber, email, postCode, address, dtlAddress);
+                        }
                     }
-                }
-            }} >
-                <div className="user_info_up">
-                    <h1>회원정보 변경</h1>
+                }} > */}
+                <form>
+                    <div className="user_info_up">
+                        <h1>회원정보 변경</h1>
 
-                    <label htmlFor="userName">이름</label>
-                    <input
-                        id="userName"
-                        name="userName"
-                        type="text"
-                        value={userName}
-                        maxLength={10}
-                        onChange={(e) => setUserName(e.target.value)}
-                        placeholder="이름을 입력하세요"
-                    />
+                        <label htmlFor="userName">이름</label>
+                        <input
+                            id="userName"
+                            name="userName"
+                            type="text"
+                            value={userName}
+                            maxLength={10}
+                            onChange={(e) => setUserName(e.target.value)}
+                            placeholder="이름을 입력하세요"
+                        />
 
-                    <label htmlFor="phoneNumber">연락처</label>
-                    <input
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        type="text"
-                        value={phoneNumber}
-                        maxLength={11}
-                        onChange={(e) => {
-                            if (/^\d*$/.test(e.target.value)) {
-                                setPhoneNumber(e.target.value);
-                            }
-                        }}
-                        placeholder="연락처를 입력하세요"
-                    />
+                        <label htmlFor="phoneNumber">연락처</label>
+                        <input
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            type="text"
+                            value={phoneNumber}
+                            maxLength={11}
+                            onChange={(e) => {
+                                if (/^\d*$/.test(e.target.value)) {
+                                    setPhoneNumber(e.target.value);
+                                }
+                            }}
+                            placeholder="연락처를 입력하세요"
+                        />
 
-                    <label htmlFor="email">이메일</label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="text"
-                        value={email}
-                        maxLength={50}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="이메일을 입력하세요"
-                    />
-                    <label></label>
-                    <label></label>
+                        <label htmlFor="email">이메일</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="text"
+                            value={email}
+                            maxLength={50}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="이메일을 입력하세요"
+                        />
+                        <label></label>
+                        <label></label>
 
-                    <label className='juso_title' htmlFor="address">주소</label>
-                    <input
-                        id="postCode"
-                        name="postCode"
-                        value={postCode}
-                        className='post_input'
-                        type="text"
-                        readOnly
-                    />
+                        <label className='juso_title' htmlFor="address">주소</label>
+                        <input
+                            id="postCode"
+                            name="postCode"
+                            value={postCode}
+                            className='post_input'
+                            type="text"
+                            readOnly
+                        />
 
-                    <button type="button" id="address_kakao">주소 검색</button>
-                    <label></label>
-                    <input
-                        type='text'
-                        id='address'
-                        name='address'
-                        value={address}
-                        placeholder='주소를 검색하세요.'
-                        className='juso_input'
-                        readOnly
-                    />
+                        <button type="button" id="address_kakao">주소 검색</button>
+                        <label></label>
+                        <input
+                            type='text'
+                            id='address'
+                            name='address'
+                            value={address}
+                            placeholder='주소를 검색하세요.'
+                            className='juso_input'
+                            readOnly
+                        />
 
-                    <label htmlFor="dtlAddress">상세주소</label>
-                    <input
-                        id="dtlAddress"
-                        name="dtlAddress"
-                        type="text"
-                        value={dtlAddress}
-                        className='dtl_juso_input'
-                        onChange={(e) => setDtlAddress(e.target.value)}
-                        placeholder="상세 주소를 입력하세요"
-                    />
+                        <label htmlFor="dtlAddress">상세주소</label>
+                        <input
+                            id="dtlAddress"
+                            name="dtlAddress"
+                            type="text"
+                            value={dtlAddress}
+                            className='dtl_juso_input'
+                            onChange={(e) => setDtlAddress(e.target.value)}
+                            placeholder="상세 주소를 입력하세요"
+                        />
 
-                </div>
+                    </div>
+                </form>
                 <div className='btn_box'>
-                    <button type="button" id='pwupdate' className='update_btn'>비밀번호변경</button>
-                    <button type="submit" className='update_btn'>수정</button>
+                    <div className='align_left'>
+                        <button type="button" className='update_btn'
+                            onClick={(e) => {
+                                e.preventDefault();
+
+                                const isConfirmed = window.confirm("정말 탈퇴 하시겠습니까? 탈퇴 후 복구가 불가능합니다.");
+
+                                userdelete();
+                            }}>탈퇴
+                        </button>
+                    </div>
+                    <div className='align_right'>
+                        <SecurityModal href="./Login/Security" />
+                        {/* <button type="submit" className='update_btn'>회원정보 변경</button> */}
+                        {/* 비밀번호변경 버튼이 from태그안에있으면 이벤트가 중복으로 발생하여 밖으로 위치 이동했고 */}
+                        {/* 회원정보 변경 버튼이 from태그 밖으로 나오면서 type=submit 불가하여 아래와같이 수정 */}
+                        <button type="button" className='update_btn'
+                            onClick={(e) => {
+                                e.preventDefault();
+
+                                const isConfirmed = window.confirm("회원정보를 수정하시겠습니까?");
+
+                                if (isConfirmed) {
+                                    if (validation()) {
+                                        onUpSubmit(userName, phoneNumber, email, postCode, address, dtlAddress);
+                                    }
+                                }
+                            }}>회원정보 변경
+                        </button>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
     );
 };

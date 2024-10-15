@@ -92,7 +92,7 @@ function PasswordFindingModal() {
 
     return (
         <span className='modalcss'>
-            <button className='FindID' type='button' onClick={openModal}>비밀번호 변경</button>
+            <button className='update_btn' type='button' onClick={openModal}>비밀번호 변경</button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -115,7 +115,7 @@ function PasswordFindingModal() {
                             placeholder='연락처를 입력하세요.'
                             onChange={(e) => setPhone_Num(e.target.value)} />
                         <div className='pop_btn_box'>
-                            <button type='submit' className='pop_btn'>수정</button>
+                            <button type='submit' className='pop_btn'>찾기</button>
                             <button onClick={closeModal} className='pop_btn'>닫기</button>
                         </div>
                     </form>
@@ -140,7 +140,7 @@ function PasswordFindingModal() {
                             onChange={(e) => setCheckPassword(e.target.value)}
                             maxLength={16} />
                         <div className='pop_btn_box'>
-                            <button type='submit' className='pop_btn'>찾기</button>
+                            <button type='submit' className='pop_btn'>수정</button>
                             <button onClick={closeModal} className='pop_btn'>닫기</button>
                         </div>
                     </form>

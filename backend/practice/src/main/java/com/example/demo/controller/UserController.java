@@ -10,12 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.UserDTO;
 import com.example.demo.entity.User;
@@ -25,6 +27,8 @@ import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/user")
@@ -292,13 +296,15 @@ public class UserController {
  	@PostMapping("/pwUpdate")
  	public String pwUpdate(@RequestBody User entity, Model model) {
  		
+ 		log.info("전달된 password값 확인 => "+entity.getPassword());
  		// password 암호화
  		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
  		
+ 		log.info("암호화한 password값 확인 => "+entity.getPassword());
  		String pwupdateYn = "Password 수정 성공.";
  		
  		try {
- 			service.updatePassword(entity.getUser_id(), entity.getPhone_num());
+ 			service.updatePassword(entity.getUser_id(), entity.getPassword());
  			log.info("Password Update 성공 => "+entity.getUser_name());
  			
 		} catch (Exception e) {
@@ -308,5 +314,28 @@ public class UserController {
  		
  		return pwupdateYn;
  	} //pwUpdate
+ 	
+// 	@GetMapping("/userDelete")
+ 	@DeleteMapping("/userdelete")
+ 	public String userDelete(@RequestParam String user_id, 
+ 					HttpSession session, RedirectAttributes rttr) {
+		// 1) 요청분석
+		String uri = "redirect:/";
+		
+		log.info("삭제 id"+user_id);
+		
+		// 2) Service & 결과
+		try {
+			service.deleteByuser_id(user_id);
+			log.info("** 회원탈퇴 성공 => "+user_id);
+			rttr.addFlashAttribute("message", "탈퇴가 완료 되었습니다..");
+			session.invalidate();
+		} catch (Exception e) {
+			rttr.addFlashAttribute("message", "탈퇴중 오류가 발생했습니다.");
+		}
+		
+		return uri;
+	} //deleteForm
+ 	
 	
 } //class
