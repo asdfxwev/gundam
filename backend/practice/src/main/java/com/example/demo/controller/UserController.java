@@ -104,21 +104,22 @@ public class UserController {
       
         if( entity != null ) {
       	
-      	UserDTO userDTO = UserDTO.builder()
-      			.user_id(entity.getUser_id())
-				.login_id(entity.getLogin_id())
-				.user_name(entity.getUser_name())
-				.email(entity.getEmail())
-				.birth(entity.getBirth())
-				.gender(entity.getGender())
-				.phone_num(entity.getPhone_num())
-				.postcode(entity.getPostcode())
-				.address(entity.getAddress())
-				.dtl_address(entity.getDtl_address())
-				.user_cd(entity.getUser_cd())
-				.build();
+//      	UserDTO userDTO = UserDTO.builder()
+//      			.user_id(entity.getUser_id())
+//				.login_id(entity.getLogin_id())
+//				.user_name(entity.getUser_name())
+//				.email(entity.getEmail())
+//				.birth(entity.getBirth())
+//				.gender(entity.getGender())
+//				.phone_num(entity.getPhone_num())
+//				.postcode(entity.getPostcode())
+//				.address(entity.getAddress())
+//				.dtl_address(entity.getDtl_address())
+//				.user_cd(entity.getUser_cd())
+//				.build();
       	
-			return ResponseEntity.ok(userDTO);
+//			return ResponseEntity.ok(userDTO);
+			return ResponseEntity.ok(entity);
 			
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
@@ -259,30 +260,53 @@ public class UserController {
   	} //checkid
  	
 //  ** User Detail
-// 	@GetMapping("/userDetail")
-// 	public ResponseEntity<?> userdetail(HttpSession session,
-// 										@AuthenticationPrincipal String login_id) {
-// 		
-// 		// => userID: 인증받은 token 에서 get (스프링이 @AuthenticationPrincipal 으로 제공해줌)
-//         // => 요청 전달 : 스프링 시큐리티 필터 작동
-//         //    -> JwtAuthenticationFilter 클래스의 doFilterInternal() 메서드가 호출되어
-//         //    -> request 객체에서 token을 꺼내 분석하고, 인증되면
-//         //    -> SecurityContext에 인증된 Authentication 객체를 넣어두고 
-//         //       현재 스레드내에서 공유되도록 관리하고 있으며, 
-//         //    -> @AuthenticationPrincipal 으로 이 정보를 제공해줌.
-// 		
-// 		//session.invalidate();
-// 		log.info("userdetail, 전달된 userId 확인 => "+login_id);
-// 		log.info("userdetail, session에 보관한 loginId 확인 => "+session.getAttribute("login_id"));
-// 		
-// 		Member entity = service.selectOne(login_id);
-// 		if( entity != null ) {
-// 			return ResponseEntity.ok(entity);
-// 		} else {
-// 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-// 					.body("userDetail failed.");
-// 		}
-// 		
-// 	} //userdetail
+ 	@PostMapping("/myinfo_update")
+ 	public ResponseEntity<?> myinfoupdate(@RequestBody User entity) {
+ 		
+ 		log.info("회원정보 수정 전 return 값 => "+entity);
+ 		entity = service.save(entity);
+ 		log.info("회원정보 수정 후 return 값 => "+entity);
+ 		
+ 		if( entity != null ) {
+ 			return ResponseEntity.ok(entity);
+ 		} else {
+ 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+ 					.body("회원정보 update failed.");
+ 		}
+ 		
+ 	} //userdetail
+ 	
+ 	@PostMapping("/pwUserCheck")
+	public ResponseEntity<?> pwUserCheck(@RequestBody User entity) {
+		
+ 		entity = service.pwUserCheck(entity.getLogin_id(), entity.getPhone_num());
+		
+		if( entity != null ) {
+ 			return ResponseEntity.ok(entity);
+ 		} else {
+ 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+ 					.body("회원정보가 입치하지 않습니다.");
+ 		}
+	} //pwUpdate
+
+ 	@PostMapping("/pwUpdate")
+ 	public String pwUpdate(@RequestBody User entity, Model model) {
+ 		
+ 		// password 암호화
+ 		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+ 		
+ 		String pwupdateYn = "Password 수정 성공.";
+ 		
+ 		try {
+ 			service.updatePassword(entity.getUser_id(), entity.getPhone_num());
+ 			log.info("Password Update 성공 => "+entity.getUser_name());
+ 			
+		} catch (Exception e) {
+			log.error("Password Update Exception => "+e.toString());
+			pwupdateYn = "Password 수정 실패. 다시 시도하세요.";
+		}
+ 		
+ 		return pwupdateYn;
+ 	} //pwUpdate
 	
 } //class

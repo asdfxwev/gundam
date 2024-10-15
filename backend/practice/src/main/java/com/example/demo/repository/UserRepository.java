@@ -18,8 +18,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 	// => JPQL 적용
 	@Modifying
 	@Transactional
-	@Query("UPDATE User u SET u.password=:password WHERE u.login_id=:login_id")
-	void updatePassword(@Param("login_id") String login_id, @Param("password") String password);
+	@Query("UPDATE User u SET u.password=:password WHERE u.user_id=:user_id")
+	void updatePassword(@Param("user_id") String user_id, @Param("password") String password);
 	
 	// => NativeQuery 적용
 	//@Modifying
@@ -43,5 +43,9 @@ public interface UserRepository extends JpaRepository<User, String> {
 	// 회원가입시 user_id 값 순차증가를 위한 select
 	@Query("SELECT u.user_id FROM User u")
     List<String> findAllUserId();
+	
+	// pw변경을 위한 입력정보 일치여부 확인
+	@Query("SELECT u FROM User u WHERE u.login_id=:login_id AND u.phone_num=:phone_num")
+	User pwUserCheck(@Param("login_id") String login_id, @Param("phone_num") String phone_num);
 	
 }
