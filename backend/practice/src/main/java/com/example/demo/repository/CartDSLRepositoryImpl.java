@@ -30,6 +30,7 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
                 product.pro_id,
                 cart.cart_quantity,
                 product.pro_price,
+                product.pro_stock,
                 cart.cart_quantity.multiply(product.pro_price).as("total_price"),
                 user.user_id,          // user_id 추가
                 user.user_name,        // user_name 추가

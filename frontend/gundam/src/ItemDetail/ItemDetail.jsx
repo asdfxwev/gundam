@@ -55,7 +55,13 @@ export default function ItemDetail() {
     };
 
     const plus = () => {
-        setCount(prevCount => prevCount + 1);
+        console.log("productStock = " + productList.pro_stock);
+
+        if (count < productList.pro_stock) {
+            setCount(prevCount => prevCount + 1);
+        } else {
+            alert(`재고가 부족합니다. 현재 재고는 ${productList.pro_stock}개입니다.`);
+        }
     };
 
     useEffect(() => {
@@ -103,7 +109,7 @@ export default function ItemDetail() {
             let url = `/user/user_info`;
 
             const data = { user_id: user_id };
-            
+
             const response = apiCall(url, 'POST', data, null)
                 .then((response) => {
                     // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
@@ -121,7 +127,7 @@ export default function ItemDetail() {
             navigate('/Login');
         }
     };
-    
+
     const toCart = async (e) => {
         if (isLoggedIn) {
             e.preventDefault();
@@ -160,9 +166,9 @@ export default function ItemDetail() {
             }
         }
     };
-    console.log("imgList = " +imgList);
-    console.log("productList = " +productList);
-    console.log("reviewList = " +reviewList);
+    console.log("imgList = " + imgList);
+    console.log("productList = " + productList);
+    console.log("reviewList = " + reviewList);
 
 
     return (
@@ -221,7 +227,7 @@ export default function ItemDetail() {
                         <SectionImg imgList={imgList} productList={productList} />
                     )}
                     {productList && (
-                        <ItemReview key={productList.pro_id} item={productList} pro_id={proId} reviewList = {reviewList} />
+                        <ItemReview key={productList.pro_id} item={productList} pro_id={proId} reviewList={reviewList} />
                     )}
                     {productList && (
                         <ItemQna key={productList.pro_id} item={productList} />
