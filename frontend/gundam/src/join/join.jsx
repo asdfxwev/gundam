@@ -213,8 +213,13 @@ const SignupForm = () => {
                         navigate("/Login/Join");
                     });
 
+<<<<<<< Updated upstream
             } catch (err) {
                 console.err("회원가입 중 오류가 발생했습니다: ", err);
+=======
+            } catch (error) {
+                console.error("회원가입 중 에러가 발생했습니다: ", error);
+>>>>>>> Stashed changes
             }
 
         }

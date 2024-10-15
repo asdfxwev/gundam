@@ -110,5 +110,16 @@ public class ProductController {
 	public void productReviewDelete(@RequestBody ReviewDTO dto) {
 		reservice.reviewDelete(dto);
 	}
+	
+	@PostMapping("productReviewModify")
+	public void productReviewModify(@RequestBody ReviewDTO dto) {
+		System.out.println(dto);
+		reservice.reviewUpdate(dto);
+	}
+	
+	@PostMapping("productReviewDelete")
+	public void productReviewDelete(@RequestBody ReviewDTO dto) {
+		reservice.reviewDelete(dto);
+	}
 
 }

@@ -81,11 +81,17 @@ public class CartController {
         return ResponseEntity.ok(boughtCarts);
     }
     
+<<<<<<< Updated upstream
     @GetMapping("/user")
     public ResponseEntity<User> getUserByLoginId(@RequestParam String user_id) {
     	System.out.println("아이디는 무엇이니?"+user_id);
         User user = cartService.getUserByLoginId(user_id);
         System.out.println("user is = "+user);
+=======
+    @GetMapping("/user/{loginId}")
+    public ResponseEntity<User> getUserByLoginId(@PathVariable String loginId) {
+        User user = cartService.getUserByLoginId(loginId);
+>>>>>>> Stashed changes
         
         if (user != null) {
             // 콘솔에 사용자 정보를 출력합니다.
@@ -96,7 +102,11 @@ public class CartController {
             System.out.println("User phone_num: " + user.getPhone_num());
             // 필요한 다른 필드들도 출력할 수 있습니다.
         } else {
+<<<<<<< Updated upstream
             System.out.println("User not found for loginId: " + user_id);
+=======
+            System.out.println("User not found for loginId: " + loginId);
+>>>>>>> Stashed changes
         }
 
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();

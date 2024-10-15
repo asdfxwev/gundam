@@ -10,15 +10,22 @@ import { API_BASE_URL } from "../service/app-config";
 const ItemBuy = () => {
     const location = useLocation();
     const navigate = useNavigate();
+<<<<<<< Updated upstream
     const { item, count, imgList } = location.state || {};
     const [total, setTotal] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
     const { loginInfo, isLoggedIn, onLogout } = useLogin();
+=======
+    const { item, count } = location.state || {};
+    const [total, setTotal] = useState(0);
+    const [totalQuantity, setTotalQuantity] = useState(0);
+>>>>>>> Stashed changes
     const [showUser, setShowUser] = useState(true);
     const [checkedTrueItems, setCheckedTrueItems] = useState([]);
     const [deliveryAddress, setDeliveryAddress] = useState('');
     const [deliveryUser, setDeliveryUser] = useState('');
     const [deliveryPhone, setDeliveryPhone] = useState('');
+<<<<<<< Updated upstream
     const [deliverDtlAddress, setDeliverDtlAddress] = useState('');
     const [userDetails, setUserDetails] = useState({});
     // const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
@@ -65,6 +72,14 @@ const ItemBuy = () => {
     // console.log("imgList = " + imgList);
     // console.log("count = " + count);
 
+=======
+    const [userDetails, setUserDetails] = useState({});
+    const loginId = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
+    const addressKakaoRef = useRef(null);
+
+    const formatNumber = (number) => number.toLocaleString('ko-KR');
+
+>>>>>>> Stashed changes
     useEffect(() => {
         if (item && count) {
             const initialTotal = item.price * count;
@@ -90,6 +105,19 @@ const ItemBuy = () => {
 
         fetchUserDetails();
     }, []);
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/cart/user/${loginId}`);
+                setUserDetails(response.data);
+            } catch (error) {
+                console.error('사용자 정보 로드 중 오류 발생:', error);
+            }
+        };
+
+        fetchUserDetails();
+    }, [loginId]);
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -121,6 +149,7 @@ const ItemBuy = () => {
         setShowUser(prev => !prev);
     };
 
+<<<<<<< Updated upstream
     const handleOrder = async () => {
         // 배송 정보가 없으면 경고
         if (!showUser && (!deliveryUser || !deliveryPhone || !deliveryAddress)) {
@@ -199,6 +228,100 @@ const ItemBuy = () => {
             // for (const item of allItemsToBuy) {
             //     await axios.delete(`${API_BASE_URL}/cart/${user_id}/${item.pro_id}`);
             // }
+=======
+    // const handleSaveDeliveryInfo = () => {
+    //     if (!deliveryUser || !deliveryPhone || !deliveryAddress) {
+    //         alert('모든 배송 정보를 입력해주세요.');
+    //         return;
+    //     }
+    //     setUserDetails(prevDetails => ({
+    //         ...prevDetails,
+    //         user_name: deliveryUser,
+    //         phone_num: deliveryPhone,
+    //         address: deliveryAddress,
+    //     }));
+    //     alert('배송 정보가 저장되었습니다.');
+    // };
+
+    const handleOrder = async () => {
+        // 배송 정보가 없으면 경고
+        if (!showUser && (!deliveryUser || !deliveryPhone || !deliveryAddress)) {
+            alert('배송 정보를 입력해주세요.');
+            return;
+        }
+
+        try {
+            const today = new Date();
+            const year = today.getFullYear().toString().slice(-2); // 마지막 두 자리 연도
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (1~12)
+            const day = String(today.getDate()).padStart(2, '0'); // 일 (1~31)
+            const formattedDate = `${year}${month}${day}`; // yyMMdd 형식
+            console.log('formattedDate : ', formattedDate);
+            const orderCountResponse = await axios.get(`${API_BASE_URL}/cart/${loginId}`);
+            const orderCount = orderCountResponse.data.length;
+            const order_id = `${formattedDate}${loginId}${String(orderCount + 1).padStart(4, '0')}`;
+            console.log('order_id : ', order_id);
+            console.log('userDetails : ', userDetails);
+            const itemsToBuyFromCart = (await axios.get(`${API_BASE_URL}/cart/${loginId}`)).data;
+            console.log('itemcart : ', itemsToBuyFromCart);
+            const itemDetailToBuy = item ? {
+                ...item,
+                quantity: count,
+                pro_id: item.pro_id,
+                order_id: order_id
+            } : null;
+            console.log('itemdetailtobuy :', itemDetailToBuy);
+
+            const allItemsToBuy = itemDetailToBuy ? [...itemsToBuyFromCart, itemDetailToBuy] : itemsToBuyFromCart;
+
+            const stockCheckPromises = allItemsToBuy.map(async (item) => {
+                const productResponse = await axios.get(`${API_BASE_URL}/products/${item.pro_id}`);
+                return {
+                    pro_id: item.pro_id,
+                    stock: productResponse.data.pro_stock,
+                    quantity: item.quantity
+                };
+            });
+
+            const stockChecks = await Promise.all(stockCheckPromises);
+            const outOfStockItem = stockChecks.find(stockCheck => stockCheck.quantity > stockCheck.stock);
+
+            if (outOfStockItem) {
+                alert(`주문 수량이 ${outOfStockItem.pro_id}의 재고(${outOfStockItem.stock}개)보다 많습니다.`);
+                return;
+            }
+
+            const deliveryInfo = showUser ? {
+                deliveryUser: userDetails.user_name,
+                deliveryPhone: userDetails.phone_num,
+                deliveryAddress: userDetails.address
+            } : {
+                deliveryUser,
+                deliveryPhone,
+                deliveryAddress
+            };
+
+            const orderDto = {
+                order_id,
+                user_id: loginId,
+                order_date: formattedDate,
+                order_status: 'pending',
+                postcode: '123456',
+                oritem_address: deliveryInfo.deliveryAddress,
+                oritem_dtladdress: '상세 주소',
+                oritem_name: deliveryInfo.deliveryUser,
+                oritem_number: deliveryInfo.deliveryPhone,
+                pay_method: '신용카드',
+                oritem_payment: total,
+                oritem_count: totalQuantity,
+                items: allItemsToBuy.map(item => ({
+                    pro_id: item.pro_id,
+                    oritem_quan: item.quantity
+                }))
+            };
+
+            await axios.post(`${API_BASE_URL}/api/orders`, orderDto);
+>>>>>>> Stashed changes
 
             alert('결제가 완료되었습니다.');
             navigate('../Order');
@@ -219,12 +342,18 @@ const ItemBuy = () => {
                         <div className="subtitle_left"><h3>상품 정보</h3></div>
                     </div>
                     <ItemBuyCartList
+<<<<<<< Updated upstream
                         item={item}
                         imgList={imgList}
                         count={count}
                         setTotal={setTotal}
                         setTotalQuantity={setTotalQuantity}
                         setCheckedTrueItems={setCheckedTrueItems} // 체크된 아이템을 설정할 수 있도록 props 추가
+=======
+                        setTotal={setTotal}
+                        setTotalQuantity={setTotalQuantity}
+                        setCheckedTrueItems={setCheckedTrueItems}
+>>>>>>> Stashed changes
                     />
                 </div>
 
@@ -234,6 +363,7 @@ const ItemBuy = () => {
                             <h3>주문자 정보</h3>
                             <button className='delivery_change_btn' onClick={deliveryChange}>배송지 변경</button>
                         </div>
+<<<<<<< Updated upstream
 
                         <div className='buy_item_info underline'>
                             {showUser ? (
@@ -248,6 +378,20 @@ const ItemBuy = () => {
                                     <span className='buy_user_address_box'>&nbsp;&nbsp;주소 : {userDetails.address}</span>
                                     <span className='buy_user_address_boxs'>&nbsp;&nbsp;상세주소 : {userDetails.dtl_address}</span>
 
+=======
+
+                        <div className='buy_item_info underline'>
+                            {showUser ? (
+                                <div id='user' className='userinfo'>
+                                    <p>주문자</p>
+                                    <p>{userDetails.user_name}</p>
+                                    <p>연락처</p>
+                                    <p>{userDetails.phone_num}</p>
+                                    <p>e-Mail</p>
+                                    <p>{userDetails.email}</p>
+                                    <p>배송지</p>
+                                    <p className='buy_user_address_box'>{userDetails.address}</p>
+>>>>>>> Stashed changes
                                 </div>
                             ) : (
                                 <div id='delivery' className='delivery_info'>
@@ -261,6 +405,7 @@ const ItemBuy = () => {
                                     <p className='buy_address_search'>
                                         <button id='address_kakao' className='address_search_btn' ref={addressKakaoRef}>주소검색</button>
                                     </p>
+<<<<<<< Updated upstream
                                     <input type='text' name='delivery_address' className='buy_delivery_address'
                                         placeholder='주소를 입력하세요.' value={deliveryAddress}
                                         readOnly />
@@ -292,6 +437,38 @@ const ItemBuy = () => {
                                 <div className='total_price'>{formatNumber(total)} 원</div>
                             </div>
                         </div>
+=======
+                                    <input type='text' name='delivery_address' className='buy_delivery_address_box'
+                                        placeholder='주소를 검색하세요.' value={deliveryAddress} readOnly />
+                                    {/* <button className="save_btn" onClick={handleSaveDeliveryInfo}>저장</button> */}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className='item_count underline'>
+                            <div className='count_left_box font_medium'>구매수량</div>
+                            <div className='count_right_box'>
+                                <div className='count_num'>{totalQuantity}</div>
+                            </div>
+                        </div>
+
+                        <div className='item_count underline'>
+                            <div className='count_left_box font_medium'>결제 수단</div>
+                            <select>
+                                <option>신용카드</option>
+                                <option>무통장 입금</option>
+                                <option>네이버 페이</option>
+                                <option>카카오 페이</option>
+                            </select>
+                        </div>
+
+                        <div className='item_count underline'>
+                            <div className='count_left_box font_medium'>총 결제 금액</div>
+                            <div className='count_right_box'>
+                                <div className='total_price'>{formatNumber(total)} 원</div>
+                            </div>
+                        </div>
+>>>>>>> Stashed changes
                         <div className='buy_button_box'>
                             <button className='submit_btn' onClick={handleOrder}>결제하기</button>
                         </div>

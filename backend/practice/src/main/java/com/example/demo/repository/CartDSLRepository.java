@@ -9,5 +9,8 @@ import java.util.List;
 public interface CartDSLRepository {
     List<CartDTO> findByUserId(String userId);
     User findUserByLoginId(String loginId);
+<<<<<<< Updated upstream
     void deleteCart(Cart cart);
+=======
+>>>>>>> Stashed changes
 }

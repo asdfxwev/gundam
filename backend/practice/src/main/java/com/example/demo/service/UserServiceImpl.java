@@ -96,9 +96,12 @@ public class UserServiceImpl implements UserService {
 		urepository.updatePassword(user_id, password);
 	}
 	
+<<<<<<< Updated upstream
 	@Override
 	public User pwUserCheck(String login_id, String phone_num) {
 		return urepository.pwUserCheck(login_id, phone_num);
 	}
 	
+=======
+>>>>>>> Stashed changes
 }

@@ -9,7 +9,10 @@ import com.example.demo.domain.OrdersDTO;
 import com.example.demo.entity.Orders;
 import com.example.demo.entity.Oritems;
 import com.querydsl.core.BooleanBuilder;
+<<<<<<< Updated upstream
 import com.querydsl.core.Tuple;
+=======
+>>>>>>> Stashed changes
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

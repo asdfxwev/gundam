@@ -3,6 +3,12 @@ package com.example.demo.repository;
 import com.example.demo.domain.CartDTO;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.User;  // User 엔티티 추가
+<<<<<<< Updated upstream
+=======
+import com.example.demo.entity.QCart;
+import com.example.demo.entity.QProduct;
+import com.example.demo.entity.QImg;
+>>>>>>> Stashed changes
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.PersistenceContext;
@@ -30,7 +36,10 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
                 product.pro_id,
                 cart.cart_quantity,
                 product.pro_price,
+<<<<<<< Updated upstream
                 product.pro_stock,
+=======
+>>>>>>> Stashed changes
                 cart.cart_quantity.multiply(product.pro_price).as("total_price"),
                 user.user_id,          // user_id 추가
                 user.user_name,        // user_name 추가
@@ -45,6 +54,17 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
                 .on(user.user_id.eq(cart.user_id)) // user_id 기준으로 조인
                 .where(cart.user_id.eq(userId))
                 .fetch();
+<<<<<<< Updated upstream
+=======
+    }
+
+
+    // userId와 같은 login_id를 가진 User 엔티티를 조회하는 메서드
+    public User findUserByLoginId(String loginId) {
+        return jpaQueryFactory.selectFrom(user)
+                .where(user.user_id.eq(loginId)) 
+                .fetchOne();
+>>>>>>> Stashed changes
     }
 
 

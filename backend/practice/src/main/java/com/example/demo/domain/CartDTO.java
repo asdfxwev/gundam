@@ -21,7 +21,10 @@ public class CartDTO {
     private String user_name;   
     private String email;      
     private String phone_num;
+<<<<<<< Updated upstream
     private int pro_stock;
+=======
+>>>>>>> Stashed changes
 
     @Override
     public String toString() {
@@ -33,7 +36,11 @@ public class CartDTO {
                ", total_price=" + (cart_quantity * pro_price) + 
                ", user_name=" + user_name + 
                ", phone_num=" + phone_num + 
+<<<<<<< Updated upstream
                ", email=" + email +
                ", pro_stock=" +pro_stock +"]";
+=======
+               ", email=" + email + "]";
+>>>>>>> Stashed changes
     }
 }
