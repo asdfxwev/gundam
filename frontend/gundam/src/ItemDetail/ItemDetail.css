@@ -904,7 +904,7 @@
 
 .userinfo {
     display: grid;
-    grid-template: repeat(4, .5fr) / .5fr 1fr;
+    grid-template: repeat(5, .5fr) / .5fr 1fr;
     width: 100%;
     align-items: center;
     height: 100%;
@@ -915,8 +915,13 @@
 }
 
 .buy_user_address_box {
-    height: 80px;
+    height: 40px;
     grid-area: 5/1/6/3;
+}
+
+.buy_user_address_boxs {
+    height: 40px;
+    grid-area: 6/1/7/3;
 }
 
 .delivery_info {

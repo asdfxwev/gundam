@@ -201,6 +201,7 @@ const Cart = () => {
                     </div>
                     {orderList && orderList.length > 0 ? (
                         orderList.map((item) => {
+                            console.log(item)
                             const matchedImage = mainImage.find(image => image.pro_id.pro_id === item.pro_id.pro_id);
                             const matchedReview = reviewExist.find(review =>
                                 review.product.pro_id === item.pro_id.pro_id && review.order.order_id === item.order_id.order_id
@@ -221,7 +222,7 @@ const Cart = () => {
                                         </a>
                                     </div>
                                     <div>{item.pro_id.pro_name}</div>
-                                    <div>{item.order_id.oritem_count}</div>
+                                    <div>{item.oritem_quan}</div>
                                     <div>{item.pro_id.pro_price}원</div>
                                     <div>{(item.pro_id.pro_price * item.oritem_quan)}원</div>
                                     {matchedReview ? (

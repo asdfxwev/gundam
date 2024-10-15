@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.CartDTO;
@@ -18,13 +19,16 @@ import com.example.demo.entity.Cart;
 import com.example.demo.entity.CartId;
 import com.example.demo.entity.User;
 import com.example.demo.service.CartService;
+import com.example.demo.service.OrdersService;
+
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/cart")
+@AllArgsConstructor
 public class CartController {
 
-    @Autowired
     private CartService cartService;
 
     // 상품을 카트에 추가하는 메서드
@@ -44,6 +48,7 @@ public class CartController {
     @GetMapping("/{userId}")
     public ResponseEntity<List<CartDTO>> getCartItems(@PathVariable String userId) {
         List<CartDTO> cartItems = cartService.getCartItemsByUserId(userId);
+        System.out.println("겁나긴거"+cartService.getCartItemsByUserId(userId));
         return ResponseEntity.ok(cartItems);
     }
 
@@ -76,9 +81,11 @@ public class CartController {
         return ResponseEntity.ok(boughtCarts);
     }
     
-    @GetMapping("/user/{loginId}")
-    public ResponseEntity<User> getUserByLoginId(@PathVariable String loginId) {
-        User user = cartService.getUserByLoginId(loginId);
+    @GetMapping("/user")
+    public ResponseEntity<User> getUserByLoginId(@RequestParam String user_id) {
+    	System.out.println("아이디는 무엇이니?"+user_id);
+        User user = cartService.getUserByLoginId(user_id);
+        System.out.println("user is = "+user);
         
         if (user != null) {
             // 콘솔에 사용자 정보를 출력합니다.
@@ -89,7 +96,7 @@ public class CartController {
             System.out.println("User phone_num: " + user.getPhone_num());
             // 필요한 다른 필드들도 출력할 수 있습니다.
         } else {
-            System.out.println("User not found for loginId: " + loginId);
+            System.out.println("User not found for loginId: " + user_id);
         }
 
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();

@@ -7,9 +7,12 @@ import { API_BASE_URL } from "../service/app-config";
 
 // CartItem 컴포넌트
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
+    console.log(item);
     const handleQuantityChange = (newQuantity) => {
-        if (newQuantity >= 1) {
+        if (newQuantity >= 1 && newQuantity <= item.pro_stock) {
             onQuantityChange(item.pro_id, newQuantity);
+        } else if (newQuantity > item.pro_stock) {
+            alert(`재고가 부족합니다. 현재 재고는 ${item.pro_stock}개입니다.`);
         }
     };
 
@@ -43,7 +46,7 @@ const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
 };
 
 // ItemBuyCartList 컴포넌트
-const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, initialItem, initialCount }) => {
+const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, initialItem, initialCount, item, imgList, count }) => {
     const [cartItems, setCartItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState([]);
     const [isAllChecked, setIsAllChecked] = useState(false);
@@ -51,7 +54,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
     const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
     const { loginInfo, isLoggedIn, onLogout } = useLogin();
 
-       // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
+    // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
     // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
     useEffect(() => {
         if (isLoggedIn) {
@@ -75,7 +78,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
             let url = `/user/user_info`;
 
             const data = { user_id: user_id };
-            
+
             const response = apiCall(url, 'POST', data, null)
                 .then((response) => {
                     // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
@@ -98,6 +101,26 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
                         updatedItems[existingIndex].cart_quantity += initialCount;
                     } else {
                         updatedItems.push({ ...initialItem, cart_quantity: initialCount, isChecked: true });
+                    }
+                }
+
+                // 새로운 아이템(item)을 추가
+                if (item && count) {
+                    const existingIndex = updatedItems.findIndex(cartItem => cartItem.pro_id === item.pro_id);
+                    if (existingIndex >= 0) {
+                        updatedItems[existingIndex].cart_quantity += count;
+                    } else {
+                        const img = imgList.filter(item => item.pro_num === 0);
+                        console.log(img);
+                        console.log(img[0]);
+                        console.log(img[0].pro_imgs);
+                        const pro_imgs = img && img.pro_imgs ? img.pro_imgs : ''; // img가 존재하고 pro_imgs가 있으면 값 가져옴
+                        updatedItems.push({
+                            ...item,
+                            pro_imgs: img[0].pro_imgs,  // 이미지를 imgList에서 가져옴
+                            cart_quantity: count,
+                            isChecked: true,
+                        });
                     }
                 }
 

@@ -23,7 +23,7 @@ public class Orders {
     @Column(name = "order_date", nullable = false, columnDefinition = "datetime default current_timestamp")
     private LocalDateTime order_date;
 
-    @Column(name = "order_status", nullable = false, length = 10)
+    @Column(name = "order_status", length = 10, columnDefinition = "varchar(10) default 'order_cd01'")
     private String order_status;
 
     @Column(name = "postcode", nullable = false, length = 6)

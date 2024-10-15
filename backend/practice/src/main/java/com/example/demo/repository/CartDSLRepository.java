@@ -9,4 +9,5 @@ import java.util.List;
 public interface CartDSLRepository {
     List<CartDTO> findByUserId(String userId);
     User findUserByLoginId(String loginId);
+    void deleteCart(Cart cart);
 }
