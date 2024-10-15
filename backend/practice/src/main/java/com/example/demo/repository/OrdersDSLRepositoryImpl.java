@@ -88,5 +88,5 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
                 .groupBy(orders.user.gender)
                 .fetch();
     }
-    
+
 }
