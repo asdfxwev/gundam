@@ -6,12 +6,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -258,6 +260,7 @@ public class AdiminProductController {
 	        if (prosImgs != null && !prosImgs.isEmpty() && proNums != null && !proNums.isEmpty()) {
 				for (MultipartFile img : prosImgs) {
 					System.out.println("11");
+					System.out.println("proNum = "+proNums);
 					System.out.println("proId = "+proId);
 					System.out.println("iservice.findAllProNum(proId) = "+iservice.findAllProNum(proId));
 					List<Integer> proNum = iservice.findAllProNum(proId);
@@ -304,6 +307,11 @@ public class AdiminProductController {
 	    
 	    // 삭제 후 상품 수정 페이지로 리다이렉트
 	    return "redirect:/adminproduct/productModify?proId=" + proId;
+	}
+	
+	@PostMapping("deleteImage")
+	public void deleteImage(@RequestBody List<Map<String, String>> requestData, HttpServletRequest request) {
+		iservice.deleteImage(requestData, request);
 	}
 
 	

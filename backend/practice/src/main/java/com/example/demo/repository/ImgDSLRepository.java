@@ -25,4 +25,6 @@ public interface ImgDSLRepository {
 	
 	List<Img> orderImgList(List<String> proId);
 	
+	void deleteImage(String pro_id, String pro_imgs);
+	
 }
