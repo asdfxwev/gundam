@@ -236,46 +236,55 @@ const Order = () => {
                         </div>
                     )}
                 </div>
+                <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        contentLabel="리뷰 작성"
+                    >
+                        <form className="review_pop">
+                            <h2>리뷰작성</h2>
+                            <div>
+                                <div>제목
+                                    <input name='rev_title' value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} type="text" id="title" className="re_title" />
+                                </div>
+                                <div>별점
+                                    <StarRating name='rev_rating' rating={rev_rating} setRating={setRating} />
+                                </div>
+                                <div className="reviewBox">내용
+                                    <textarea value={rev_com} name='rev_com' onChange={(e) => setReviewMessage(e.target.value)} id="comment" className="re_comment" />
+                                </div>
+                            </div>
+                            <div className="re_button_box">
+                                <button type="button" className="re_button" onClick={reviewSubmit}>저장</button>
+                                <button type="button" className="re_button" onClick={closeModal}>닫기</button>
+                            </div>
+                        </form>
+                    </Modal>
 
-                {/* 리뷰 작성 모달 */}
-                <Modal isOpen={modalIsOpen} onRequestClose={closeModal} ariaHideApp={false} className="modalContainer">
-                    <h2>리뷰 작성</h2>
-                    <form onSubmit={reviewSubmit}>
-                        <div>
-                            <label>리뷰 제목</label>
-                            <input type="text" value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} />
-                        </div>
-                        <div>
-                            <label>리뷰 내용</label>
-                            <textarea value={rev_com} onChange={(e) => setReviewMessage(e.target.value)} />
-                        </div>
-                        <div>
-                            <label>별점</label>
-                            <StarRating rating={rev_rating} setRating={setRating} />
-                        </div>
-                        <button type="submit">리뷰 제출</button>
-                    </form>
-                </Modal>
-
-                {/* 리뷰 수정 모달 */}
-                <Modal isOpen={modalModifyIsOpen} onRequestClose={closeModalModify} ariaHideApp={false} className="modalContainer">
-                    <h2>리뷰 수정</h2>
-                    <form onSubmit={reviewModify}>
-                        <div>
-                            <label>리뷰 제목</label>
-                            <input type="text" value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} />
-                        </div>
-                        <div>
-                            <label>리뷰 내용</label>
-                            <textarea value={rev_com} onChange={(e) => setReviewMessage(e.target.value)} />
-                        </div>
-                        <div>
-                            <label>별점</label>
-                            <StarRating rating={rev_rating} setRating={setRating} />
-                        </div>
-                        <button type="submit">리뷰 수정</button>
-                    </form>
-                </Modal>
+                <Modal
+                        isOpen={modalModifyIsOpen}
+                        onRequestClose={closeModalModify}
+                        contentLabel="리뷰 수정"
+                    >
+                        <form className="review_pop">
+                            <h2>리뷰수정</h2>
+                            <div>
+                                <div>제목
+                                    <input name='rev_title' value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} type="text" id="title" className="re_title" />
+                                </div>
+                                <div>별점
+                                    <StarRating name='rev_rating' rating={rev_rating} setRating={setRating} />
+                                </div>
+                                <div className="reviewBox">내용
+                                    <textarea value={rev_com} name='rev_com' onChange={(e) => setReviewMessage(e.target.value)} id="comment" className="re_comment" />
+                                </div>
+                            </div>
+                            <div className="re_button_box">
+                                <button type="button" className="re_button" onClick={reviewModify}>저장</button>
+                                <button type="button" className="re_button" onClick={closeModalModify}>닫기</button>
+                            </div>
+                        </form>
+                    </Modal>
             </div>
         </div>
     );
