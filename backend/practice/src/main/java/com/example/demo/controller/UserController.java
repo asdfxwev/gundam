@@ -315,7 +315,6 @@ public class UserController {
  		return pwupdateYn;
  	} //pwUpdate
  	
-// 	@GetMapping("/userDelete")
  	@DeleteMapping("/userdelete")
  	public String userDelete(@RequestParam String user_id, 
  					HttpSession session, RedirectAttributes rttr) {
@@ -336,6 +335,8 @@ public class UserController {
 		
 		return uri;
 	} //deleteForm
+ 	
+ 	
  	
 	
 } //class
