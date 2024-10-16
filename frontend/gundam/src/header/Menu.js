@@ -124,6 +124,11 @@ export default function Menu() {
                 <div className="h_right_container">
                     {isLoggedIn ? (
                         <>
+                            {userInfo.user_cd == 'uc01' && (
+                                <div className={`h_right h_mypage ${smallTopMenu ? 'blackText' : ''} `}>
+                                    <a href='http://localhost:8080/home' className={`${isMainPage ? 'noPosition' : ''}`}> ADMIN</a>
+                                </div>
+                            )}
                             <div className={`h_right h_login ${smallTopMenu ? 'blackText' : ''} `}>{userInfo.user_name} 님</div>
                             <div style={{ cursor: 'pointer' }} className={`h_right h_logout ${smallTopMenu ? 'blackText' : ''} `} onClick={onLogout}>
                                 <FontAwesomeIcon icon={faRightFromBracket} /> 로그아웃</div>

@@ -100,12 +100,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     // }, [reviews, item]);
 
 
-<<<<<<< HEAD
-    console.log(reviewList);
-    // console.log(reviewList[0].rev_rating); // 3
-=======
     // console.log(reviewList);
->>>>>>> main
     let reviewTotal = 0;
     if (reviewList != null) {
         for (let i = 0; i < reviewList.length; i++) {

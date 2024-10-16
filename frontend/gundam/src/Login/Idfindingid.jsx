@@ -52,12 +52,12 @@ function IdFindingModal() {
 
             apiCall(url, 'POST', data, null)
                 .then((response) => {
-                    alert(`회원님의 아이디는 ${response.login_id} 입니다.`);
+                    alert(`회원님의 아이디는 ${response} 입니다.`);
                     setLogin_Id(response);
+                    setPhone_Num('');
                     closeModal();
                 }).catch((err) => {
                     alert('입력 정보를 다시 확인하세요.');
-                    setLogin_Id('');
                 });
         }
     }
@@ -69,6 +69,7 @@ function IdFindingModal() {
     function closeModal() {
         setIsOpen(false);
         setLogin_Id('');
+        setPhone_Num('');
     }
 
     return (
@@ -89,19 +90,24 @@ function IdFindingModal() {
                         id='user_name'
                         name='user_name'
                         placeholder='이름'
-                        onChange={(e) => setUser_Name(e.target.value)}
-                        required />
+                        maxLength={10}
+                        onChange={(e) => setUser_Name(e.target.value)} />
                     <br/>
-                    <label htmlFor='phone_num' className='pop_label'>전화번호</label>
+                    <label htmlFor='phone_num' className='pop_label'>연락처</label>
                     <br/>
                     <input 
                         className='pop_input'
                         type='text'
                         id='phone_num'
                         name='phone_num'
+                        value={phone_num}
                         placeholder='연락처를 입력하세요.'
-                        onChange={(e) => setPhone_Num(e.target.value)}
-                        required />
+                        maxLength={11}
+                        onChange={(e) => {
+                            if (/^\d*$/.test(e.target.value)) {
+                                setPhone_Num(e.target.value);
+                            }
+                        }} />
                     <div className='pop_btn_box'>
                         <button type='submit' className='pop_btn'>찾기</button>
                         <button onClick={closeModal} className='pop_btn'>닫기</button>
