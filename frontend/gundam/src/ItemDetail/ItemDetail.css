@@ -951,7 +951,6 @@
     height: 30px;
     border: none;
     border-radius: 10px;
-<<<<<<< Updated upstream
 
 }
 
@@ -959,9 +958,6 @@
     display: flex;
     flex-direction: row; 
     gap: 15px; 
-=======
-    
->>>>>>> Stashed changes
 }
 
 .address_search_btn:hover {
@@ -969,11 +965,7 @@
     background-color: blue;
 }
 
-<<<<<<< Updated upstream
 .buy_delivery_address {
-=======
-.buy_delivery_address_box {
->>>>>>> Stashed changes
     height: 80px;
     width: 100%;
     grid-area: 4/1/5/3;
