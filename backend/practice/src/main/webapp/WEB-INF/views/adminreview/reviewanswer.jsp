@@ -98,6 +98,7 @@ body {
 		</div>
 
 		<div class="review-container">
+			<c:if test="${not empty reviewList}">
 			<c:forEach var="review" items="${reviewList}">
 				<div class="review-title">리뷰 제목 : ${review.rev_title} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상품이름 : ${review.product.pro_name}</div>
 				<div class="review-content">리뷰 내용 : ${review.rev_com}</div>
@@ -116,6 +117,10 @@ body {
 				</div>
 				<hr>
 			</c:forEach>
+			</c:if>
+			<c:if test="${empty reviewList}">
+				<p>답변 가능한 리뷰가 없습니다.</p>
+			</c:if>
 		</div>
 	</div>
 </body>
