@@ -998,3 +998,26 @@
     display: flex;
     align-items: center;
 }
+
+.ReactModal__Content {
+
+    display: grid!important;
+    grid-template-rows: repeat(7, 1fr)!important;
+    justify-self: center!important;
+    align-self: center!important;
+    width: 25%!important;
+    height: 30%!important;
+}
+
+.ReactModal__Content>div {
+    grid-row: 1 / 2!important;
+}
+
+.ReactModal__Content>button {
+    grid-row: 3 / 4!important;
+    justify-self: center!important;
+    align-self: center!important;
+    width: 30%!important;
+    height: 100%!important;
+
+}
