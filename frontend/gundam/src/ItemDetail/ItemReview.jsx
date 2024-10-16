@@ -99,6 +99,17 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     //     return filteredReview.reverse();
     // }, [reviews, item]);
 
+
+    console.log(reviewList);
+    console.log(reviewList[0].rev_rating); // 3
+    let reviewTotal=0;
+    for (let i = 0; i < reviewList.length; i++) {
+        reviewTotal += reviewList[i].rev_rating;
+        
+    }
+    let avgrevRating = reviewTotal / reviewList.length;
+    console.log(reviewTotal);
+
     function onreviewTitle(e) {
         setReviewTitle(e.target.value)
     }
@@ -149,61 +160,10 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     return (
         <>
             <div className="info_top_box" id="REVIEW_TAB">
-                <div className="info_top_left">상품리뷰</div>
-                <div className="info_top_right">
-                    <FontAwesomeIcon className="iconsize" icon={faPenToSquare} onClick={reviewPop} />
-                    <Modal
-                        isOpen={modalIsOpen}
-                        onRequestClose={closeModal}
-                        contentLabel="Example Modal"
-                    >
-                        <form className="review_pop">
-                            <h2>리뷰작성</h2>
-                            <div>
-                                <div>제목
-                                    <input value={rev_title} onChange={onreviewTitle} type="text" id="title" className="re_title" />
-                                </div>
-                                <div>별점
-                                    <StarRating rating={rev_rating} setRating={setRating} />
-                                </div>
-                                <div className="reviewBox">내용
-                                    <textarea value={rev_com} onChange={onreviewMessage} type="text" id="comment" className="re_comment" />
-                                </div>
-                            </div>
-                            <div className="re_button_box">
-                                <button type="button" className="re_button" onClick={reviewSubmit}>저장</button>
-                                <button type="button" className="re_button" onClick={closeModal}>닫기</button>
-                            </div>
-                        </form>
-                    </Modal>
-
-                    <Modal
-                        isOpen={modalOpenPop}
-                        onRequestClose={closePopModal}
-                        contentLabel="Example Modal"
-                    >
-                        <div className="review_pop">
-                            <h2>로그인 후 이용 가능합니다.</h2>
-                            <div className="re_button_box">
-                                <button type="button" className="re_button" onClick={() => { navigate('/Login') }}>로그인</button>
-                                <button type="button" className="re_button" onClick={closePopModal}>닫기</button>
-                            </div>
-                        </div>
-                    </Modal>
-
-                    <Modal
-                        isOpen={modalNoPurchase}
-                        onRequestClose={closeNoPurchaseModal}
-                        contentLabel="Example Modal"
-                    >
-                        <div className="review_pop">
-                            <h2>상품을 구매 후 리뷰작성이 가능합니다.</h2>
-                            <div className="re_button_box">
-                                <button type="button" className="re_button" onClick={closeNoPurchaseModal}>닫기</button>
-                            </div>
-                        </div>
-                    </Modal>
-                </div>
+                <div className="info_top_left">상품리뷰 평균별점 : {avgrevRating}</div>
+                {/* <div className="info_top_right">
+                    
+                </div> */}
             </div>
             <div className="review_list">
                 <div className="re_list_top">
