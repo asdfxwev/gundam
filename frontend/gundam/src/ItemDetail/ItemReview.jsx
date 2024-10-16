@@ -42,7 +42,8 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     const [expandedReviewId, setExpandedReviewId] = useState(null); // 클릭된 리뷰 ID
     const [order_id, setOrderId] = useState();
     const navigate = useNavigate();
-
+    // 1. 더한 값을 review 전체 갯수로 나누면 avg 값 나온다.
+    // 2. 이걸 별점으로 돌려야 한다.
 
     
     // useEffect(() => {
@@ -146,10 +147,21 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     const handleReviewClick = (reviewId) => {
         setExpandedReviewId(prevId => (prevId === reviewId ? null : reviewId));
     };
+    
+    // const reatingAvg = () => {
+
+    // }
+
+    const convertToKST = (dateString) => {
+        const utcDate = new Date(dateString); // dateString을 Date 객체로 변환
+        const kstDate = new Date(utcDate.getTime() + 3240 * 10000); // 9시간 더함
+        return `${String(kstDate.getFullYear()).slice(-2)}-${String(kstDate.getMonth() + 1).padStart(2, '0')}-${String(kstDate.getDate()).padStart(2, '0')} ${String(kstDate.getHours()).padStart(2, '0')}:${String(kstDate.getMinutes()).padStart(2, '0')}:${String(kstDate.getSeconds()).padStart(2, '0')}`;
+    };
     return (
         <>
             <div className="info_top_box" id="REVIEW_TAB">
                 <div className="info_top_left">상품리뷰</div>
+                {/* <div className="info_top_center">평균 별점 {reatingAvg}</div> */}
                 <div className="info_top_right">
                     <FontAwesomeIcon className="iconsize" icon={faPenToSquare} onClick={reviewPop} />
                     <Modal
@@ -217,7 +229,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
                                 className={`re_list_row ${expandedReviewId === item.rev_id ? 'expanded' : ''}`}
                                 onClick={() => handleReviewClick(item.rev_id)}  
                             >
-                                <div>{item.rev_creat}</div>
+                                <div>{convertToKST(item.rev_creat)}</div>
                                 <div>
                                     <p>제목 : {item.rev_title}</p>
                                     <div className={`review-details ${expandedReviewId === item.rev_id ? 'show' : ''}`}>

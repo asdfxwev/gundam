@@ -27,7 +27,7 @@ const StarRating = ({ rating, setRating }) => {
     );
 };
 
-const Cart = () => {
+const Order = () => {
     const [orderList, setOrderList] = useState([]); // 주문 목록 상태
     const [mainImage, setMainImage] = useState([]); // 상품 이미지 상태
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰 작성 모달 상태
@@ -281,4 +281,4 @@ const Cart = () => {
     );
 };
 
-export default Cart;
+export default Order;

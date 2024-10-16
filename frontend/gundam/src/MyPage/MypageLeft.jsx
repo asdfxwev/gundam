@@ -10,9 +10,9 @@ export default function MypageLeft() {
             <ul>
                 <li><Link to={`/Cart`}>장바구니</Link></li>
                 <li><Link to={`/Order`}>구매내역</Link></li>
-                <li>리뷰관리</li>
+                {/* <li>리뷰관리</li> */}
                 <li><Link to={`/MyInfoUp`}>회원정보변경</Link></li>
-                <li>알림신청</li>
+                {/* <li>알림신청</li> */}
             </ul>
             <h2 className='MyPage_h3'>나의 혜택관리</h2>
             <ul>
