@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import './Idfindingid.css';
+// import './Idfindingid.css';
+import '../MyPage/MyPage.css';
 import axios from 'axios';
+import { apiCall } from '../service/apiService';
 
 // Modal.setAppElement('#root');
 
@@ -9,26 +11,26 @@ function IdFindingModal() {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [message, setMessage] = useState('');
 
-    const handleFindEmail = (e) => {
-        e.preventDefault();
-        axios.get(`http://localhost:3001/users?name=${name}&phoneNumber=${phoneNumber}`)
-            .then(response => {
-                let foundUser = response.data.find(user => user.name === name && user.phoneNumber === phoneNumber);
-                if (foundUser) {
-                    setEmail(foundUser.email);
-                    setMessage('');
-                } else {
-                    setMessage('User not found');
-                    setEmail('');
-                }
-            })
-            .catch(error => {
-                setMessage('Error fetching data');
-            });
-    }
+    // const handleFindEmail = (e) => {
+    //     e.preventDefault();
+    //     axios.get(`http://localhost:3001/users?name=${name}&phoneNumber=${phoneNumber}`)
+    //         .then(response => {
+    //             let foundUser = response.data.find(user => user.name === name && user.phoneNumber === phoneNumber);
+    //             if (foundUser) {
+    //                 setEmail(foundUser.email);
+    //                 setMessage('');
+    //             } else {
+    //                 setMessage('User not found');
+    //                 setEmail('');
+    //             }
+    //         })
+    //         .catch(error => {
+    //             setMessage('Error fetching data');
+    //         });
+    // }
 
     function openModal() {
         setIsOpen(true);
@@ -47,7 +49,9 @@ function IdFindingModal() {
                 contentLabel="아이디 찾기"
             >
                 <h2>아이디 찾기</h2>
-                <form onSubmit={handleFindEmail}>
+                {/* <form onSubmit={handleFindEmail}> */}
+                {/* <form onSubmit={handleFindId}> */}
+                <form>
                     <input className='inputText'
                         type='text'
                         id='name'
@@ -63,8 +67,8 @@ function IdFindingModal() {
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         required />
                     <button type='submit'>찾기</button>
-                    {email && <p>사용자 이메일 : {email}</p>}
-                    {message && <p>{message}</p>}
+                    {/* {email && <p>사용자 이메일 : {email}</p>}
+                    {message && <p>{message}</p>} */}
                 </form>
                 <button onClick={closeModal}>닫기</button>
             </Modal>
