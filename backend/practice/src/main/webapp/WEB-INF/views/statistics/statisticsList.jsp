@@ -84,7 +84,27 @@
         }
     </style>
     <script>
-        function toggleStats() {
+    	
+    	window.onload = function() {
+        	const endDateInput = document.getElementById('endDate');
+	        const startDateInput = document.getElementById('startDate');
+	        console.log(startDateInput);
+
+        	const today = new Date();
+        	const priorDate = new Date();
+        	priorDate.setDate(today.getDate() - 30);
+        	console.log(today);
+
+    	    const formattedToday = today.toISOString().split('T')[0];
+	        const formattedPriorDate = priorDate.toISOString().split('T')[0];
+
+        	endDateInput.value = formattedToday;
+        	startDateInput.value = formattedPriorDate;
+        	console.log(endDateInput.value);
+    	};
+    	
+    
+         function toggleStats() {
             const selectedValue = document.getElementById("statsOption").value;
             const monthlySection = document.getElementById("monthlyStatsSection");
             const genderSection = document.getElementById("genderStatsSection");
@@ -98,42 +118,7 @@
             }
         }
 
-        function fetchDateStats() {
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
 
-            if (startDate && endDate) {
-                if (new Date(startDate) > new Date(endDate)) {
-                    alert("시작 날짜는 종료 날짜보다 이전이어야 합니다.");
-                    return; 
-                }
-
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', `your_api_endpoint?start=${startDate}&end=${endDate}`, true);
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        const orderStats = JSON.parse(xhr.responseText);
-                        updateOrderStatsTable(orderStats);
-                    } else {
-                        console.error('Failed to fetch data');
-                    }
-                };
-                xhr.send();
-            } else {
-                alert("시작 날짜와 종료 날짜를 모두 선택해주세요.");
-            }
-        }
-
-        function updateOrderStatsTable(orderStats) {
-            const tbody = document.querySelector('#monthlyStatsTable tbody');
-            tbody.innerHTML = ''; 
-
-            orderStats.forEach(entry => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${entry.orderDate}</td><td>${entry.totalOrders}</td>`;
-                tbody.appendChild(row);
-            });
-        }
     </script>
 </head>
 <body>
@@ -142,10 +127,9 @@
             <h2>관리자 페이지</h2>
             <ul>
                 <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
-                <li><a href="adminproduct/productList">상품 등록/수정/삭제</a></li>
-                <li><a href="<c:url value='/codeTable' />">코드테이블 등록/수정/삭제</a></li>
-                <li><a href="adminreview/reviewanswer">리뷰답변달기</a></li>
-                <li><a href="statistics/statisticsList">통계</a></li>
+                <li><a href="<c:url value='/adminproduct/productList'/>">상품 등록/수정/삭제</a></li>
+                <li><a href="<c:url value='/adminreview/reviewanswer'/>">리뷰답변달기</a></li>
+                <li><a href="<c:url value='/statistics/statisticsList'/>">통계</a></li>
             </ul>
         </div>
 
@@ -168,6 +152,29 @@
 			        <input type="date" id="endDate" name="endDate">
 			        
 			        <button id="searchButton" onclick="fetchDateStats()">검색</button>
+			    <h2>주문 통계</h2>	
+			    <div>
+					<form action="/statistics/statisticsList" method="POST">
+						<c:forEach items="${codecate }" var="codecate">
+							<label><input name="pro_cate" type="checkbox" value="${codecate.code_id}">${codecate.code_name }</label>
+						</c:forEach>
+						<br>
+						<c:forEach var="codebrand" items="${codebrand}">
+							<label><input name="cate_brand" type="checkbox" value="${codebrand.code_id}">${codebrand.code_name}</label>
+						</c:forEach>
+						<br>
+						<c:forEach var="codepiece" items="${codepiece}">
+							<label><input name="cate_piece" type="checkbox" value="${codepiece.code_id}">${codepiece.code_name}</label>
+						</c:forEach>
+						<br>
+    					<label for="startDate">시작 날짜:</label>
+    					<input type="date" id="startDate" name="startDate">
+    
+    					<label for="endDate">종료 날짜:</label>
+    					<input type="date" id="endDate" name="endDate">
+    
+					    <button type="submit">검색</button>
+					</form>
 			           <!--             <form action="/adminproduct/productList" method="GET">
                     <input type="text" name="inputValue" placeholder="상품 이름, 브랜드, 카테고리 등 검색">
                     <button type="submit">검색</button>
@@ -182,14 +189,12 @@
 			            </tr>
 			        </thead>
 			        <tbody>
-			            <%-- 
-			                <c:forEach var="entry" items="${orderStats}">
-			                    <tr>
-			                        <td>${entry.orderDate}</td>
-			                        <td>${entry.totalOrders}</td>
-			                    </tr>
-			                </c:forEach>
-			            --%>
+			            <c:forEach var="orderList" items="${orderList}">
+			                <tr>
+			                    <td>${orderList.proName}</td>
+			                    <td>${orderList.totalQuantity}</td>
+			                </tr>
+			            </c:forEach>
 			        </tbody>
 			    </table>
 			</div>

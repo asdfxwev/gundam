@@ -53,19 +53,20 @@
         <input type="number" id="pro_stock" name="pro_stock" step="1" required>
 		
         <label for="pro_cate">Category:</label>
+        <!-- 건담/포켓몬 -->
 		<select id="pro_cate" name="pro_cate">
 				<c:forEach var="codecate" items="${codecate}">
 					<option value="${codecate.code_id}"  >${codecate.code_name}</option>
 				</c:forEach>
 			</select>
-
+		<!-- 브랜드 1/100 -->
         <label for="cate_brand">Brand:</label>
 			<select id="cate_brand" name="cate_brand">
 				<c:forEach var="codebrand" items="${codebrand}">
 					<option value="${codebrand.code_id}" >${codebrand.code_name}</option>
 				</c:forEach>
 			</select>
-
+		<!-- 카테고리 건담무사 -->
         <label for="cate_piece">Piece:</label>
 			<select id="cate_piece" name="cate_piece">
 				<c:forEach var="codepiece" items="${codepiece}">

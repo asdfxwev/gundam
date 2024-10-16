@@ -6,6 +6,7 @@
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>
+<<<<<<< HEAD
 	<section name="NewClassCreationWizard.dialogBounds">
 <<<<<<< HEAD
 		<item key="DIALOG_X_ORIGIN" value="681"/>
@@ -14,6 +15,14 @@
 		<item key="DIALOG_X_ORIGIN" value="561"/>
 		<item key="DIALOG_Y_ORIGIN" value="151"/>
 >>>>>>> main
+=======
+	<section name="BuildPathsPropertyPage">
+		<item key="pageIndex" value="3"/>
+	</section>
+	<section name="NewClassCreationWizard.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="681"/>
+		<item key="DIALOG_Y_ORIGIN" value="85"/>
+>>>>>>> sb
 		<item key="DIALOG_WIDTH" value="575"/>
 		<item key="DIALOG_HEIGHT" value="659"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
@@ -25,6 +34,7 @@
 		<item key="create_constructor" value="false"/>
 		<item key="create_unimplemented" value="true"/>
 	</section>
+<<<<<<< HEAD
 	<section name="ProblemSeveritiesConfigurationBlock">
 		<item key="expanded0" value="true"/>
 		<item key="expanded1" value="false"/>
@@ -76,4 +86,6 @@
 		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_SIZE" value="true"/>
 		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_LOCATION" value="false"/>
 	</section>
+=======
+>>>>>>> sb
 </section>

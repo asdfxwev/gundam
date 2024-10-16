@@ -91,8 +91,9 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
+                console.log('responser ?', response);
                 const cartData = response.data || [];
-
+                console.log('cartdata ?', cartData);
                 // 장바구니에 initialItem 추가 및 수량 업데이트 처리
                 const updatedItems = [...cartData];
                 if (initialItem && initialCount) {
@@ -181,6 +182,8 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
         setCheckedItems(newCheckedItems);
         setIsAllChecked(!isAllChecked);
     };
+
+
 
     return (
         <div>
