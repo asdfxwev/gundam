@@ -32,6 +32,26 @@ function IdFindingModal() {
     //         });
     // }
 
+
+    // const handleFindId = (e) => {
+    //     e.preventDefault();
+
+    //     let url = "/user/pwUserCheck";
+    //     const data = { login_id, phone_num };
+
+    //     apiCall(url, 'POST', data, null)
+    //         .then((response) => {
+    //             alert('정보가 확인됐습니다. 비밀번호를 변경하세요.');
+    //             setUserInfo(response);
+    //             setUserCheck(true);
+    //         }).catch((err) => {
+    //             alert('입력 정보를 다시 확인하세요.');
+    //             setUserInfo('');
+    //             setUserCheck(false);
+    //         });
+    // }
+
+
     function openModal() {
         setIsOpen(true);
     }
@@ -54,8 +74,8 @@ function IdFindingModal() {
                 <form>
                     <input className='inputText'
                         type='text'
-                        id='name'
-                        name='name'
+                        id='user_name'
+                        name='user_name'
                         placeholder='이름'
                         onChange={(e) => setName(e.target.value)}
                         required />
