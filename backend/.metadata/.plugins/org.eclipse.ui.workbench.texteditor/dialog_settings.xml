@@ -1,97 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-		<item key="selection" value="productList"/>
-=======
-		<item key="selection" value="prepository"/>
->>>>>>> main
-=======
-		<item key="selection" value=""/>
->>>>>>> sb
->>>>>>> main
+		<item key="selection" value="orderList"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
 		<list key="findhistory">
-<<<<<<< HEAD
-			<item value="dele"/>
-			<item value="password"/>
-			<item value="Password"/>
-			<item value="entity.getPassword"/>
-			<item value="phone_num"/>
-			<item value="updatePassword"/>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-			<item value="productList"/>
-			<item value="token"/>
-			<item value="FROM"/>
-			<item value="selectOne"/>
-			<item value="validateAndGetUserId"/>
-			<item value="userDTO"/>
-			<item value="UserDTO"/>
-			<item value="joinDSL"/>
-			<item value="inputValue"/>
-			<item value="Pageable"/>
-			<item value="pageable"/>
-=======
-			<item value="prepository"/>
-			<item value="carts"/>
-			<item value="OrderItemDTO"/>
-			<item value="OrderItem"/>
-			<item value="items = "/>
-			<item value="items"/>
-			<item value="orderdto"/>
-			<item value="creating"/>
-			<item value="Creating"/>
-			<item value="orderdtos"/>
-			<item value="orderId"/>
-			<item value="userid"/>
-			<item value="orderid"/>
-			<item value="localdataetime"/>
-			<item value="localdatetime"/>
->>>>>>> main
-=======
-			<item value="startDate"/>
-			<item value="pro_cate"/>
-			<item value="orderlist"/>
 			<item value="orderList"/>
-			<item value="tuple"/>
-			<item value="statistics/statisticsList"/>
-			<item value="statics"/>
-			<item value="toggleStats"/>
+			<item value="바보쏠"/>
+			<item value="endtime"/>
+			<item value="gdgd"/>
+			<item value="productId"/>
+			<item value="#productBarChart"/>
+			<item value="style"/>
+			<item value="productBarChart"/>
+			<item value="150"/>
+			<item value="gender = "/>
+			<item value="gender"/>
+			<item value="filterGender"/>
 			<item value="monthlyStatsSection"/>
->>>>>>> sb
->>>>>>> main
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-<<<<<<< HEAD
-		<item key="DIALOG_X_ORIGIN" value="222"/>
-		<item key="DIALOG_Y_ORIGIN" value="291"/>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-		<item key="DIALOG_X_ORIGIN" value="1402"/>
-		<item key="DIALOG_Y_ORIGIN" value="229"/>
-=======
-		<item key="DIALOG_X_ORIGIN" value="1147"/>
-		<item key="DIALOG_Y_ORIGIN" value="221"/>
->>>>>>> main
-=======
-		<item key="DIALOG_X_ORIGIN" value="1017"/>
-		<item key="DIALOG_Y_ORIGIN" value="225"/>
->>>>>>> sb
->>>>>>> main
+		<item key="DIALOG_X_ORIGIN" value="1106"/>
+		<item key="DIALOG_Y_ORIGIN" value="164"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
