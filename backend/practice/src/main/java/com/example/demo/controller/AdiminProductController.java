@@ -65,9 +65,13 @@ public class AdiminProductController {
 
 	@GetMapping("/productInsert")
 	public void productInsert(Model model) {
+		//브랜드 1/100
 		model.addAttribute("codebrand", coservice.codeBrandOne());
+		//건담, 포켓몬
 		model.addAttribute("codecate", coservice.codeCateOne());
+		//카테고리 건담무사
 		model.addAttribute("codepiece", coservice.codePieceOne());
+		// 품절유무
 		model.addAttribute("codestate",coservice.codeStateOne());
 	}
 
@@ -299,18 +303,19 @@ public class AdiminProductController {
 		
 	}
 	
-	@PostMapping("/deleteImages")
-	public String deleteSelectedImages(@RequestParam("img_id") List<Long> imgId, @RequestParam String proId, HttpServletRequest request) {
-		System.out.println("gd");
-	    // 선택된 이미지 삭제 로직
-		iservice.deleteImagesByIds(imgId, request, proId);
-	    
-	    // 삭제 후 상품 수정 페이지로 리다이렉트
-	    return "redirect:/adminproduct/productModify?proId=" + proId;
-	}
+//	@PostMapping("/deleteImages")
+//	public String deleteSelectedImages(@RequestParam("img_id") List<Long> imgId, @RequestParam String proId, HttpServletRequest request) {
+//		System.out.println("gd");
+//	    // 선택된 이미지 삭제 로직
+//		iservice.deleteImagesByIds(imgId, request, proId);
+//	    
+//	    // 삭제 후 상품 수정 페이지로 리다이렉트
+//	    return "redirect:/adminproduct/productModify?proId=" + proId;
+//	}
 	
 	@PostMapping("deleteImage")
-	public void deleteImage(@RequestBody List<Map<String, String>> requestData, HttpServletRequest request) {
+	public void deleteImage(@RequestBody Map<String, List<Map<String, String>>> requestData, HttpServletRequest request) {
+		System.out.println("requestData = " +requestData);
 		iservice.deleteImage(requestData, request);
 	}
 

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.OrdersDTO;
 import com.example.demo.domain.OrderItemDTO;
 import com.example.demo.domain.OrderRequestDTO;
+import com.example.demo.domain.OrderStatisticDTO;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.Code;
 import com.example.demo.entity.Orders;
@@ -24,12 +25,18 @@ import com.example.demo.repository.OrdersRepository;
 import com.example.demo.repository.OritemsRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.UserRepository;
+import com.querydsl.core.Tuple;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,6 +59,8 @@ public class OrdersServiceImpl implements OrdersService {
 	private final ProductRepository prepository;
 	private final ProductDSLRespository pDSLrepository;
 	private final CartDSLRepository cartDSLrepository;
+	
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 //    @Override
 //    public List<OrdersDTO> getOrders(String userId, String orderStatus) {
@@ -197,35 +206,35 @@ public class OrdersServiceImpl implements OrdersService {
             .map(Code::getCode_id)
             .collect(Collectors.toList());
     }
-
+    
+    
     @Override
-    public List<OrdersDTO> getAllOrdersWithItems() {
-        List<Orders> ordersList = ordersDSLRepository.findAllOrders();
-        
-        // Convert Orders to OrdersDTO
-        return ordersList.stream()
-            .map(order -> {
-                List<OrderItemDTO> items = oritemDSLRepository.findItemsByOrderId(order.getOrder_id()); // Add this method in your repository
-                return new OrdersDTO(
-                    order.getOrder_id(),
-                    order.getUser().getUser_id(),
-                    order.getOrder_date(),
-                    order.getOrder_status(),
-                    order.getPostcode(),
-                    order.getOritem_address(),
-                    order.getOritem_dtladdress(),
-                    order.getOritem_name(),
-                    order.getOritem_number(),
-                    order.getPay_method(),
-                    order.getOritem_payment(),
-                    order.getOritem_count(),
-                    items 
-                );
-            })
-            .collect(Collectors.toList());
+    public List<OrderStatisticDTO> statisticList() {
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	Calendar c1 = Calendar.getInstance();
+    	c1.add(Calendar.DATE,1);
+    	String nextDay = sdf.format(c1.getTime());
+    	c1.add(Calendar.DATE, -31);
+    	String lastDay = sdf.format(c1.getTime());
+
+
+        // String을 LocalDateTime으로 변환
+        LocalDateTime startDateTime = LocalDateTime.parse(lastDay + " 00:00:00", formatter);
+        LocalDateTime endDateTime = LocalDateTime.parse(nextDay + " 00:00:00", formatter);
+    	
+    	return ordersDSLRepository.statisticList(startDateTime, endDateTime);
     }
     
-    
-    
+    @Override
+    public List<OrderStatisticDTO> statisticLists(String startDate, String endDate, List<String>pro_cate, List<String>cate_brand, List<String>cate_piece) {
+    	
+        LocalDateTime startDateTime = LocalDateTime.parse(startDate + " 00:00:00", formatter);
+        LocalDateTime endDateTime = LocalDateTime.parse(endDate + " 00:00:00", formatter).plusDays(1);
+    	
+        return ordersDSLRepository.statisticSearchList(startDateTime, endDateTime, pro_cate, cate_brand, cate_piece);
     }
+    
+
+}
 

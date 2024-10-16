@@ -5,6 +5,7 @@ import static com.example.demo.entity.QOritems.oritems;
 import static com.example.demo.entity.QProduct.product;
 
 import com.example.demo.domain.ImgDTO;
+import com.example.demo.domain.OrderStatisticDTO;
 import com.example.demo.domain.OrdersDTO;
 import com.example.demo.entity.Orders;
 import com.example.demo.entity.Oritems;
@@ -17,6 +18,7 @@ import com.example.demo.entity.QOrders;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -88,6 +90,49 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
                 .where(orders.user.user_id.eq(userId))
                 .groupBy(orders.user.gender)
                 .fetch();
+    }
+    
+    @Override
+    public List<OrderStatisticDTO> statisticList(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    	
+    	return queryFactory.select(Projections.bean(OrderStatisticDTO.class,
+    			product.pro_name.as("proName"), oritems.oritem_quan.castToNum(Integer.class).sum().as("totalQuantity")))
+    			.from(oritems)
+    			.leftJoin(orders).on(orders.order_id.eq(oritems.order_id.order_id))
+    			.leftJoin(product).on(product.pro_id.eq(oritems.pro_id.pro_id))
+    			.where(orders.order_date.goe(startDateTime).and(orders.order_date.lt(endDateTime)))
+    			.groupBy(product.pro_name)
+    			.fetch();
+    }
+    
+    @Override
+    public List<OrderStatisticDTO> statisticSearchList(LocalDateTime startDateTime, LocalDateTime endDateTime,
+    		List<String> pro_cate, List<String> cate_brand, List<String> cate_piece) {
+    	
+        BooleanBuilder builder = new BooleanBuilder();
+        
+        if (pro_cate != null && !pro_cate.isEmpty()) {
+            builder.and(product.pro_cate.in(pro_cate));
+        }
+
+        // cateBrand 조건 추가
+        if (cate_brand != null && !cate_brand.isEmpty()) {
+            builder.and(product.cate_brand.in(cate_brand));
+        }
+
+        // cateBrand 조건 추가
+        if (cate_piece != null && !cate_piece.isEmpty()) {
+        	builder.and(product.cate_piece.in(cate_piece));
+        }
+    	
+    	return queryFactory.select(Projections.bean(OrderStatisticDTO.class,
+    			product.pro_name.as("proName"), oritems.oritem_quan.castToNum(Integer.class).sum().as("totalQuantity")))
+    			.from(oritems)
+    			.leftJoin(orders).on(orders.order_id.eq(oritems.order_id.order_id))
+    			.leftJoin(product).on(product.pro_id.eq(oritems.pro_id.pro_id))
+    			.where(orders.order_date.goe(startDateTime).and(orders.order_date.lt(endDateTime)).and(builder))
+    			.groupBy(product.pro_name)
+    			.fetch();
     }
     
 }

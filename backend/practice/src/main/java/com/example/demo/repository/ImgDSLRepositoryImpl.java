@@ -167,4 +167,12 @@ public class ImgDSLRepositoryImpl implements ImgDSLRepository {
 		.execute();
 	}
 	
+	@Override
+	public void updateImage(String pro_imgs, String pro_id, int pro_num) {
+		jpaQueryFactory.update(img)
+		.set(img.pro_num, pro_num)
+		.where(img.pro_id.pro_id.eq(pro_id).and(img.pro_imgs.eq(pro_imgs)))
+		.execute();
+	}
+	
 }

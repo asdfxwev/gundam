@@ -1,9 +1,12 @@
-=\=\=\=\=\=\=
-<<<<<<<=HEAD
->>>>>>>=sb
-IMPORT_FILES_AND_FOLDERS_RELATIVE=true
-IMPORT_FILES_AND_FOLDERS_TYPE=23,1
 eclipse.preferences.version=1
+<<<<<<< HEAD
 platformState=1806532539432200
+=======
+<<<<<<< HEAD
+platformState=1856929821623128
+=======
+platformState=1807018481919448
+>>>>>>> 9a9d3816ad15556e7560bc3b9555f15f676b4863
+>>>>>>> main
 quickStart=false
 tipsAndTricks=true

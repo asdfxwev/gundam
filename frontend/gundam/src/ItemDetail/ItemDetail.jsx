@@ -127,6 +127,29 @@ export default function ItemDetail() {
             navigate('/Login');
         }
     };
+    console.log('isadded 전 : ', isAdded);
+
+    // 처음 페이지 로드 시 장바구니 상태를 확인하는 useEffect
+    useEffect(() => {
+        const checkCartStatus = async () => {
+            try {
+                if (user_id) {
+                    const checkResponse = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
+                    const existingItem = checkResponse.data.find(item => item.pro_id === proId);
+
+                    if (existingItem) {
+                        setIsAdded(true); // 장바구니에 이미 있으면 true로 설정
+                    } else {
+                        setIsAdded(false); // 장바구니에 없으면 false로 설정
+                    }
+                }
+            } catch (error) {
+                console.error('장바구니 상태 확인 중 오류 발생: ', error.response ? error.response.data : error.message);
+            }
+        };
+
+        checkCartStatus();
+    }, [proId, user_id]);
 
     const toCart = async (e) => {
         if (isLoggedIn) {
@@ -151,21 +174,40 @@ export default function ItemDetail() {
             };
 
             try {
-                const response = await axios.post(`${API_BASE_URL}/cart`, cartData);
-                if (response.status >= 200 && response.status < 300) {
-                    alert('장바구니에 추가되었습니다.');
-                    setIsAdded(true);
-                    navigate('/cart');
+                // 장바구니에서 상품 조회
+                const checkResponse = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
+                const existingItem = checkResponse.data.find(item => item.pro_id === proId);
+
+                // 장바구니에 상품이 이미 있는 경우
+                if (existingItem) {
+                    // 삭제 요청
+                    const deleteResponse = await axios.delete(`${API_BASE_URL}/cart/${user_id}/${proId}`);
+                    if (deleteResponse.status === 204) {
+                        alert('장바구니에서 삭제되었습니다.');
+                        setIsAdded(false); // isAdded 상태를 false로 변경
+                    } else {
+                        alert('장바구니 삭제 실패, 다시 시도해주세요');
+                    }
                 } else {
-                    console.error('장바구니 추가 실패: ', response.data);
-                    alert('장바구니 추가 실패, 다시 시도해주세요');
+                    // 추가 요청
+                    const response = await axios.post(`${API_BASE_URL}/cart`, cartData);
+                    if (response.status >= 200 && response.status < 300) {
+                        alert('장바구니에 추가되었습니다.');
+                        setIsAdded(true); // isAdded 상태를 true로 변경
+                        navigate('/cart');
+                    } else {
+                        console.error('장바구니 추가 실패: ', response.data);
+                        alert('장바구니 추가 실패, 다시 시도해주세요');
+                    }
                 }
             } catch (error) {
-                console.error('장바구니 추가 실패: ', error.response ? error.response.data : error.message);
+                console.error('장바구니 처리 중 오류 발생: ', error.response ? error.response.data : error.message);
                 alert('오류가 발생, 다시 시도해주세요.');
             }
         }
     };
+
+
     console.log("imgList = " + imgList);
     console.log("productList = " + productList);
     console.log("reviewList = " + reviewList);
