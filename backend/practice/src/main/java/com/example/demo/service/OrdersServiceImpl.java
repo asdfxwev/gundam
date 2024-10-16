@@ -196,6 +196,8 @@ public class OrdersServiceImpl implements OrdersService {
     public List<String> searchOrderId(String userId) {
         return ordersDSLRepository.searchOrderId(userId);
     }
+    
+    @Override
     public List<String> getOrderStatusCodes() {
         List<Code> codes = codeDSLRepository.findByCodeValue("order_status");
         System.out.println("Fetched Codes: " + codes); // 추가된 로그
@@ -222,7 +224,10 @@ public class OrdersServiceImpl implements OrdersService {
         // String을 LocalDateTime으로 변환
         LocalDateTime startDateTime = LocalDateTime.parse(lastDay + " 00:00:00", formatter);
         LocalDateTime endDateTime = LocalDateTime.parse(nextDay + " 00:00:00", formatter);
-    	
+        System.out.println("endtime = "+endDateTime);
+//        Map<String, Object> list = new HashMap<>();
+//        list.put("orderList", ordersDSLRepository.statisticList(startDateTime, endDateTime));
+//        list.put("orderList", ordersDSLRepository.statisticList(startDateTime, endDateTime));
     	return ordersDSLRepository.statisticList(startDateTime, endDateTime);
     }
     
