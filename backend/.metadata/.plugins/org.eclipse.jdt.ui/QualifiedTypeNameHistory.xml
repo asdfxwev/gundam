@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<<<<<<< HEAD
+<qualifiedTypeNameHistroy/>
+=======
 <qualifiedTypeNameHistroy>
 <<<<<<< HEAD
     <fullyQualifiedTypeName name="java.lang.Override"/>
@@ -21,3 +24,4 @@
 >>>>>>> sb
 >>>>>>> main
 </qualifiedTypeNameHistroy>
+>>>>>>> main
