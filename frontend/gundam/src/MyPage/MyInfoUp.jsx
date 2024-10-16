@@ -150,7 +150,8 @@ const MyInfoUp = () => {
                 .then((response) => {
                     alert('회원정보 변경이 완료됐습니다.');
                     // setJoinInfo(response);
-                    navigate("/MyInfoUp");
+                    // navigate("/MyInfoUp");
+                    window.location.reload(); // page 새로고침
                 }).catch((err) => {
                     alert(`** 회원정보 변경중 오류가 발생했습니다. 다시 시도해주세요.`);
                     navigate("/MyInfoUp");
