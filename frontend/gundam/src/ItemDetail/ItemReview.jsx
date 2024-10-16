@@ -100,7 +100,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     // }, [reviews, item]);
 
 
-    console.log(reviewList);
+    // console.log(reviewList);
     let reviewTotal = 0;
     if (reviewList != null) {
         for (let i = 0; i < reviewList.length; i++) {
@@ -108,8 +108,8 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
         }
     }
 
-    let avgrevRating = reviewTotal / reviewList.length;
-
+    let avgrevRating = reviewList.length > 0 ? reviewTotal / reviewList.length : 0;
+    
     console.log(reviewTotal);
 
     function onreviewTitle(e) {
@@ -169,10 +169,11 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     return (
         <>
             <div className="info_top_box" id="REVIEW_TAB">
-                <div className="info_top_left">상품리뷰 평균별점 : {avgrevRating}</div>
-                {/* <div className="info_top_right">
-                    
-                </div> */}
+                <div className="info_top_left">상품리뷰</div>
+                <div className="info_top_left">
+                    <span>평균별점 : {avgrevRating.toFixed(1)} / 5</span>
+                    <StarRating rating={Math.round(avgrevRating)} setRating={() => {}} />
+                </div>
             </div>
             <div className="review_list">
                 <div className="re_list_top">
