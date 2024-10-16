@@ -143,6 +143,15 @@
 
             <!-- 월별 주문 통계 섹션 -->
 			<div id="monthlyStatsSection" class="">
+			    <h2>주문 통계</h2>
+			    <div>
+			        <label for="startDate">시작 날짜:</label>
+			        <input type="date" id="startDate" name="startDate">
+			        
+			        <label for="endDate">종료 날짜:</label>
+			        <input type="date" id="endDate" name="endDate">
+			        
+			        <button id="searchButton" onclick="fetchDateStats()">검색</button>
 			    <h2>주문 통계</h2>	
 			    <div>
 					<form action="/statistics/statisticsList" method="POST">

@@ -23,6 +23,7 @@ import java.util.List;
 public class AdminStatisticsController {
 
 	private final OrdersService ordersService;
+
 	private final CodeService coservice;
 
 	@GetMapping("/statisticsList")
