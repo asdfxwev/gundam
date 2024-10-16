@@ -158,7 +158,8 @@ const Cart = () => {
                 alert('선택한 상품의 수량이 업데이트되었습니다.');
                 setCheckedItems(cartItems.map(item => item.pro_id));
                 setIsAllChecked(true);
-                navigate('/cart');
+                // navigate('/cart');
+                window.location.reload(); // page 새로고침
             } catch (error) {
                 console.error('Error updating cart items:', error);
                 alert('선택한 상품 수량 업데이트에 실패했습니다.');
