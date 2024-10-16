@@ -166,8 +166,8 @@ const ItemBuy = () => {
                 // order_date: today.toISOString(),
                 // order_status: "order_cd01", // 단일 문자열로 설정
                 postcode: userDetails.postcode,
-                oritem_address: userDetails.address,
-                oritem_dtladdress: userDetails.dtl_address,
+                oritem_address: deliveryInfo.deliveryAddress,
+                oritem_dtladdress: deliveryInfo.deliverDtlAddress,
                 oritem_name: deliveryInfo.deliveryUser, // 수령자 정보
                 oritem_number: deliveryInfo.deliveryPhone, // 연락처 정보
                 pay_method: payMethod,
