@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<<<<<<< HEAD
 <qualifiedTypeNameHistroy/>
+=======
+<qualifiedTypeNameHistroy>
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+=======
+    <fullyQualifiedTypeName name="com.example.demo.entity.Cart"/>
+>>>>>>> main
+=======
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+    <fullyQualifiedTypeName name="com.querydsl.core.BooleanBuilder"/>
+>>>>>>> sb
+</qualifiedTypeNameHistroy>
+>>>>>>> main
