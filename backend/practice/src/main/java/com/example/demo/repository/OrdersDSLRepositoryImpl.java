@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import static com.example.demo.entity.QOrders.orders;
+import static com.example.demo.entity.QUser.user;
 import static com.example.demo.entity.QOritems.oritems;
 import static com.example.demo.entity.QProduct.product;
 
@@ -92,18 +93,24 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
                 .fetch();
     }
     
+    // 성별에 따라 받아오는거
     @Override
     public List<OrderStatisticDTO> statisticList(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    	System.out.println("gdgd"+product.pro_id);
     	
     	return queryFactory.select(Projections.bean(OrderStatisticDTO.class,
-    			product.pro_name.as("proName"), oritems.oritem_quan.castToNum(Integer.class).sum().as("totalQuantity")))
+    			product.pro_name.as("proName"),user.gender, oritems.oritem_quan.castToNum(Integer.class).sum().as("totalQuantity")))
     			.from(oritems)
     			.leftJoin(orders).on(orders.order_id.eq(oritems.order_id.order_id))
     			.leftJoin(product).on(product.pro_id.eq(oritems.pro_id.pro_id))
+    			.leftJoin(user).on(user.user_id.eq(orders.user.user_id))
     			.where(orders.order_date.goe(startDateTime).and(orders.order_date.lt(endDateTime)))
-    			.groupBy(product.pro_name)
+    			.groupBy(product.pro_name, user.gender)
+    			.orderBy(oritems.oritem_quan.castToNum(Integer.class).sum().desc())
     			.fetch();
     }
+    
+
     
     @Override
     public List<OrderStatisticDTO> statisticSearchList(LocalDateTime startDateTime, LocalDateTime endDateTime,
@@ -124,14 +131,23 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
         if (cate_piece != null && !cate_piece.isEmpty()) {
         	builder.and(product.cate_piece.in(cate_piece));
         }
+        
+		/*
+		 * if (gender != null && !gender.isEmpty() ) { if ( gender.equals("남")) {
+		 * builder.and(user.gender.eq("1").and(user.gender.eq("3"))); } else
+		 * if(gender.equals("여")) {
+		 * builder.and(user.gender.eq("2").and(user.gender.eq("4"))); } }
+		 */
     	
     	return queryFactory.select(Projections.bean(OrderStatisticDTO.class,
-    			product.pro_name.as("proName"), oritems.oritem_quan.castToNum(Integer.class).sum().as("totalQuantity")))
+    			product.pro_name.as("proName"),user.gender.as("gender"), oritems.oritem_quan.castToNum(Integer.class).sum().as("totalQuantity")))
     			.from(oritems)
     			.leftJoin(orders).on(orders.order_id.eq(oritems.order_id.order_id))
     			.leftJoin(product).on(product.pro_id.eq(oritems.pro_id.pro_id))
+    			.leftJoin(user).on(user.user_id.eq(orders.user.user_id))
     			.where(orders.order_date.goe(startDateTime).and(orders.order_date.lt(endDateTime)).and(builder))
-    			.groupBy(product.pro_name)
+    			.groupBy(product.pro_name, user.gender)
+    			.orderBy(oritems.oritem_quan.castToNum(Integer.class).sum().desc())
     			.fetch();
     }
     

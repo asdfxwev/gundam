@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class OrderStatisticDTO {
     private String proName;
     private Integer totalQuantity;
+    private String gender;
 }
