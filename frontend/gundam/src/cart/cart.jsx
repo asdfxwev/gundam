@@ -10,7 +10,7 @@ import { API_BASE_URL } from '../service/app-config';
 // CartItem 컴포넌트 정의
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
     console.log(item);
-    
+
     const handleQuantityChange = (newQuantity) => {
         if (newQuantity >= 1 && newQuantity <= item.pro_stock) {
             onQuantityChange(item.pro_id, newQuantity);
@@ -100,7 +100,7 @@ const Cart = () => {
             try {
                 const response = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
                 console.log(response.data);
-                
+
                 setCartItems(response.data);
                 setCheckedItems(response.data.map(item => item.pro_id));
                 setIsAllChecked(response.data.length > 0);
@@ -159,7 +159,7 @@ const Cart = () => {
                 setCheckedItems(cartItems.map(item => item.pro_id));
                 setIsAllChecked(true);
                 // navigate('/cart');
-                window.location.reload(); // page 새로고침
+                window.location.reload(); // page 새로고침 할때 
             } catch (error) {
                 console.error('Error updating cart items:', error);
                 alert('선택한 상품 수량 업데이트에 실패했습니다.');
