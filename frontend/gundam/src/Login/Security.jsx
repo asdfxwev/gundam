@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
-import './Idfindingid.css';
-import axios from 'axios';
+import '../MyPage/MyPage.css';
+// import './Idfindingid.css';
+// import axios from 'axios';
 import { apiCall } from '../service/apiService';
-import { useNavigate } from 'react-router-dom';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+// import { useNavigate } from 'react-router-dom';
+import MyPage from './../MyPage/MyPage';
 
 Modal.setAppElement('#root');
 
@@ -16,16 +17,7 @@ function PasswordFindingModal() {
     const [userCheck, setUserCheck] = useState(false); // 사용자 인증 상태
     const [password, setPassword] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
-    // const [completeVal, setCompleteVal] = useState(false); //validation 결과 변수
-    const [message, setMessage] = useState('');
-    const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     if (userCheck) {
-    //         document.querySelector("from[id='usercheckform']").hidden
-    //         document.querySelector("from[id='pwupdateform']").show
-    //     }
-    // }, [userCheck]); // 회원정보값을 받아왔을때 실행되도록 설정
+    // const [message, setMessage] = useState('');
 
     const validation = () => {
         if (password.trim() === "") {
@@ -102,13 +94,15 @@ function PasswordFindingModal() {
 
                 {!userCheck ? (
                     <form onSubmit={handleFindPassword}>
-                        <input className='inputText'
+                        <input 
+                            className='pop_input'
                             type='text'
                             id='login_id'
                             name='login_id'
                             placeholder='아이디를 입력하세요.'
                             onChange={(e) => setLogin_Id(e.target.value)} />
-                        <input className='inputText'
+                        <input 
+                            className='pop_input'
                             type='text'
                             id='phone_num'
                             name='phone_num'
@@ -121,8 +115,11 @@ function PasswordFindingModal() {
                     </form>
                 ) : (
                     <form onSubmit={updatePassword}>
-                        <label htmlFor='password'>비밀번호</label>
-                        <input className='inputText'
+                        <br/>
+                        <label htmlFor='password' className='pop_label'>비밀번호</label>
+                        <br/>
+                        <input 
+                            className='pop_input'
                             type='password'
                             id='password'
                             name='password'
@@ -130,13 +127,11 @@ function PasswordFindingModal() {
                             placeholder='비밀번호를 입력하세요.'
                             onChange={(e) => setPassword(e.target.value)}
                             maxLength={16} />
-<<<<<<< HEAD
+                        <br />
+                        <label htmlFor='checkPassword' className='pop_label'>비밀번호 확인</label>
                         <br/>
-=======
-                            <br/>
->>>>>>> main
-                        <label htmlFor='checkPassword'>비밀번호 확인</label>
-                        <input className='inputText'
+                        <input 
+                            className='pop_input'
                             type='password'
                             id='checkPassword'
                             name='checkPassword'

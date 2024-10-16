@@ -23,12 +23,12 @@
     font-size: 2em;
     font-style: normal;
     /* margin-bottom: 15px; */
-    
+
     /* 폰트 설정 */
-    }
-    
-.MyPage_h2 a{
-    color: black;        
+}
+
+.MyPage_h2 a {
+    color: black;
 }
 
 .mypage_menu .MyPage_h3 {
@@ -83,7 +83,7 @@
     margin-bottom: 10px;
     /* 각 행 사이의 간격 */
     margin-bottom: 50px;
-   
+
 
 }
 
@@ -92,7 +92,7 @@
     font-size: 1.5em;
     margin-right: 10px;
     /* 이름과 값 사이의 간격 */
-    
+
 }
 
 .name {
@@ -219,7 +219,8 @@
     grid-row: 4 / span 2;
 }
 
-.post_input, .juso_input {
+.post_input,
+.juso_input {
     background-color: #f0f0f0;
 }
 
@@ -297,6 +298,33 @@
     border-radius: 10px;
 }
 
+
+.ReactModal__Content {
+    display: grid;
+    grid-template-rows: repeat(3, .5fr);
+    justify-self: center;
+    align-self: center;
+    width: 25%;
+    height: 35%;
+}
+
+.ReactModal__Content form .pop_label {
+    width: 150px;
+    height: 30px;
+    margin: 10px;
+    border: none;
+}
+
+.ReactModal__Content form .pop_input {
+    width: 90%;
+    height: 30px;
+    margin: 10px;
+    border: 1px solid #100101;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 15px;
+}
+
 /* pw변경 팝업 END */
 
 
@@ -336,34 +364,43 @@
 
 @media (max-width: 768px) {
     .mypage_container {
-        padding: 10px; /* 모바일 화면에서 컨테이너의 패딩 조정 */
+        padding: 10px;
+        /* 모바일 화면에서 컨테이너의 패딩 조정 */
         margin-left: inherit;
     }
 
     .mypage_menu {
-        font-size: 14px; /* 모바일 화면에서 메뉴의 폰트 크기 조정 */
+        font-size: 14px;
+        /* 모바일 화면에서 메뉴의 폰트 크기 조정 */
         width: 30%;
     }
 
     .mypage_menu ul li {
-        margin-bottom: 10px; /* 모바일 화면에서 메뉴 항목 간격 조정 */
+        margin-bottom: 10px;
+        /* 모바일 화면에서 메뉴 항목 간격 조정 */
     }
 
     .user_info {
-        font-size: 14px; /* 모바일 화면에서 사용자 정보의 폰트 크기 조정 */
+        font-size: 14px;
+        /* 모바일 화면에서 사용자 정보의 폰트 크기 조정 */
     }
 
     .user_info .row {
         display: flex;
-        flex-direction: column; /* 모바일 화면에서 행을 세로로 배열 */
-        margin-bottom: 10px; /* 모바일 화면에서 행 간격 조정 */
+        flex-direction: column;
+        /* 모바일 화면에서 행을 세로로 배열 */
+        margin-bottom: 10px;
+        /* 모바일 화면에서 행 간격 조정 */
         border-bottom: 2px solid black;
-    /* 검은색 굵은 선 추가 */
-    padding-bottom: 5px;
+        /* 검은색 굵은 선 추가 */
+        padding-bottom: 5px;
     }
 
-    .user_info .name, .user_info .Value {
-        width: 100%; /* 모바일 화면에서 이름과 값의 너비를 100%로 조정 */
-        text-align: left; /* 모바일 화면에서 텍스트를 왼쪽 정렬 */
+    .user_info .name,
+    .user_info .Value {
+        width: 100%;
+        /* 모바일 화면에서 이름과 값의 너비를 100%로 조정 */
+        text-align: left;
+        /* 모바일 화면에서 텍스트를 왼쪽 정렬 */
     }
 }
