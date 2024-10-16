@@ -44,7 +44,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     const navigate = useNavigate();
 
 
-    
+
     // useEffect(() => {
     //     setReviews(reviewData.review);
     // }, []);
@@ -55,7 +55,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     // }, [reviews, item, setReviewCount]);
 
     useEffect(() => {
-        const loginCheck = JSON.parse(sessionStorage.getItem('loginInfo'));
+        const loginCheck = JSON.parse(sessionStorage.getItem('userInfo'));
         if (loginCheck !== null) {
             setIsLoggedIn(true);
         }
@@ -63,15 +63,15 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
 
     const reviewPop = async () => {
         if (isLoggedIn) {     // 로그인 상태가 true 일때
-            const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
-            const users = {user_id, pro_id}
+            const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
+            const users = { user_id, pro_id }
             const Response = await axios.post(`${API_BASE_URL}/product/productReviewId`, users);
             const data = Response.data
             console.log(data);
             setOrderId(data);
 
             // const hasBoughtItem = userData.buy && userData.buy.some(buyItem => buyItem.id === item);
-            console.log("data = "+data);
+            console.log("data = " + data);
             if (data) {
                 setModalIsOpen(true);
             } else {
@@ -102,12 +102,15 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
 
     console.log(reviewList);
     console.log(reviewList[0].rev_rating); // 3
-    let reviewTotal=0;
-    for (let i = 0; i < reviewList.length; i++) {
-        reviewTotal += reviewList[i].rev_rating;
-        
+    let reviewTotal = 0;
+    if (reviewList != null) {
+        for (let i = 0; i < reviewList.length; i++) {
+            reviewTotal += parseFloat(reviewList[i].rev_rating);
+        }
     }
+
     let avgrevRating = reviewTotal / reviewList.length;
+
     console.log(reviewTotal);
 
     function onreviewTitle(e) {
@@ -121,11 +124,11 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     const reviewSubmit = async (e) => {
         e.preventDefault();
         const user_id = JSON.parse(sessionStorage.getItem('loginInfo')).user_id;
-        const data = {rev_title, rev_com, rev_rating, pro_id, user_id, order_id}
+        const data = { rev_title, rev_com, rev_rating, pro_id, user_id, order_id }
         console.log(data);
         try {
             if (rev_title === '' || rev_com === '' || rev_rating === 0) {
-            alert(`제목, 내용, 별점을 모두 입력해주세요.`);
+                alert(`제목, 내용, 별점을 모두 입력해주세요.`);
                 return false;
             }
             console.log(data);
@@ -157,6 +160,13 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     const handleReviewClick = (reviewId) => {
         setExpandedReviewId(prevId => (prevId === reviewId ? null : reviewId));
     };
+
+    const convertToKST = (dateString) => {
+        const utcDate = new Date(dateString); // dateString을 Date 객체로 변환
+        const kstDate = new Date(utcDate.getTime() + 3240 * 10000); // 9시간 더함
+        return `${String(kstDate.getFullYear()).slice(-2)}-${String(kstDate.getMonth() + 1).padStart(2, '0')}-${String(kstDate.getDate()).padStart(2, '0')} ${String(kstDate.getHours()).padStart(2, '0')}:${String(kstDate.getMinutes()).padStart(2, '0')}:${String(kstDate.getSeconds()).padStart(2, '0')}`;
+    };
+
     return (
         <>
             <div className="info_top_box" id="REVIEW_TAB">
@@ -175,15 +185,15 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
                             <div
                                 key={i}
                                 className={`re_list_row ${expandedReviewId === item.rev_id ? 'expanded' : ''}`}
-                                onClick={() => handleReviewClick(item.rev_id)}  
+                                onClick={() => handleReviewClick(item.rev_id)}
                             >
-                                <div>{item.rev_creat}</div>
+                                <div>{convertToKST(item.rev_creat)}</div>
                                 <div>
                                     <p>제목 : {item.rev_title}</p>
                                     <div className={`review-details ${expandedReviewId === item.rev_id ? 'show' : ''}`}>
                                         <h2>내용</h2>
                                         <p>{item.rev_com}</p>
-                                        <p>별점:                             
+                                        <p>별점:
                                             {Array.from({ length: 5 }, (_, index) => (
                                                 <FontAwesomeIcon
                                                     key={index}
@@ -197,7 +207,7 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
                                 </div>
                             </div>
                         ))
-                    ) :  (
+                    ) : (
                         <div className="re_list_row">
                             <div className="no_review">등록된 리뷰가 없습니다.</div>
                         </div>
