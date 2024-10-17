@@ -315,7 +315,6 @@ public class UserController {
  		return pwupdateYn;
  	} //pwUpdate
  	
-// 	@GetMapping("/userDelete")
  	@DeleteMapping("/userdelete")
  	public String userDelete(@RequestParam String user_id, 
  					HttpSession session, RedirectAttributes rttr) {
@@ -336,6 +335,21 @@ public class UserController {
 		
 		return uri;
 	} //deleteForm
+ 	
+ 	@PostMapping("/loginidFind")
+ 	public ResponseEntity<?> loginidFind(@RequestBody User entity) {
+    	
+ 		String login_id;
+ 		
+    	login_id = service.findloginid(entity.getUser_name(),entity.getPhone_num());
+		
+		if( login_id != null ) {
+ 			return ResponseEntity.ok(login_id);
+ 		} else {
+ 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+ 					.body("입력하신 정보는 탈퇴 되었거나 없는정보 입니다.");
+ 		}
+    } //login
  	
 	
 } //class

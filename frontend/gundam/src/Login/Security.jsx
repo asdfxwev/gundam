@@ -17,20 +17,47 @@ function PasswordFindingModal() {
     const [userCheck, setUserCheck] = useState(false); // 사용자 인증 상태
     const [password, setPassword] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
-    // const [message, setMessage] = useState('');
 
     const validation = () => {
-        if (password.trim() === "") {
-            alert("비밀번호는 필수 입력 항목입니다.");
-            return false;
-        }
-        if (password.length < 6 || password.length > 16) {
-            alert("비밀번호는 6자 이상, 16자 이하로 입력하세요.");
-            return false;
-        }
-        if (password !== checkPassword) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return false;
+
+        if (!userCheck) {
+            // 아이디 필수입력 체크
+            if (login_id.trim() === "") {
+                alert("아이디는 필수입력 항목입니다.");
+                document.querySelector("input[name='login_id']").focus();
+                return false;
+            }
+            // 아이디 입력길이 체크
+            if (login_id.length < 4 || login_id.length > 16) {
+                alert("ID를 4자 이상, 16자 이하로 입력하세요.");
+                return false;
+            }
+            // 연락처 필수입력 체크
+            if (phone_num.trim() === "") {
+                alert("연락처는 필수입력 항목입니다.");
+                document.querySelector("input[name='phone_num']").focus();
+                return false;
+            }
+            // 연락처 입력길이 체크
+            if (phone_num.length < 10 || phone_num.length > 11) {
+                alert("연락처를 10자 이상, 11자 이하로 입력하세요.");
+                return false;
+            }
+
+        } else {
+            if (password.trim() === "") {
+                alert("비밀번호는 필수 입력 항목입니다.");
+                return false;
+            }
+            if (password.length < 6 || password.length > 16) {
+                alert("비밀번호는 6자 이상, 16자 이하로 입력하세요.");
+                return false;
+            }
+            if (password !== checkPassword) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+
         }
         return true;
     };
@@ -38,19 +65,24 @@ function PasswordFindingModal() {
     const handleFindPassword = (e) => {
         e.preventDefault();
 
-        let url = "/user/pwUserCheck";
-        const data = { login_id, phone_num };
+        if (validation()) {
 
-        apiCall(url, 'POST', data, null)
-            .then((response) => {
-                alert('정보가 확인됐습니다. 비밀번호를 변경하세요.');
-                setUserInfo(response);
-                setUserCheck(true);
-            }).catch((err) => {
-                alert('입력 정보를 다시 확인하세요.');
-                setUserInfo('');
-                setUserCheck(false);
-            });
+            let url = "/user/pwUserCheck";
+            const data = { login_id, phone_num };
+
+            apiCall(url, 'POST', data, null)
+                .then((response) => {
+                    alert('정보가 확인됐습니다. 비밀번호를 변경하세요.');
+                    setUserInfo(response);
+                    setPhone_Num('');
+                    setUserCheck(true);
+                }).catch((err) => {
+                    alert('입력 정보가 올바르지않습니다. 다시 확인하세요.');
+                    setUserInfo('');
+                    setPhone_Num('');
+                    setUserCheck(false);
+                });
+        }
     }
 
     const updatePassword = (e) => {
@@ -94,20 +126,27 @@ function PasswordFindingModal() {
 
                 {!userCheck ? (
                     <form onSubmit={handleFindPassword}>
-                        <input 
+                        <input
                             className='pop_input'
                             type='text'
                             id='login_id'
                             name='login_id'
                             placeholder='아이디를 입력하세요.'
+                            maxLength={10}
                             onChange={(e) => setLogin_Id(e.target.value)} />
-                        <input 
+                        <input
                             className='pop_input'
                             type='text'
                             id='phone_num'
                             name='phone_num'
+                            value={phone_num}
                             placeholder='연락처를 입력하세요.'
-                            onChange={(e) => setPhone_Num(e.target.value)} />
+                            maxLength={11}
+                            onChange={(e) => {
+                                if (/^\d*$/.test(e.target.value)) {
+                                    setPhone_Num(e.target.value);
+                                }
+                            }} />
                         <div className='pop_btn_box'>
                             <button type='submit' className='pop_btn'>찾기</button>
                             <button onClick={closeModal} className='pop_btn'>닫기</button>
@@ -115,10 +154,10 @@ function PasswordFindingModal() {
                     </form>
                 ) : (
                     <form onSubmit={updatePassword}>
-                        <br/>
+                        <br />
                         <label htmlFor='password' className='pop_label'>비밀번호</label>
-                        <br/>
-                        <input 
+                        <br />
+                        <input
                             className='pop_input'
                             type='password'
                             id='password'
@@ -129,8 +168,8 @@ function PasswordFindingModal() {
                             maxLength={16} />
                         <br />
                         <label htmlFor='checkPassword' className='pop_label'>비밀번호 확인</label>
-                        <br/>
-                        <input 
+                        <br />
+                        <input
                             className='pop_input'
                             type='password'
                             id='checkPassword'

@@ -48,4 +48,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query("SELECT u FROM User u WHERE u.login_id=:login_id AND u.phone_num=:phone_num")
 	User pwUserCheck(@Param("login_id") String login_id, @Param("phone_num") String phone_num);
 	
+	// login_id 찾기
+	@Query("SELECT u.login_id FROM User u WHERE u.user_name=:user_name AND u.phone_num=:phone_num")
+	String findloginid(@Param("user_name") String user_name, @Param("phone_num") String phone_num);
 }

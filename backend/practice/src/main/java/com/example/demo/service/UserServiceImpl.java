@@ -102,5 +102,10 @@ public class UserServiceImpl implements UserService {
 	public User pwUserCheck(String login_id, String phone_num) {
 		return urepository.pwUserCheck(login_id, phone_num);
 	}
+
+	@Override
+	public String findloginid(String user_name, String phone_num) {
+		return urepository.findloginid(user_name, phone_num);
+	}
 	
 }

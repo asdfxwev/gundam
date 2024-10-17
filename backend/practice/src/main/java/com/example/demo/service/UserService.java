@@ -34,5 +34,7 @@ public interface UserService {
 	
 	// ** Password 수정을 위한 정보 일치여부 확인
 	public User pwUserCheck(String login_id, String phone_num);
+	
+	public String findloginid(String user_name, String phone_num);
 
 }
