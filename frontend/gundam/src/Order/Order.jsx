@@ -46,7 +46,7 @@ const Order = () => {
 
     const convertToKST = (dateString) => {
         const utcDate = new Date(dateString); // dateString을 Date 객체로 변환
-        const kstDate = new Date(utcDate.getTime() + 3240 * 10000); // 9시간 더함
+        const kstDate = new Date(utcDate.getTime()); // 9시간 더함
         return `${String(kstDate.getFullYear()).slice(-2)}-${String(kstDate.getMonth() + 1).padStart(2, '0')}-${String(kstDate.getDate()).padStart(2, '0')} ${String(kstDate.getHours()).padStart(2, '0')}:${String(kstDate.getMinutes()).padStart(2, '0')}:${String(kstDate.getSeconds()).padStart(2, '0')}`;
     };
 
