@@ -170,6 +170,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+				<mainClass>com.example.demo.GundamApplication</mainClass> 
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -189,6 +190,7 @@
                     <execution>
                         <goals>
                             <goal>process</goal>
+                            
                         </goals>
                         <configuration>
                             <outputDirectory>target/generated-sources/annotations</outputDirectory>
