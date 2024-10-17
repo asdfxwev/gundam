@@ -87,12 +87,8 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 	public void reviewUpdate(Review reviews) {
 		queryFactory.update(review)
 		.set(review.rev_rating, reviews.getRev_rating())
-		.set(review.rev_rating, reviews.getRev_rating())
 		.set(review.rev_title, reviews.getRev_title())
 		.set(review.rev_com, reviews.getRev_com())
-		.set(review.rev_creat, reviews.getRev_creat())
-		.set(review.order, reviews.getOrder())
-		.set(review.product, reviews.getProduct())
 		.where(review.rev_id.eq(reviews.getRev_id()))
 		.execute();
 	}

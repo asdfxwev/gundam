@@ -6,7 +6,6 @@ import { API_BASE_URL } from "../service/app-config";
 import Modal from 'react-modal';
 import { faStar as faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PagiNationNum from "../csc/PagiNationNum";
 
 // 한국 단위로 바꿔주는거
 const formatNumber = (number) => number.toLocaleString('ko-KR');
@@ -40,7 +39,6 @@ const Order = () => {
     const [selectedOrderId, setSelectedOrderId] = useState(''); // 선택된 주문 ID
     const [reviewExist, setReviewExist] = useState([]); // 기존 리뷰 상태
     const [selectedRevId, setSelectedRevId] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
 
     // 로그인한 사용자 정보
     const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -71,9 +69,6 @@ const Order = () => {
 
     const closeModal = () => {
         setModalIsOpen(false);
-        setReviewTitle('');
-        setReviewMessage('');
-        setRating(0);
     };
 
     const closeModalModify = () => {
@@ -85,6 +80,9 @@ const Order = () => {
 
     // 리뷰 작성 모달 팝업을 여는 함수
     const reviewPop = (pro_id, order_id) => {
+        setReviewTitle('');
+        setReviewMessage('');
+        setRating(0);
         setSelectedProId(pro_id);
         setSelectedOrderId(order_id);
         setModalIsOpen(true);
@@ -120,7 +118,6 @@ const Order = () => {
             order_id: selectedOrderId,
             pro_id: selectedProId
         };
-        console.log(data);
 
         if (!rev_title || !rev_com || rev_rating === 0) {
             alert(`제목, 내용, 별점을 모두 입력해주세요.`);
@@ -144,6 +141,7 @@ const Order = () => {
             rev_com,
             rev_rating,
             user_id,
+            rev_id: selectedRevId,
             order_id: selectedOrderId,
             pro_id: selectedProId
         };
@@ -293,13 +291,6 @@ const Order = () => {
                         </form>
                     </Modal>
             </div>
-            <PagiNationNum
-                itemsPerPage={5}
-                maxPagesToShow={5}
-                totalItems={orderList.length}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />
         </div>
     );
 };

@@ -169,9 +169,11 @@
         <div class="sidebar">
             <h2>관리자 페이지</h2>
             <ul>
+                <li><a href="http://localhost:3000/">홈페이지로 가기</a></li>
                 <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
-                <li><a href="productList">상품 등록/수정/삭제</a></li>
-                <li><a href="">코드테이블 등록/수정/삭제</a></li>
+                <li><a href="<c:url value='/adminproduct/productList'/>">상품 등록/수정/삭제</a></li>
+                <li><a href="<c:url value='/adminreview/reviewanswer'/>">리뷰답변달기</a></li>
+                <li><a href="<c:url value='/statistics/statisticsList'/>">통계</a></li>
             </ul>
         </div>
         <div class="admingrid-wrapper">
@@ -400,7 +402,7 @@
             <!-- 수정 및 삭제 버튼을 admingrid-wrapper 안에 중앙에 위치 -->
             <div class="productModifyFlex">
                 <button type="submit">수정</button>
-                <a href="/product/productDelete?proId=${productSelectOne.pro_id}" onclick="return confirm('정말로 삭제하시겠습니까?');">
+                <a href="/adminproduct/productDelete?proId=${productSelectOne.pro_id}" onclick="return confirm('정말로 삭제하시겠습니까?');">
                     <button type="button">삭제</button>
                 </a>
             </div>

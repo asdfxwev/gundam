@@ -101,9 +101,10 @@ public class ProductController {
 	}
 	
 	@PostMapping("productReviewModify")
-	public void productReviewModify(@RequestBody ReviewModifyDTO dto) {
-		System.out.println(dto);
+	public ResponseEntity<?> productReviewModify(@RequestBody ReviewModifyDTO dto) {
+		System.out.println("dto = "+dto);
 		reservice.reviewUpdate(dto);
+		return ResponseEntity.ok("리뷰 수정에 성공하였습니다");
 	}
 	
 	@PostMapping("productReviewDelete")
