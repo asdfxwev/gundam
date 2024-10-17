@@ -180,6 +180,7 @@ const Order = () => {
             console.error('리뷰 삭제 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
         }
     };
+    console.log(orderList)
 
     return (
         <div className="mypageContainer">
