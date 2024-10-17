@@ -206,7 +206,7 @@ const SignupForm = () => {
                         navigate("/Login");
                     }).catch((err) => {
                         if (err === 502) {
-                            alert("입력정보를 확인하세요.");
+                            alert("입력정보를 확인하세요.")
                         } else {
                             alert(`** 회원가입을 실패했습니다 다시 시도해주세요.`);
                         }
