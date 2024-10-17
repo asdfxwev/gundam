@@ -115,6 +115,7 @@ const Order = () => {
             order_id: selectedOrderId,
             pro_id: selectedProId
         };
+        console.log(data);
 
         if (!rev_title || !rev_com || rev_rating === 0) {
             alert(`제목, 내용, 별점을 모두 입력해주세요.`);
@@ -122,7 +123,7 @@ const Order = () => {
         }
 
         try {
-            await axios.post(`${API_BASE_URL}/product/productReviewSubmit`, data);
+            await axios.post(`${API_BASE_URL}/product/productReview`, data);
             closeModal();
             fetchData(); // 리뷰 제출 후 데이터 새로고침
         } catch (error) {

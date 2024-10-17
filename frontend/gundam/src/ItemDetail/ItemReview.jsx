@@ -190,8 +190,8 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
                                 <div>
                                     <p>제목 : {item.rev_title}</p>
                                     <div className={`review-details ${expandedReviewId === item.rev_id ? 'show' : ''}`}>
-                                        <h2>내용</h2>
-                                        <p>{item.rev_com}</p>
+                                        <p>내용 : {item.rev_com}</p>
+                                        <p>답변 : {item.rev_answer}</p>
                                         <p>별점:
                                             {Array.from({ length: 5 }, (_, index) => (
                                                 <FontAwesomeIcon
