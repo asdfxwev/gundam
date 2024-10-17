@@ -333,7 +333,7 @@ public class UserController {
 		}
 		
 		return uri;
-	} //deleteForm
+	} 
  	
  	@PostMapping("/loginidFind")
  	public ResponseEntity<?> loginidFind(@RequestBody User entity) {
