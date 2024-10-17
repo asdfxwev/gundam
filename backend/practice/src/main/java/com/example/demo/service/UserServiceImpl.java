@@ -106,6 +106,12 @@ public class UserServiceImpl implements UserService {
 		return urepository.findloginid(user_name, phone_num);
 	}
 	
+//	@Override
+//	public List<User> findAllUsers() {
+////		return urepository.findAllUsers();
+//		return udslrepository.findAllUsers();
+//	}
+	
 	@Override
 	public List<User> findAllUsers() {
 //		return urepository.findAllUsers();

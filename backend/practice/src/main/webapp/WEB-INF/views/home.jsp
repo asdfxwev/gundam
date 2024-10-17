@@ -103,7 +103,7 @@ console.log(UserList);
             
             <!-- Search Bar -->
             <div class="search-container">
-                <form action="/user/home" method="GET">
+                <form action="/home" method="GET">
                     <input type="text" name="inputValue" placeholder="이름, 로그인 아이디 검색" value="${param.inputValue}">
                     <button type="submit">검색</button>
                 </form>

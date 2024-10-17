@@ -8,4 +8,6 @@ public interface UserDSLRepository {
 	
 	List<User> findAllUsers();
 
+	List<User> searchUsers(String inputValue);
+
 }
