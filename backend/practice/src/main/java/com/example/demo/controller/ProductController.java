@@ -64,6 +64,7 @@ public class ProductController {
 		list.put("pieceList", coservice.codePieceOne());
 		list.put("stateList", coservice.codeStateOne());
 		//Map<String, Object> list = pservice.
+		System.out.println("dd"+pservice.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price));
 		return ResponseEntity.ok(list);
 	}
 
