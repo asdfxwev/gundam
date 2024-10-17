@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.UserDTO;
 import com.example.demo.entity.User;
+import com.example.demo.repository.UserDSLRepository;
 import com.example.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import lombok.extern.log4j.Log4j2;
 public class UserServiceImpl implements UserService {
 	
 	final private UserRepository urepository; 
+	final private UserDSLRepository udslrepository;
 	
 	@Override
 	public List<User> selectList() {
@@ -106,12 +107,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public List<UserDTO> findAllUsers() {
-		return urepository.findAllUsers();
+	public List<User> findAllUsers() {
+//		return urepository.findAllUsers();
+		return udslrepository.findAllUsers();
 	}
 	
 	@Override
-	public List<UserDTO> searchUsers(String inputValue) {
+	public List<User> searchUsers(String inputValue) {
 		return urepository.searchUsers(inputValue);
 	}
 	

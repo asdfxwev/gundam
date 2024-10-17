@@ -57,11 +57,14 @@ public interface UserRepository extends JpaRepository<User, String> {
 //	List<User> adminUserList(@Param("inputValue") String inputValue);
 	
 	// 전체 사용자 조회 쿼리
-	@Query("SELECT new com.example.demo.dto.UserDTO(u) FROM User u")
-	List<UserDTO> findAllUsers();
+//	@Query("SELECT new com.example.demo.dto.UserDTO(u) FROM User u")
+	@Query("SELECT u FROM User u")
+	List<User> findAllUsers();
 	
 	// 조건검색 쿼리
-	@Query("SELECT new com.example.demo.dto.UserDTO(u) FROM User u "
+//	@Query("SELECT new com.example.demo.dto.UserDTO(u) FROM User u "
+//			+ "WHERE u.user_name LIKE %:inputValue% OR u.login_id LIKE %:inputValue%")
+	@Query("SELECT u FROM User u "
 			+ "WHERE u.user_name LIKE %:inputValue% OR u.login_id LIKE %:inputValue%")
-	List<UserDTO> searchUsers(@Param("inputValue") String inputValue);
+	List<User> searchUsers(@Param("inputValue") String inputValue);
 }

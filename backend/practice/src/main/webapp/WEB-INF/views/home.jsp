@@ -81,6 +81,9 @@ h1, h2 {
     </style>
     
 </head>
+<script>
+console.log(UserList);
+</script>
 <body>
     <div class="container">
         <!-- Sidebar -->
@@ -120,6 +123,7 @@ h1, h2 {
                     </tr>
                 </thead>
                 <tbody>
+                
                 	<c:if test="${!empty UserList }">
 	                    <c:forEach var="user" items="${UserList}">
 	                        <tr>

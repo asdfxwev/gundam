@@ -360,10 +360,12 @@ public class UserController {
  	
  	@GetMapping("/home")
  	public String userList(@RequestParam(required = false) String inputValue, Model model) {
- 	    List<UserDTO> listResult;
+// 	    List<UserDTO> listResult;
+ 	    List<User> listResult;
 
  	    if (inputValue == null || inputValue.trim().isEmpty()) {
  	        listResult = service.findAllUsers(); // 모든 유저 데이터
+ 	        System.out.println("listResult = "+listResult);
  	    } else {
  	        listResult = service.searchUsers(inputValue); // 검색 결과
  	    }

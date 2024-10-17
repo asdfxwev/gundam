@@ -38,8 +38,8 @@ public interface UserService {
 	
 	public String findloginid(String user_name, String phone_num);
 		
-	List<UserDTO> findAllUsers();
+	List<User> findAllUsers();
 	
-	List<UserDTO> searchUsers(String inputValue);
+	List<User> searchUsers(String inputValue);
 
 }
