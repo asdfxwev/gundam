@@ -19,7 +19,7 @@ const StarRating = ({ rating, setRating }) => {
                 <FontAwesomeIcon
                     key={star}
                     icon={faStar}
-                    onClick={() => setRating(star)}
+                    // onClick={() => setRating(star)}
                     className={`star-icon ${rating >= star ? 'filled' : ''}`}
                 />
             ))}
