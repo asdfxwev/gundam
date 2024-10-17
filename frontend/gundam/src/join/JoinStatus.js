@@ -11,12 +11,14 @@ export function JoinProvider({ children }) {
     const navigate = useNavigate();
 
     // 회원가입 함수
-    const onJoinSubmit = (userName, loginId, userPassword, checkPassword, phoneNumber, 
-                            email, postCode, address, dtlAddress, birth, gender) => {
+    const onJoinSubmit = (userName, loginId, userPassword, checkPassword, phoneNumber,
+        email, postCode, address, dtlAddress, birth, gender) => {
 
         let url = "/user/join";
-        const data = { user_name: userName, login_id: loginId, password: userPassword, phone_num: phoneNumber, 
-            email: email, postcode: postCode, address: address, dtl_address: dtlAddress, birth: birth, gender: gender };
+        const data = {
+            user_name: userName, login_id: loginId, password: userPassword, phone_num: phoneNumber,
+            email: email, postcode: postCode, address: address, dtl_address: dtlAddress, birth: birth, gender: gender
+        };
 
         apiCall(url, 'POST', data, null)
             .then((response) => {
@@ -25,11 +27,12 @@ export function JoinProvider({ children }) {
                 setJoinInfo(response);
                 navigate("/Login");
             }).catch((err) => {
-                if (err === 502) {
-                    alert("ID 또는 비밀번호를 확인하세요.");
-                } else {
-                    alert(`** 시스템 오류 발생: err=${err}`);
-                }
+                // if (err === 502) {
+                //     alert("ID 또는 비밀번호를 확인하세요.");
+                // } else {
+                //     alert(`** 시스템 오류 발생: err=${err}`);
+                // }
+                alert(`회원가입중 오류가 발생했습니다. 다시 시도해주세요.`);
                 navigate("/Login/Join");
             });
     };

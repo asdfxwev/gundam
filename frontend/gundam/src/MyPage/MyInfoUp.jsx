@@ -162,24 +162,40 @@ const MyInfoUp = () => {
 
     // 회원 탈퇴
     const userdelete = () => {
-
-        if (validation) {
-            let url = `/user/userdelete`;
-
-            const data = {
-                user_id: userInfo.user_id
-            };
-
-            axios.delete(url, data)
-                .then((response) => {
-                    alert('탈퇴가 완료됐습니다.');
-                    navigate("/");
-                }).catch((err) => {
-                    alert(`** 탈퇴중 오류가 발생했습니다.`);
-                    navigate("/MyInfoUp");
-                });
-        }
+        let url = `/user/userdelete?user_id=${userInfo.user_id}`;
+    
+        axios.delete(url)
+            .then((response) => {
+                alert('탈퇴가 완료됐습니다.');
+                sessionStorage.clear();
+                navigate("/");
+                window.location.reload();
+            }).catch((err) => {
+                alert('** 탈퇴 중 오류가 발생했습니다.');
+                navigate("/MyInfoUp");
+            });
     };
+
+    // const userdelete = () => {
+
+    //     // if (validation) {
+    //         let url = `/user/userdelete`;
+
+    //         const data = {
+    //             user_id: userInfo.user_id
+    //         };
+
+    //         axios.delete(url, data)
+    //             .then((response) => {
+    //                 alert('탈퇴가 완료됐습니다.');
+    //                 sessionStorage.clear();
+    //                 navigate("/");
+    //             }).catch((err) => {
+    //                 alert(`** 탈퇴중 오류가 발생했습니다.`);
+    //                 navigate("/MyInfoUp");
+    //             });
+    //     // }
+    // };
 
     return (
         <div className="mypageContainer">
