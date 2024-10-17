@@ -6,6 +6,7 @@ import { API_BASE_URL } from "../service/app-config";
 import Modal from 'react-modal';
 import { faStar as faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PagiNationNum from "../csc/PagiNationNum";
 
 // 한국 단위로 바꿔주는거
 const formatNumber = (number) => number.toLocaleString('ko-KR');
@@ -39,6 +40,8 @@ const Order = () => {
     const [selectedOrderId, setSelectedOrderId] = useState(''); // 선택된 주문 ID
     const [reviewExist, setReviewExist] = useState([]); // 기존 리뷰 상태
     const [selectedRevId, setSelectedRevId] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5; // 한 페이지당 보여줄 아이템 개수
 
     // 로그인한 사용자 정보
     const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -58,14 +61,17 @@ const Order = () => {
             setOrderList(response.data.orderList);
             setMainImage(response.data.imgList);
             setReviewExist(response.data.reviewList); // 리뷰 리스트를 배열로 설정
+
+
         } catch (error) {
             console.error("데이터를 가져오는 중 에러가 발생했습니다: ", error);
         }
     };
+    
 
     useEffect(() => {
         fetchData(); // 컴포넌트 로드 시 데이터 가져오기
-    }, [user_id]);
+    }, [currentPage]);
 
     const closeModal = () => {
         setModalIsOpen(false);
@@ -184,6 +190,9 @@ const Order = () => {
         }
     };
     console.log(orderList)
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentOrderList = orderList.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <div className="mypageContainer">
@@ -200,15 +209,15 @@ const Order = () => {
                         <div>총 가격</div>
                         <div>리뷰</div>
                     </div>
-                    {orderList && orderList.length > 0 ? (
-                        orderList.map((item) => {
+                    {currentOrderList && currentOrderList.length > 0 ? (
+                        currentOrderList.map((item, i) => {
                             const matchedImage = mainImage.find(image => image.pro_id.pro_id === item.pro_id.pro_id);
                             const matchedReview = reviewExist.find(review =>
                                 review.product.pro_id === item.pro_id.pro_id && review.order.order_id === item.order_id.order_id
                             );
 
                             return (
-                                <div className="cart-item" key={item.order_id.order_id}>
+                                <div className="cart-item" key={i}>
                                     <div>{convertToKST(item.order_id.order_date)}</div>
                                     <div>
                                         <a href={`ItemList/ItemDetail/${item.pro_id.pro_id}`}>
@@ -242,54 +251,61 @@ const Order = () => {
                     )}
                 </div>
                 <Modal
-                        isOpen={modalIsOpen}
-                        onRequestClose={closeModal}
-                        contentLabel="리뷰 작성"
-                    >
-                        <form className="review_pop">
-                            <h2>리뷰작성</h2>
-                            <div>
-                                <div>제목
-                                    <input name='rev_title' value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} type="text" id="title" className="re_title" />
-                                </div>
-                                <div>별점
-                                    <StarRating name='rev_rating' rating={rev_rating} setRating={setRating} />
-                                </div>
-                                <div className="reviewBox">내용
-                                    <textarea value={rev_com} name='rev_com' onChange={(e) => setReviewMessage(e.target.value)} id="comment" className="re_comment" />
-                                </div>
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="리뷰 작성"
+                >
+                    <form className="review_pop">
+                        <h2>리뷰작성</h2>
+                        <div>
+                            <div>제목
+                                <input name='rev_title' value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} type="text" id="title" className="re_title" />
                             </div>
-                            <div className="re_button_box">
-                                <button type="button" className="re_button" onClick={reviewSubmit}>저장</button>
-                                <button type="button" className="re_button" onClick={closeModal}>닫기</button>
+                            <div>별점
+                                <StarRating name='rev_rating' rating={rev_rating} setRating={setRating} />
                             </div>
-                        </form>
-                    </Modal>
+                            <div className="reviewBox">내용
+                                <textarea value={rev_com} name='rev_com' onChange={(e) => setReviewMessage(e.target.value)} id="comment" className="re_comment" />
+                            </div>
+                        </div>
+                        <div className="re_button_box">
+                            <button type="button" className="re_button" onClick={reviewSubmit}>저장</button>
+                            <button type="button" className="re_button" onClick={closeModal}>닫기</button>
+                        </div>
+                    </form>
+                </Modal>
 
                 <Modal
-                        isOpen={modalModifyIsOpen}
-                        onRequestClose={closeModalModify}
-                        contentLabel="리뷰 수정"
-                    >
-                        <form className="review_pop">
-                            <h2>리뷰수정</h2>
-                            <div>
-                                <div>제목
-                                    <input name='rev_title' value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} type="text" id="title" className="re_title" />
-                                </div>
-                                <div>별점
-                                    <StarRating name='rev_rating' rating={rev_rating} setRating={setRating} />
-                                </div>
-                                <div className="reviewBox">내용
-                                    <textarea value={rev_com} name='rev_com' onChange={(e) => setReviewMessage(e.target.value)} id="comment" className="re_comment" />
-                                </div>
+                    isOpen={modalModifyIsOpen}
+                    onRequestClose={closeModalModify}
+                    contentLabel="리뷰 수정"
+                >
+                    <form className="review_pop">
+                        <h2>리뷰수정</h2>
+                        <div>
+                            <div>제목
+                                <input name='rev_title' value={rev_title} onChange={(e) => setReviewTitle(e.target.value)} type="text" id="title" className="re_title" />
                             </div>
-                            <div className="re_button_box">
-                                <button type="button" className="re_button" onClick={reviewModify}>저장</button>
-                                <button type="button" className="re_button" onClick={closeModalModify}>닫기</button>
+                            <div>별점
+                                <StarRating name='rev_rating' rating={rev_rating} setRating={setRating} />
                             </div>
-                        </form>
-                    </Modal>
+                            <div className="reviewBox">내용
+                                <textarea value={rev_com} name='rev_com' onChange={(e) => setReviewMessage(e.target.value)} id="comment" className="re_comment" />
+                            </div>
+                        </div>
+                        <div className="re_button_box">
+                            <button type="button" className="re_button" onClick={reviewModify}>저장</button>
+                            <button type="button" className="re_button" onClick={closeModalModify}>닫기</button>
+                        </div>
+                    </form>
+                </Modal>
+                <PagiNationNum
+                    itemsPerPage={5}
+                    maxPagesToShow={5}
+                    totalItems={orderList.length}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
             </div>
         </div>
     );

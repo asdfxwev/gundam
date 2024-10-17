@@ -12,11 +12,17 @@ const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
     console.log(item);
 
     const handleQuantityChange = (newQuantity) => {
+        if (newQuantity < 1) {
+            alert("수량은 1개 이상이어야 합니다.");
+            return;
+        }
         if (newQuantity >= 1 && newQuantity <= item.pro_stock) {
             onQuantityChange(item.pro_id, newQuantity);
         } else if (newQuantity > item.pro_stock) {
             alert(`재고가 부족합니다. 현재 재고는 ${item.pro_stock}개입니다.`);
+            newQuantity = item.pro_stock;
         }
+        onQuantityChange(item.pro_id, newQuantity);
     };
 
     const totalPrice = item.cart_quantity * item.pro_price;

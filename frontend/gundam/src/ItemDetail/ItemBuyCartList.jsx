@@ -9,11 +9,17 @@ import { API_BASE_URL } from "../service/app-config";
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
     console.log(item);
     const handleQuantityChange = (newQuantity) => {
+        if (newQuantity < 1) {
+            alert("수량은 1개 이상이어야 합니다.");
+            return;
+        }
         if (newQuantity >= 1 && newQuantity <= item.pro_stock) {
             onQuantityChange(item.pro_id, newQuantity);
         } else if (newQuantity > item.pro_stock) {
             alert(`재고가 부족합니다. 현재 재고는 ${item.pro_stock}개입니다.`);
+            newQuantity = item.pro_stock;
         }
+        onQuantityChange(item.pro_id, newQuantity);
     };
 
     return (
@@ -163,9 +169,19 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
 
     // 개별 체크박스 상태 변경 핸들러
     const handleCheckboxChange = (id) => {
-        const updatedItems = cartItems.map(item =>
-            item.pro_id === id ? { ...item, isChecked: !item.isChecked } : item
-        );
+        const updatedItems = cartItems.map(item => {
+            if (item.pro_id === id) {
+                // 현재 아이템의 수량이 재고를 초과하는 경우
+                if (item.cart_quantity > item.pro_stock) {
+                    alert(`체크하신 상품의 재고는 ${item.pro_stock}개 입니다.`);
+                    return { ...item, isChecked: false }; // 체크 해제
+                } else {
+                    // 체크 상태 반전
+                    return { ...item, isChecked: !item.isChecked };
+                }
+            }
+            return item;
+        });
         setCartItems(updatedItems);
 
         const newCheckedItems = updatedItems.filter(item => item.isChecked).map(item => item.pro_id);
@@ -175,12 +191,29 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
 
     // 전체 체크박스 상태 변경 핸들러
     const handleAllCheckboxChange = () => {
-        const updatedItems = cartItems.map(item => ({ ...item, isChecked: !isAllChecked }));
+
+        const updatedItems = cartItems.map(item => {
+            // 재고가 충분한 경우에만 체크박스 상태를 변경
+            if (item.cart_quantity <= item.pro_stock) {
+                return { ...item, isChecked: !isAllChecked };
+            }
+            alert("체크되지 않은 상품은 재고가 부족합니다.")
+            return item; // 재고가 부족한 아이템은 상태를 변경하지 않음
+        });
         setCartItems(updatedItems);
 
         const newCheckedItems = updatedItems.filter(item => item.isChecked).map(item => item.pro_id);
         setCheckedItems(newCheckedItems);
-        setIsAllChecked(!isAllChecked);
+        setIsAllChecked(newCheckedItems.length === updatedItems.length);
+
+
+
+        // const updatedItems = cartItems.map(item => ({ ...item, isChecked: !isAllChecked }));
+        // setCartItems(updatedItems);
+
+        // const newCheckedItems = updatedItems.filter(item => item.isChecked).map(item => item.pro_id);
+        // setCheckedItems(newCheckedItems);
+        // setIsAllChecked(!isAllChecked);
     };
 
 
