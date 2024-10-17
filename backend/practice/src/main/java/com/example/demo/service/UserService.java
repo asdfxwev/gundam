@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import com.example.demo.domain.UserDTO;
 import com.example.demo.entity.User;
 
 public interface UserService {
@@ -36,5 +37,9 @@ public interface UserService {
 	public User pwUserCheck(String login_id, String phone_num);
 	
 	public String findloginid(String user_name, String phone_num);
+		
+	List<UserDTO> findAllUsers();
+	
+	List<UserDTO> searchUsers(String inputValue);
 
 }
