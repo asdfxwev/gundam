@@ -1,14 +1,11 @@
 package com.example.demo.service;
 
-import java.io.Console;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.UserDTO;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
@@ -106,6 +103,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String findloginid(String user_name, String phone_num) {
 		return urepository.findloginid(user_name, phone_num);
+	}
+	
+	@Override
+	public List<UserDTO> findAllUsers() {
+		return urepository.findAllUsers();
+	}
+	
+	@Override
+	public List<UserDTO> searchUsers(String inputValue) {
+		return urepository.searchUsers(inputValue);
 	}
 	
 }

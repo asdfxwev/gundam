@@ -1,7 +1,5 @@
 package com.example.demo.repository;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.example.demo.domain.UserDTO;
 import com.example.demo.entity.User;
 
 import jakarta.transaction.Transactional;
@@ -51,4 +50,18 @@ public interface UserRepository extends JpaRepository<User, String> {
 	// login_id 찾기
 	@Query("SELECT u.login_id FROM User u WHERE u.user_name=:user_name AND u.phone_num=:phone_num")
 	String findloginid(@Param("user_name") String user_name, @Param("phone_num") String phone_num);
+	
+	// admin userList
+//	@Query("SELECT u FROM User u "
+//			+ "WHERE u.login_id like concat('%',:inputValue,'%') OR u.user_name like concat('%',:inputValue,'%')")
+//	List<User> adminUserList(@Param("inputValue") String inputValue);
+	
+	// 전체 사용자 조회 쿼리
+	@Query("SELECT new com.example.demo.dto.UserDTO(u) FROM User u")
+	List<UserDTO> findAllUsers();
+	
+	// 조건검색 쿼리
+	@Query("SELECT new com.example.demo.dto.UserDTO(u) FROM User u "
+			+ "WHERE u.user_name LIKE %:inputValue% OR u.login_id LIKE %:inputValue%")
+	List<UserDTO> searchUsers(@Param("inputValue") String inputValue);
 }

@@ -87,7 +87,7 @@ h1, h2 {
         <div class="sidebar">
             <h2>관리자 페이지</h2>
             <ul>
-                <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
+                <li><a href="<c:url value='/home' />">유저 리스트 출력</a></li>
                 <li><a href="<c:url value='/adminproduct/productList'/>">상품 등록/수정/삭제</a></li>
                 <li><a href="<c:url value='/adminreview/reviewanswer'/>">리뷰답변달기</a></li>
                 <li><a href="<c:url value='/statistics/statisticsList'/>">통계</a></li>
@@ -97,6 +97,14 @@ h1, h2 {
         <!-- Content -->
         <div class="content">
             <h1>Admin Dashboard</h1>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <form action="/user/home" method="GET">
+                    <input type="text" name="inputValue" placeholder="이름, 로그인 아이디 검색" value="${param.inputValue}">
+                    <button type="submit">검색</button>
+                </form>
+            </div>
 
             <!-- User List Table -->
             <h2>User List</h2>
@@ -105,26 +113,33 @@ h1, h2 {
                     <tr>
                         <th>User ID</th>
                         <th>Login ID</th>
-                        <th>Name</th>
+                        <th>이름</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
+                        <th>연락처</th>
+                        <th>수정</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="user" items="${userList}">
-                        <tr>
-                            <td>${user.user_id}</td>
-                            <td>${user.login_id}</td>
-                            <td>${user.user_name}</td>
-                            <td>${user.email}</td>
-                            <td>${user.phone_num}</td>
-                            <td>
-                                <a href="<c:url value='/user/edit/${user.user_id}' />">수정</a> |
-                                <a href="<c:url value='/user/delete/${user.user_id}' />" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                	<c:if test="${!empty UserList }">
+	                    <c:forEach var="user" items="${UserList}">
+	                        <tr>
+	                            <td>${user.user_id}</td>
+	                            <td>${user.login_id}</td>
+	                            <td>${user.user_name}</td>
+	                            <td>${user.email}</td>
+	                            <td>${user.phone_num}</td>
+	                            <td>${user.user_cd}</td>
+	                            <td>
+	                                <a href="<c:url value='/user/edit/${user.user_id}' />">수정</a>
+	                            </td>
+	                        </tr>
+	                    </c:forEach>
+	                </c:if>
+					<c:if test="${empty UserList}">
+	   					<tr>
+	        				<td colspan="7">검색된 사용자가 없습니다.</td>
+	    				</tr>
+					</c:if>
                 </tbody>
             </table>
         </div>
