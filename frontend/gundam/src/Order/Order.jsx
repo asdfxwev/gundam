@@ -6,6 +6,7 @@ import { API_BASE_URL } from "../service/app-config";
 import Modal from 'react-modal';
 import { faStar as faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PagiNationNum from "../csc/PagiNationNum";
 
 // 한국 단위로 바꿔주는거
 const formatNumber = (number) => number.toLocaleString('ko-KR');
@@ -39,6 +40,7 @@ const Order = () => {
     const [selectedOrderId, setSelectedOrderId] = useState(''); // 선택된 주문 ID
     const [reviewExist, setReviewExist] = useState([]); // 기존 리뷰 상태
     const [selectedRevId, setSelectedRevId] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
 
     // 로그인한 사용자 정보
     const existingInquiries = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -69,6 +71,9 @@ const Order = () => {
 
     const closeModal = () => {
         setModalIsOpen(false);
+        setReviewTitle('');
+        setReviewMessage('');
+        setRating(0);
     };
 
     const closeModalModify = () => {
@@ -115,6 +120,7 @@ const Order = () => {
             order_id: selectedOrderId,
             pro_id: selectedProId
         };
+        console.log(data);
 
         if (!rev_title || !rev_com || rev_rating === 0) {
             alert(`제목, 내용, 별점을 모두 입력해주세요.`);
@@ -122,7 +128,7 @@ const Order = () => {
         }
 
         try {
-            await axios.post(`${API_BASE_URL}/product/productReviewSubmit`, data);
+            await axios.post(`${API_BASE_URL}/product/productReview`, data);
             closeModal();
             fetchData(); // 리뷰 제출 후 데이터 새로고침
         } catch (error) {
@@ -179,6 +185,7 @@ const Order = () => {
             console.error('리뷰 삭제 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
         }
     };
+    console.log(orderList)
 
     return (
         <div className="mypageContainer">
@@ -286,6 +293,13 @@ const Order = () => {
                         </form>
                     </Modal>
             </div>
+            <PagiNationNum
+                itemsPerPage={5}
+                maxPagesToShow={5}
+                totalItems={orderList.length}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+            />
         </div>
     );
 };
