@@ -112,6 +112,16 @@
         .user-table td a:hover {
             text-decoration: underline;
         }
+        .listNames{
+        	font-size:2rem;
+        }
+        .productInsert{
+        	text-align: righr;
+        	color: black;
+        }
+        .number a{
+        	color: black;
+        }
     </style>
 </head>
 <body>
@@ -119,6 +129,7 @@
         <div class="sidebar">
             <h2>관리자 페이지</h2>
             <ul>
+                <li><a href="http://localhost:3000/">홈페이지로 가기</a></li>
                 <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
                 <li><a href="<c:url value='/adminproduct/productList'/>">상품 등록/수정/삭제</a></li>
                 <li><a href="<c:url value='/adminreview/reviewanswer'/>">리뷰답변달기</a></li>
@@ -138,7 +149,10 @@
             </div>
 
             <!-- User List Table -->
-            <h2>Product List</h2>
+            <div>
+            	<span class="listNames">Product List</span>           
+            	<span><a class="productInsert" href="/adminproduct/productInsert">상품등록</a></span>
+            </div>
             <table class="user-table">
                 <thead>
                     <tr>
@@ -167,7 +181,7 @@
                             <td><img width="50" alt="productImg" src="/resources/productImg/${productJoinList.pro_id}/${productJoinList.pro_imgs}"></td>
                             <td>
                                 <a href="/adminproduct/productModify?proId=${productJoinList.pro_id}">수정</a> |
-                                <a href="/product/productDelete?proId=${productJoinList.pro_id}" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+                                <a href="/adminproduct/productDelete?proId=${productJoinList.pro_id}" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -179,7 +193,7 @@
 				</c:if>
                 </tbody>
             </table>
-       	<div align="center">
+       	<div class="number" align="center">
 			<c:choose>
         		<c:when test="${currentPage > 1}">
             		<a href="?inputValue=${inputValue}&page=1">&LT;&LT;</a>&nbsp;

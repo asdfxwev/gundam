@@ -122,7 +122,7 @@ public class AdiminProductController {
 		String realPath = request.getServletContext().getRealPath("/");
 		
 		
-		realPath += "resources\\"+productEntity.getPro_id()+"\\";
+		realPath += "resources\\productImg\\"+productEntity.getPro_id()+"\\";
 
 		File file = new File(realPath);
 		System.out.println(file.getPath());
@@ -321,7 +321,7 @@ public class AdiminProductController {
 
 	
 
-	@PostMapping("/productDelete")
+	@GetMapping("/productDelete")
 	public String productDelete(@RequestParam(value = "proId") String proId, HttpServletRequest request) {
 		// 이미지 삭제
 	    iservice.deleteProId(proId);
@@ -330,7 +330,7 @@ public class AdiminProductController {
 	    
 	    
 	    // 파일 삭제
-	    String realPath = request.getServletContext().getRealPath("/") + "resources\\"+proId+"\\";
+	    String realPath = request.getServletContext().getRealPath("/") + "resources\\productImg\\"+proId+"\\";
 	    File dir = new File(realPath);
 	    
 	    
@@ -356,7 +356,7 @@ public class AdiminProductController {
 	        log.info("Directory does not exist or is not a directory.");
 	    }
 	    
-	    return "redirect:/product/productList";
+	    return "redirect:/adminproduct/productList";
 	}
 	
 	

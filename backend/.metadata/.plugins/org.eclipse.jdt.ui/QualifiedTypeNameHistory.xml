@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<<<<<<< HEAD
-<qualifiedTypeNameHistroy/>
-=======
 <qualifiedTypeNameHistroy>
-<<<<<<< HEAD
-    <fullyQualifiedTypeName name="java.lang.Override"/>
-    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
-    <fullyQualifiedTypeName name="lombok.extern.java.Log"/>
-    <fullyQualifiedTypeName name="java.io.Console"/>
-    <fullyQualifiedTypeName name="lombok.extern.log4j.Log4j2"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.DeleteMapping"/>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
-=======
-    <fullyQualifiedTypeName name="com.example.demo.entity.Cart"/>
->>>>>>> main
-=======
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
-    <fullyQualifiedTypeName name="com.querydsl.core.BooleanBuilder"/>
->>>>>>> sb
->>>>>>> main
+    <fullyQualifiedTypeName name="java.lang.Override"/>
 </qualifiedTypeNameHistroy>
->>>>>>> main

@@ -122,6 +122,9 @@ const ItemBuy = () => {
     };
 
     const handleOrder = async () => {
+
+        
+
         // 배송 정보가 없으면 경고
         if (!showUser && (!deliveryUser || !deliveryPhone || !deliveryAddress)) {
             alert('배송 정보를 입력해주세요.');

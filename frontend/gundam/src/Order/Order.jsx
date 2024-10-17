@@ -46,7 +46,7 @@ const Order = () => {
 
     const convertToKST = (dateString) => {
         const utcDate = new Date(dateString); // dateString을 Date 객체로 변환
-        const kstDate = new Date(utcDate.getTime() + 3240 * 10000); // 9시간 더함
+        const kstDate = new Date(utcDate.getTime()); // 9시간 더함
         return `${String(kstDate.getFullYear()).slice(-2)}-${String(kstDate.getMonth() + 1).padStart(2, '0')}-${String(kstDate.getDate()).padStart(2, '0')} ${String(kstDate.getHours()).padStart(2, '0')}:${String(kstDate.getMinutes()).padStart(2, '0')}:${String(kstDate.getSeconds()).padStart(2, '0')}`;
     };
 
@@ -80,6 +80,9 @@ const Order = () => {
 
     // 리뷰 작성 모달 팝업을 여는 함수
     const reviewPop = (pro_id, order_id) => {
+        setReviewTitle('');
+        setReviewMessage('');
+        setRating(0);
         setSelectedProId(pro_id);
         setSelectedOrderId(order_id);
         setModalIsOpen(true);
@@ -122,7 +125,7 @@ const Order = () => {
         }
 
         try {
-            await axios.post(`${API_BASE_URL}/product/productReviewSubmit`, data);
+            await axios.post(`${API_BASE_URL}/product/productReview`, data);
             closeModal();
             fetchData(); // 리뷰 제출 후 데이터 새로고침
         } catch (error) {
@@ -138,6 +141,7 @@ const Order = () => {
             rev_com,
             rev_rating,
             user_id,
+            rev_id: selectedRevId,
             order_id: selectedOrderId,
             pro_id: selectedProId
         };
@@ -179,6 +183,7 @@ const Order = () => {
             console.error('리뷰 삭제 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
         }
     };
+    console.log(orderList)
 
     return (
         <div className="mypageContainer">

@@ -90,6 +90,7 @@ body {
 		<div class="sidebar">
 			<h2>관리자 페이지</h2>
 			<ul>
+                <li><a href="http://localhost:3000/">홈페이지로 가기</a></li>
                 <li><a href="<c:url value='/userList' />">유저 리스트 출력</a></li>
                 <li><a href="<c:url value='/adminproduct/productList'/>">상품 등록/수정/삭제</a></li>
                 <li><a href="<c:url value='/adminreview/reviewanswer'/>">리뷰답변달기</a></li>

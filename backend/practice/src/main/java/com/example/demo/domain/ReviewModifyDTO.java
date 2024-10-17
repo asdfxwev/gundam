@@ -17,6 +17,7 @@ public class ReviewModifyDTO extends OrdersDTO {
 	private int rev_rating;
 	private String rev_title;
 	private String rev_com;
+	private String pro_id;
 	
 	
 

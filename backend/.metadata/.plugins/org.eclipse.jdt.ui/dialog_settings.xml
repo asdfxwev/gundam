@@ -1,68 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item key="filters_last_used" value="filter_imports;"/>
+	<section name="JavaElementSearchActions">
+	</section>
 	<section name="completion_proposal_size">
 	</section>
 	<section name="quick_assist_proposal_size">
 	</section>
-	<section name="JavaElementSearchActions">
-	</section>
-<<<<<<< HEAD
-	<section name="NewClassCreationWizard.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="681"/>
-		<item key="DIALOG_Y_ORIGIN" value="89"/>
-<<<<<<< HEAD
-=======
-=======
-		<item key="DIALOG_X_ORIGIN" value="561"/>
-		<item key="DIALOG_Y_ORIGIN" value="151"/>
->>>>>>> main
-=======
-	<section name="BuildPathsPropertyPage">
-		<item key="pageIndex" value="3"/>
-	</section>
-	<section name="NewClassCreationWizard.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="681"/>
-		<item key="DIALOG_Y_ORIGIN" value="85"/>
->>>>>>> sb
->>>>>>> main
-		<item key="DIALOG_WIDTH" value="575"/>
-		<item key="DIALOG_HEIGHT" value="659"/>
-		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
-	</section>
-	<section name="OptionalMessageDialog.hide.">
-		<item key="org.eclipse.jdt.ui.typecomment.deprecated" value="true"/>
-	</section>
-	<section name="NewClassWizardPage">
-		<item key="create_constructor" value="false"/>
-		<item key="create_unimplemented" value="true"/>
-	</section>
-<<<<<<< HEAD
-	<section name="ProblemSeveritiesConfigurationBlock">
-		<item key="expanded0" value="true"/>
-		<item key="expanded1" value="false"/>
-		<item key="expanded2" value="false"/>
-		<item key="expanded3" value="false"/>
-		<item key="expanded4" value="false"/>
-		<item key="expanded5" value="false"/>
-		<item key="expanded6" value="false"/>
-		<item key="expanded7" value="false"/>
-		<item key="expanded8" value="false"/>
-	</section>
-	<section name="JavaBuildConfigurationBlock">
-		<item key="expanded0" value="true"/>
-		<item key="expanded1" value="false"/>
-		<item key="expanded2" value="false"/>
-	</section>
-	<section name="BuildPathsPropertyPage">
-		<item key="pageIndex" value="3"/>
-	</section>
-	<section name="org.eclipse.jdt.internal.ui.typehierarchy.QuickHierarchy">
-		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_WIDTH" value="450"/>
-		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_HEIGHT" value="380"/>
-		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_SIZE" value="true"/>
-		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_LOCATION" value="false"/>
-	</section>
-=======
->>>>>>> sb
 </section>

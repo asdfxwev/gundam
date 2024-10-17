@@ -55,6 +55,7 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
     	
     	return queryFactory.selectFrom(oritems)
     			.where(oritems.order_id.order_id.in(orderlist))
+    			.orderBy(oritems.order_id.order_date.desc())
     			.fetch();
     }
     
