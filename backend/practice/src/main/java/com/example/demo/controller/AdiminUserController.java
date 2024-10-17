@@ -13,14 +13,14 @@ import com.example.demo.entity.User;
 import com.example.demo.jwtToken.TokenProvider;
 import com.example.demo.service.UserService;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Controller
 @RequestMapping("/user")
-//@AllArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
+//@RequiredArgsConstructor
 public class AdiminUserController {
 	
 	private final UserService service;
@@ -32,8 +32,6 @@ public class AdiminUserController {
 // 	    List<UserDTO> listResult;
  	    List<User> listResult;
 
-// 	    listResult = service.findAllUsers(inputValue); // 모든 유저 데이터
-// 	    System.out.println("listResult = "+listResult);
  	    if (inputValue == null || inputValue.trim().isEmpty()) {
  	        listResult = service.findAllUsers(); // 모든 유저 데이터
  	        System.out.println("listResult = "+listResult);
