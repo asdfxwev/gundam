@@ -18,7 +18,8 @@ export default function ItemDetail() {
     const [isAdded, setIsAdded] = useState(false);
     const [productList, setProductList] = useState(null);
     const [imgList, setImgList] = useState([]);
-    const { loginInfo, isLoggedIn, onLogout } = useLogin();
+    const [isLogIn, setIsLogIn] = useState(false);
+    // const { loginInfo, isLoggedIn, onLogout } = useLogin();
     const [totalprice, setTotalPrice] = useState(0);
     const [mainImage, setMainImage] = useState(null);
     const [count, setCount] = useState(1);
@@ -62,6 +63,9 @@ export default function ItemDetail() {
     };
 
     useEffect(() => {
+        if (JSON.parse(sessionStorage.getItem('loginInfo'))) {
+            setIsLogIn(true)
+        }
         const fetchData = async () => {
             try {
                 const params = { proId };
@@ -82,41 +86,8 @@ export default function ItemDetail() {
         fetchData();
     }, [proId]);
 
-    // const user_id = JSON.parse(sessionStorage.getItem('userId')).user_id;
-    // 최초 로드 시 로그인true면 토큰값으로 user정보 가져와야하는 부분
-    useEffect(() => {
-        if (isLoggedIn) {
-            let url = `/user/token_info`;
-
-            apiCall(url, 'POST', null, loginInfo)
-                .then((response) => {
-                    // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
-                    setUser_id(response);
-
-                }).catch((err) => {
-                    onLogout(); // 로그아웃 상태로 처리
-                    alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
-                });
-        }
-
-    }, [isLoggedIn, loginInfo, onLogout]);
-
-    useEffect(() => {
-        if (user_id && user_id.length > 0) {
-            let url = `/user/user_info`;
-
-            const data = { user_id: user_id };
-
-            apiCall(url, 'POST', data, null)
-                .then((response) => {
-                    // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
-                    setUserInfo(response);
-                });
-        }
-    }, [user_id]); // user_id 값이 변경될 때 실행되도록 설정
-
     const handleBuyClick = (e) => {
-        if (isLoggedIn) {
+        if (isLogIn) {
             e.preventDefault();
             navigate('/ItemBuy', { state: { item: productList, imgList, count } });
         } else {
@@ -147,7 +118,7 @@ export default function ItemDetail() {
     }, [proId, user_id]);
 
     const toCart = async (e) => {
-        if (isLoggedIn) {
+        if (isLogIn) {
             e.preventDefault();
 
             const quantity = Number(count);
@@ -201,10 +172,6 @@ export default function ItemDetail() {
             }
         }
     };
-
-
-
-
 
     return (
         <div className="item_detail_main">
