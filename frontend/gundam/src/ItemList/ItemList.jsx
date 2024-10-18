@@ -196,7 +196,7 @@ const ItemList = () => {
         setCurrentPage(newPage);
     };
 
-
+console.log(productList)
 
 
 

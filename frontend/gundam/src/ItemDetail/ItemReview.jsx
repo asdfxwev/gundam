@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import './ItemDetail.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import Modal from 'react-modal';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import reviewData from '../data/db.json';
+import { useNavigate } from 'react-router-dom';
 import PagiNationNum from "../csc/PagiNationNum";
 import { faStar as faStarEmpty, faStar } from '@fortawesome/free-solid-svg-icons';
-import { API_BASE_URL } from "../service/app-config";
 
 // 별점 UI 컴포넌트
 const StarRating = ({ rating, setRating }) => {
@@ -28,7 +23,7 @@ const StarRating = ({ rating, setRating }) => {
 };
 
 // ItemReview 컴포넌트
-const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
+const ItemReview = ({ pro_id, reviewList }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);  // 로그인 상태 저장 변수
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰작성 모달팝업 호출 변수
     const [modalOpenPop, setModalOpenPop] = useState(false); // 비로그인 시 안내모달팝업 호출 변수
@@ -44,16 +39,6 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     const navigate = useNavigate();
     const itemsPerPage = 5; // 한 페이지당 보여줄 아이템 개수
 
-
-
-    // useEffect(() => {
-    //     setReviews(reviewData.review);
-    // }, []);
-
-    // useEffect(() => {
-    //     const filteredReviews = reviews.filter(review => review.productId === item);
-    //     // setReviewCount(filteredReviews.length);
-    // }, [reviews, item, setReviewCount]);
 
     useEffect(() => {
         const loginCheck = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -78,7 +63,6 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
 
     let avgrevRating = reviewList.length > 0 ? reviewTotal / reviewList.length : 0;
     
-    console.log(reviewTotal);
 
     function onreviewTitle(e) {
         setReviewTitle(e.target.value)
@@ -87,20 +71,6 @@ const ItemReview = ({ item, setReviewCount, pathName, pro_id, reviewList }) => {
     function onreviewMessage(e) {
         setReviewMessage(e.target.value)
     }
-
-     // useEffect(() => {
-    //     const startIndex = (currentPage - 1) * 5;
-    //     const endIndex = startIndex + 5;
-    //     const newPaginatedItems = filteredReviews.slice(startIndex, endIndex);
-
-    //     setPaginatedItems(prevItems => {
-    //         // 상태가 실제로 변경되었는지 확인하여 불필요한 상태 변경 방지
-    //         if (JSON.stringify(prevItems) !== JSON.stringify(newPaginatedItems)) {
-    //             return newPaginatedItems;
-    //         }
-    //         return prevItems;
-    //     });
-    // }, [currentPage, filteredReviews]);
 
     const handleReviewClick = (reviewId) => {
         setExpandedReviewId(prevId => (prevId === reviewId ? null : reviewId));
