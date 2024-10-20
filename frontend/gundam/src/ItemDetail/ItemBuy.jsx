@@ -92,12 +92,12 @@ const ItemBuy = () => {
     // }, []);
 
     useEffect(() => {
-        const fetchData = async() => {
+        const fetchData = async () => {
             try {
                 const tokenId = JSON.parse(sessionStorage.getItem('loginInfo'))
                 console.log(tokenId)
                 const response = await axios.get(`${API_BASE_URL}/cart/user`, {
-                     params: { tokenId } // 쿼리 파라미터로 user_id 전달
+                    params: { tokenId } // 쿼리 파라미터로 user_id 전달
                 })
                 setUserDetails(response.data);
             } catch (error) {
@@ -139,7 +139,7 @@ const ItemBuy = () => {
 
     const handleOrder = async () => {
 
-        
+
 
         // 배송 정보가 없으면 경고
         if (!showUser && (!deliveryUser || !deliveryPhone || !deliveryAddress)) {
@@ -255,7 +255,7 @@ const ItemBuy = () => {
                                         readOnly />
                                     <p>상세주소</p>
                                     <input type='text' name='delivery_dtladdress' placeholder='상세주소를 알려주세요.'
-                                        onChange={(e) => setDeliverDtlAddress(e.target.value)}  />
+                                        onChange={(e) => setDeliverDtlAddress(e.target.value)} />
                                 </div>
                             )}
                         </div>

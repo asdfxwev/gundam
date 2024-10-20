@@ -48,7 +48,6 @@ public class CartController {
     @GetMapping("/{userId}")
     public ResponseEntity<List<CartDTO>> getCartItems(@PathVariable String userId) {
         List<CartDTO> cartItems = cartService.getCartItemsByUserId(userId);
-        System.out.println("겁나긴거"+cartService.getCartItemsByUserId(userId));
         return ResponseEntity.ok(cartItems);
     }
 

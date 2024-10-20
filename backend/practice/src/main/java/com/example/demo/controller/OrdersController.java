@@ -37,7 +37,6 @@ public class OrdersController {
 //    		@RequestBody OrderRequestDTO orderDto
     		) {
         // 주문 생성 시 입력 데이터 확인을 위한 로그 출력
-        System.out.println("Creating order: " + orderDto);
         
         
         ordersService.createOrder(orderDto);

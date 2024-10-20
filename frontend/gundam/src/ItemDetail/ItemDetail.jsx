@@ -19,7 +19,7 @@ export default function ItemDetail() {
     const [productList, setProductList] = useState(null);
     const [imgList, setImgList] = useState([]);
     const [isLogIn, setIsLogIn] = useState(false);
-    // const { loginInfo, isLoggedIn, onLogout } = useLogin();
+    const { loginInfo, isLoggedIn, onLogout } = useLogin();
     const [totalprice, setTotalPrice] = useState(0);
     const [mainImage, setMainImage] = useState(null);
     const [count, setCount] = useState(1);
@@ -30,7 +30,7 @@ export default function ItemDetail() {
     const proId = location.pathname.split('/').pop();
 
     // const existingInquiries = JSON.parse(sessionStorage.getItem('loginInfo'));
-    // const userId = existingInquiries ? existingInquiries.user_id : null;
+    // const user_id = existingInquiries ? existingInquiries.user_id : null;
 
     const handleImageClick = (src) => {
         setMainImage(src);
@@ -84,7 +84,26 @@ export default function ItemDetail() {
             }
         };
         fetchData();
-    }, [proId]);
+    }, []);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            let url = `/user/token_info`;
+
+            const response = apiCall(url, 'POST', null, loginInfo)
+            apiCall(url, 'POST', null, loginInfo)
+                .then((response) => {
+                    // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
+                    setUser_id(response);
+
+                }).catch((err) => {
+                    onLogout(); // 로그아웃 상태로 처리
+                    alert("사용자 정보를 찾을수 없습니다. 다시 로그인 하세요.");
+                });
+        }
+
+    }, [isLoggedIn, loginInfo, onLogout]);
+
 
     const handleBuyClick = (e) => {
         if (isLogIn) {
