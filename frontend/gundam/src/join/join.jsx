@@ -168,7 +168,7 @@ const SignupForm = () => {
             return;
         }
         // 생년월일 입력길이 체크
-        if (birth.length != 6) {
+        if (birth.length != 8) {
             alert("생년월일이 올바르지 않습니다.");
             setCompleteVal(false);
             return;
@@ -360,8 +360,9 @@ const SignupForm = () => {
                             name="birth"
                             type="text"
                             value={birth}
+                            placeholder="생년월일 8자리"
                             className='birth_input'
-                            maxLength={6}
+                            maxLength={8}
                             onChange={(e) => {
                                 if (/^\d*$/.test(e.target.value)) {
                                     setBirth(e.target.value);
@@ -376,15 +377,30 @@ const SignupForm = () => {
                             className='gender_input'
                             maxLength={1}
                             onChange={(e) => {
-                                if (/^\d*$/.test(e.target.value)) {
-                                    setGender(e.target.value);
+                                const genderValue = e.target.value;
+
+                                if (/^\d*$/.test(genderValue)) {
+                                    const firstBirthChar = birth.charAt(0);
+
+                                    if (firstBirthChar === '1' && (genderValue === '1' || genderValue === '2')) {
+                                        setGender(genderValue);
+                                    }
+
+                                    else if (firstBirthChar === '2' && (genderValue === '3' || genderValue === '4')) {
+                                        setGender(genderValue);
+                                    }
+
+                                    else {
+                                        setGender("");
+                                    }
                                 }
+
                             }}
                         />
                     </div>
                 </div>
 
-                <button type="submit">회원가입</button>
+                <button type="submit" className='submitbtn'>회원가입</button>
             </form>
         </div>
     );

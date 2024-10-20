@@ -66,5 +66,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 //			+ "WHERE u.user_name LIKE %:inputValue% OR u.login_id LIKE %:inputValue%")
 	@Query("SELECT u FROM User u "
 			+ "WHERE u.user_name LIKE %:inputValue% OR u.login_id LIKE %:inputValue%")
+//			+ "WHERE u.login_id concat(%:inputValue%) OR u.user_name like concat(%:inputValue%)")
 	List<User> searchUsers(@Param("inputValue") String inputValue);
+
 }

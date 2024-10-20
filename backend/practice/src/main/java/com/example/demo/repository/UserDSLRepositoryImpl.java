@@ -12,6 +12,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -32,9 +33,9 @@ public class UserDSLRepositoryImpl implements UserDSLRepository {
 				user.email,
 				user.phone_num,
 				user.user_cd,
-				code.code_name.as("code_name")))
-				.from(user)
-				.leftJoin(code)
+				user.retry))
+//				code.code_name.as("user_cd"))
+				.from(user).leftJoin(code)
 				.on(user.user_cd.eq(code.code_id))
 				.fetch();
 	}
@@ -58,14 +59,22 @@ public class UserDSLRepositoryImpl implements UserDSLRepository {
 				user.email,
 				user.phone_num,
 				user.user_cd,
-				code.code_name.as("code_name")))
-				.from(user)
-				.leftJoin(code)
+				user.retry))
+//				code.code_name.as("user_cd")))
+				.from(user).leftJoin(code)
 				.on(user.user_cd.eq(code.code_id))
-				.where(user.user_name.contains(inputValue)
-				.or(user.login_id.contains(inputValue)))
+				.where(user.user_name.contains(inputValue).or(user.login_id.contains(inputValue)))
 				.fetch();
 	}
+    
+    @Transactional
+    @Override
+    public void updateUserCd(String user_id, String user_cd) {
+    	queryFactory.update(user)
+    	.set(user.user_cd, user_cd)
+    	.where(user.user_id.eq(user_id))
+        .execute();
+    }
 	
 
 }

@@ -39,8 +39,9 @@ public interface UserService {
 	public String findloginid(String user_name, String phone_num);
 		
 	List<User> findAllUsers();
-//	List<User> findAllUsers(String inputValue);
 	
 	List<User> searchUsers(String inputValue);
+	
+	void updateUserCd(String user_id, String user_cd);
 
 }
