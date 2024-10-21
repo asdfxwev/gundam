@@ -45,8 +45,6 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price) {
 		
-		System.out.println("zz"+pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price));
-		
 		return pdslRepository.joinDSLpage(itemsPerPage, currentPage, inputValue, proCate, cateBrand, catePiece, proStateCd, price);
 	}
 	

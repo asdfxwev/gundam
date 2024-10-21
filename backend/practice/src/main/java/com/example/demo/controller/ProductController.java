@@ -92,8 +92,6 @@ public class ProductController {
 	}
 	
 	
-	
-	
 	@PostMapping("productReview")
 	public ResponseEntity<?> productReview(@RequestBody ReviewDTO dto) {
 		System.out.println(dto);

@@ -229,11 +229,7 @@ public class AdiminProductController {
         productEntity.setPro_creat(formattedDateTime);
         
 		productEntity.setPro_id(proId);
-        /*
-        pservice.save(productEntity);
-         */
-        //iservice.save(imgEntity);
-        
+       
 		
 	    try {
 	        // Save product entity

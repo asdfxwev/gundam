@@ -142,7 +142,6 @@ public class OrdersServiceImpl implements OrdersService {
         			.oritem_quan(item.getOritem_quan())
         			.build();
         	
-//        	oritemDSLRepository.insertOrderItems(item);
         	oritemRepository.save(oritems);
         	
         	Cart cart = Cart.builder()
@@ -151,19 +150,12 @@ public class OrdersServiceImpl implements OrdersService {
         			.build();
         	cartDSLrepository.deleteCart(cart);
         	
-//        	int pro_stock = pDSLrepository.findbyproStock(item.getPro_id());
         	
         	pDSLrepository.updateStock(oritems);
         	
         }
         
-//        for (int i = 0; i < orderDto.getItems(); i++) {
-//			
-//		}
-        
-//        Oritems oritems = Oritems.builder()
-//        		.order_id(orderDto.getOrder_id())
-//        		.pro_id(null);
+
     }
 
     
