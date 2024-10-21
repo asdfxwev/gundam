@@ -126,7 +126,7 @@ export default function Menu() {
                         <>
                             {userInfo.user_cd == 'uc01' && (
                                 <div className={`h_right h_mypage ${smallTopMenu ? 'blackText' : ''} `}>
-                                    <a href='http://localhost:8080' className={`${isMainPage ? 'noPosition' : ''}`}> ADMIN</a>
+                                    <a href='http://localhost:8080/adminuser/home' className={`${isMainPage ? 'noPosition' : ''}`}> ADMIN</a>
                                 </div>
                             )}
                             <div className={`h_right h_login ${smallTopMenu ? 'blackText' : ''} `}>{userInfo.user_name} 님</div>

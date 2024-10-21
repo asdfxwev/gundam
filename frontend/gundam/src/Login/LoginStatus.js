@@ -31,15 +31,15 @@ export function LoginProvider({ children }) {
         apiCall(url, 'POST', data, null)
             .then((response) => {
                 sessionStorage.setItem("loginInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
-                alert('로그인 성공');
+                alert('로그인 되었습니다.');
                 setIsLoggedIn(true);
                 setLoginInfo(response);
-                alert("로그인 토큰값 확인 => " + response);
+                // alert("로그인 토큰값 확인 => " + response);
                 navigate("/");
             }).catch((err) => {
                 setIsLoggedIn(false);
                 setLoginInfo('');
-                alert(err);
+                // alert(err); 오류 status
 
                 if (err === 502) {
                     alert("ID 또는 비밀번호를 확인하세요.");
@@ -58,7 +58,7 @@ export function LoginProvider({ children }) {
     // 로그아웃 함수
     const onLogout = () => {
         let url = "/user/logout";
-        alert(`** 로그아웃 토큰 확인: ${loginInfo}`);
+        // alert(`** 로그아웃 토큰 확인: ${loginInfo}`);
         apiCall(url, 'GET', null, loginInfo)
             .then(() => {
                 sessionStorage.clear();

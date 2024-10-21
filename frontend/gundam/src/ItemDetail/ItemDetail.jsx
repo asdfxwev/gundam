@@ -23,7 +23,6 @@ export default function ItemDetail() {
     const [mainImage, setMainImage] = useState(null);
     const [count, setCount] = useState(1);
     const location = useLocation();
-    const { id } = useParams();
     const [reviewList, setReviewList] = useState([]);
     const [user_id, setUser_id] = useState(''); // token 값으로 select한 user_id정보
     const [userInfo, setUserInfo] = useState(''); // user_id값으로 user 정보 get
@@ -55,8 +54,6 @@ export default function ItemDetail() {
     };
 
     const plus = () => {
-        console.log("productStock = " + productList.pro_stock);
-
         if (count < productList.pro_stock) {
             setCount(prevCount => prevCount + 1);
         } else {
@@ -91,7 +88,7 @@ export default function ItemDetail() {
         if (isLoggedIn) {
             let url = `/user/token_info`;
 
-            const response = apiCall(url, 'POST', null, loginInfo)
+            apiCall(url, 'POST', null, loginInfo)
                 .then((response) => {
                     // sessionStorage.setItem("userId", JSON.stringify(response));  // 세션에 로그인 정보 저장
                     setUser_id(response);
@@ -110,7 +107,7 @@ export default function ItemDetail() {
 
             const data = { user_id: user_id };
 
-            const response = apiCall(url, 'POST', data, null)
+            apiCall(url, 'POST', data, null)
                 .then((response) => {
                     // sessionStorage.setItem("userInfo", JSON.stringify(response));  // 세션에 로그인 정보 저장
                     setUserInfo(response);
@@ -121,13 +118,11 @@ export default function ItemDetail() {
     const handleBuyClick = (e) => {
         if (isLoggedIn) {
             e.preventDefault();
-            console.log('productList:', productList, 'imgList:', imgList, 'count:', count);
             navigate('/ItemBuy', { state: { item: productList, imgList, count } });
         } else {
             navigate('/Login');
         }
     };
-    console.log('isadded 전 : ', isAdded);
 
     // 처음 페이지 로드 시 장바구니 상태를 확인하는 useEffect
     useEffect(() => {
@@ -208,9 +203,7 @@ export default function ItemDetail() {
     };
 
 
-    console.log("imgList = " + imgList);
-    console.log("productList = " + productList);
-    console.log("reviewList = " + reviewList);
+
 
 
     return (
@@ -269,7 +262,7 @@ export default function ItemDetail() {
                         <SectionImg imgList={imgList} productList={productList} />
                     )}
                     {productList && (
-                        <ItemReview key={productList.pro_id} item={productList} pro_id={proId} reviewList={reviewList} />
+                        <ItemReview item={productList} pro_id={proId} reviewList={reviewList} />
                     )}
                     {productList && (
                         <ItemQna key={productList.pro_id} item={productList} />

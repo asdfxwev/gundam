@@ -106,9 +106,14 @@ public class UserServiceImpl implements UserService {
 		return urepository.findloginid(user_name, phone_num);
 	}
 	
+//	@Override
+//	public List<User> findAllUsers() {
+////		return urepository.findAllUsers();
+//		return udslrepository.findAllUsers();
+//	}
+	
 	@Override
 	public List<User> findAllUsers() {
-//		return urepository.findAllUsers();
 		return udslrepository.findAllUsers();
 	}
 	
@@ -117,4 +122,8 @@ public class UserServiceImpl implements UserService {
 		return urepository.searchUsers(inputValue);
 	}
 	
+	@Override
+	public void updateUserCd(String user_id, String user_cd) {
+		udslrepository.updateUserCd(user_id, user_cd);
+	}
 }

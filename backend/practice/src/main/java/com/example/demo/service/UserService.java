@@ -41,5 +41,7 @@ public interface UserService {
 	List<User> findAllUsers();
 	
 	List<User> searchUsers(String inputValue);
+	
+	void updateUserCd(String user_id, String user_cd);
 
 }

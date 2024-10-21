@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { API_BASE_URL } from "../service/app-config";
 
-const SectionImg = ( {imgList, productList} ) => {
+const SectionImg = ({ imgList, productList }) => {
 
     const [isOpen, setIsOpen] = useState(true);
 
@@ -12,21 +12,20 @@ const SectionImg = ( {imgList, productList} ) => {
         setIsOpen(!isOpen);
     };
 
-    
 
-    return(
+
+    return (
         <>
-                {imgList && imgList.map((item, i) => (
-                    <>
-                        
-                            <img
-                                className="item_detail_img"
-                                src={`${API_BASE_URL}/resources/productImg/${item.pro_id.pro_id}/${item.pro_imgs}`}
-                                alt="sub_img"
-                            />
-                        
-                    </>
-                ))}
+            {imgList && imgList.map((item, i) => (
+                <>
+                    <img
+                        key={i}
+                        className="item_detail_img"
+                        src={`${API_BASE_URL}/resources/productImg/${item.pro_id.pro_id}/${item.pro_imgs}`}
+                        alt="sub_img"
+                    />
+                </>
+            ))}
 
 
             <div className="detail_info_box">
@@ -38,7 +37,7 @@ const SectionImg = ( {imgList, productList} ) => {
                 </div>
                 <div className={`info_bottom_box ${isOpen ? '' : 'detail_visible'}`}>
                     <div>제품명</div>
-                    {productList && 
+                    {productList &&
                         <div>{productList.pro_name}</div>
 
                     }
