@@ -74,22 +74,38 @@ const ItemBuy = () => {
     }, [item, count]);
 
     // 유저정보가져오기
+    // useEffect(() => {
+    //     const fetchUserDetails = async () => {
+    //         try {
+    //             const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
+    //             const response = await axios.get(`${API_BASE_URL}/cart/user`, {
+    //                 params: { user_id } // 쿼리 파라미터로 user_id 전달
+    //             });
+    //             console.log(response.data);
+    //             setUserDetails(response.data);
+    //         } catch (error) {
+    //             console.error('사용자 정보 로드 중 오류 발생:', error);
+    //         }
+    //     };
+
+    //     fetchUserDetails();
+    // }, []);
+
     useEffect(() => {
-        const fetchUserDetails = async () => {
+        const fetchData = async () => {
             try {
-                const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
+                const tokenId = JSON.parse(sessionStorage.getItem('loginInfo'))
+                console.log(tokenId)
                 const response = await axios.get(`${API_BASE_URL}/cart/user`, {
-                    params: { user_id } // 쿼리 파라미터로 user_id 전달
-                });
-                console.log(response.data);
+                    params: { tokenId } // 쿼리 파라미터로 user_id 전달
+                })
                 setUserDetails(response.data);
             } catch (error) {
                 console.error('사용자 정보 로드 중 오류 발생:', error);
             }
-        };
-
-        fetchUserDetails();
-    }, []);
+        }
+        fetchData();
+    }, [])
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -123,7 +139,7 @@ const ItemBuy = () => {
 
     const handleOrder = async () => {
 
-        
+
 
         // 배송 정보가 없으면 경고
         if (!showUser && (!deliveryUser || !deliveryPhone || !deliveryAddress)) {
@@ -132,20 +148,11 @@ const ItemBuy = () => {
         }
 
         try {
-            // const today = new Date();
-            // const year = today.getFullYear().toString().slice(-2); // 마지막 두 자리 연도
-            // const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (1~12)
-            // const day = String(today.getDate()).padStart(2, '0'); // 일 (1~31)
-            // const formattedDate = `${year}${month}${day}`; // yyMMdd 형식
-
             // 유저의 주문 정보 생성
             const orderCountResponse = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
             console.log('ordercountresponse : ', orderCountResponse);
             const orderCount = orderCountResponse.data.length;
             console.log('ordercount : ', orderCount);
-            // 주문 ID 생성
-            // const order_id = `${formattedDate}${user_id}${String(orderCount + 1).padStart(4, '0')}`;
-            // console.log('order_id : ',order_id);
             // 체크된 아이템만 포함
             const allItemsToBuy = checkedTrueItems.length > 0 ? checkedTrueItems : [];
 
@@ -164,10 +171,7 @@ const ItemBuy = () => {
 
             // 주문 데이터 생성
             const orderDto = {
-                // order_id,
                 user_id: user_id,
-                // order_date: today.toISOString(),
-                // order_status: "order_cd01", // 단일 문자열로 설정
                 postcode: userDetails.postcode,
                 oritem_address: deliveryInfo.deliveryAddress,
                 oritem_dtladdress: deliveryInfo.deliverDtlAddress,
@@ -185,24 +189,6 @@ const ItemBuy = () => {
             console.log('orderdto : ', orderDto);
             // 주문 정보를 백엔드로 전송
             await axios.post(`${API_BASE_URL}/api/orders`, orderDto);
-
-            // // 주문 아이템을 oritems 테이블에 추가
-            // const orderItemsDto = allItemsToBuy.map(item => ({
-            //     // order_id,
-            //     pro_id: item.pro_id,
-            //     oritem_quan: item.cart_quantity // 각 아이템의 수량
-            // }));
-
-            // // oritems 테이블에 아이템 추가
-            // for (const orderItem of orderItemsDto) {
-            //     await axios.post(`${API_BASE_URL}/api/oritems`, orderItem);
-            // }
-
-            // // 장바구니에서 모든 체크된 아이템 삭제
-            // for (const item of allItemsToBuy) {
-            //     await axios.delete(`${API_BASE_URL}/cart/${user_id}/${item.pro_id}`);
-            // }
-
             alert('결제가 완료되었습니다.');
             navigate('../Order');
         } catch (error) {
@@ -269,7 +255,7 @@ const ItemBuy = () => {
                                         readOnly />
                                     <p>상세주소</p>
                                     <input type='text' name='delivery_dtladdress' placeholder='상세주소를 알려주세요.'
-                                        onChange={(e) => setDeliverDtlAddress(e.target.value)}  />
+                                        onChange={(e) => setDeliverDtlAddress(e.target.value)} />
                                 </div>
                             )}
                         </div>

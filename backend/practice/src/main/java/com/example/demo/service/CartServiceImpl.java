@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.controller.UserController;
 import com.example.demo.domain.CartDTO;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.CartId;
@@ -25,6 +26,9 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private UserController usercontroller;
 
     public Cart addToCart(Cart cart) {
         return cartRepository.save(cart);
@@ -65,4 +69,15 @@ public class CartServiceImpl implements CartService {
 
         return cartRepository.saveAll(boughtCarts);
     }
+    
+    @Override
+    public User userInfo(String tokenId) {
+    	
+    	String tokenPlus = "1234567"+tokenId;
+    	
+    	String userId = usercontroller.getUserId(tokenPlus);
+    	
+    	return cartDSLRepository.findUserByLoginId(userId);
+    }
+    
 }
