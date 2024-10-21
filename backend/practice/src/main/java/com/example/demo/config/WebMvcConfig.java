@@ -52,9 +52,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		// 모든 경로에 대해 적용
 		
 		registry.addMapping("/**")
-				.allowedOrigins("http://localhost:3000")
+				.allowedOrigins("http://43.203.71.82:8080")
 				.allowedMethods("*")
-				//.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
+//				.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
 				.allowedHeaders("*")
 				.allowCredentials(true)
 				.maxAge(MAX_AGE_SECS);

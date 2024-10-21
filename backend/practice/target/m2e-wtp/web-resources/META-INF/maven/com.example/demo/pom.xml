@@ -55,8 +55,9 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version> 
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -165,12 +166,17 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-				<mainClass>com.example.demo.GundamApplication</mainClass> 
+					<mainClass>com.example.demo.GundamApplication</mainClass> 
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -190,7 +196,6 @@
                     <execution>
                         <goals>
                             <goal>process</goal>
-                            
                         </goals>
                         <configuration>
                             <outputDirectory>target/generated-sources/annotations</outputDirectory>

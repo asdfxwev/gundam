@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/product")
 @Log4j2
@@ -93,21 +94,23 @@ public class ProductController {
 	}
 	
 	
-	@PostMapping("productReview")
+	
+	
+	@PostMapping("/productReview")
 	public ResponseEntity<?> productReview(@RequestBody ReviewDTO dto) {
 		System.out.println(dto);
 		reservice.save(dto);
 		return ResponseEntity.ok("리뷰작성에 성공하였습니다");
 	}
 	
-	@PostMapping("productReviewModify")
+	@PostMapping("/productReviewModify")
 	public ResponseEntity<?> productReviewModify(@RequestBody ReviewModifyDTO dto) {
 		System.out.println("dto = "+dto);
 		reservice.reviewUpdate(dto);
 		return ResponseEntity.ok("리뷰 수정에 성공하였습니다");
 	}
 	
-	@PostMapping("productReviewDelete")
+	@PostMapping("/productReviewDelete")
 	public void productReviewDelete(@RequestBody ReviewDTO dto) {
 		reservice.reviewDelete(dto);
 	}
