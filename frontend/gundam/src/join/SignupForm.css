@@ -6,31 +6,20 @@
     height: 100%;
     background-color: #f2f2f2;
     font-family: 'Noto Sans KR', sans-serif;
-    
 }
 
 .signup-form {
-    background-color: white;
-    padding: .5%;
     height: 90%;
-    border-radius: 50px;
-    box-shadow: 0 0 80px rgba(255, 4, 4, 0.1);
-    width: 25%;
-    padding: 5%;
     width: 50%;
-    margin-top: 5%;
-    margin-left: 25%;
-    margin-right: 25%;
+    padding: 5%;
+    margin: 5% 25%;
     font-family: 'Noto Sans KR', sans-serif;
-    /* font-size: 1em; */
-    color: #333;
     border: 1px solid #ccc;
     border-radius: 50px;
+    color: #333;
     box-sizing: border-box;
+    box-shadow: 0 0 80px rgba(255, 4, 4, 0.1);
     background-color: #f2f2f2;
-
-
-    
 }
 
 .form-group {
@@ -42,7 +31,6 @@
     margin-bottom: 15px;
     text-align: center;
     margin-left: 35%;
-    
 }
 
 .form-group input,
