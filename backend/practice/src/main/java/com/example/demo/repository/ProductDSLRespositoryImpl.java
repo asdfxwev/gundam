@@ -75,49 +75,22 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
                 code3.code_name.as("cate_piece"),
                 code4.code_name.as("pro_state_cd"),
                 img.pro_imgs.as("pro_imgs")))
-    .from(product)
-    .leftJoin(code1).on(product.pro_cate.eq(code1.code_id))
-    .leftJoin(code2).on(product.cate_brand.eq(code2.code_id))
-    .leftJoin(code3).on(product.cate_piece.eq(code3.code_id))
-    .leftJoin(code4).on(product.pro_state_cd.eq(code4.code_id))
-    .leftJoin(img).on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0)))
-    .where(builder)
-    .fetchJoin()
-    // 페이징 정보 적용
-    .offset(pageable.getOffset())  // 조회 시작 위치 설정
-    .limit(pageable.getPageSize()) // 조회할 데이터 개수 설정
-    .fetch();
+        		.from(product)
+        		.leftJoin(code1).on(product.pro_cate.eq(code1.code_id))
+        		.leftJoin(code2).on(product.cate_brand.eq(code2.code_id))
+        		.leftJoin(code3).on(product.cate_piece.eq(code3.code_id))
+        		.leftJoin(code4).on(product.pro_state_cd.eq(code4.code_id))
+        		.leftJoin(img).on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0)))
+        		.where(builder)
+        		.fetchJoin()
+        		.offset(pageable.getOffset())  // 조회 시작 위치 설정
+        		.limit(pageable.getPageSize()) // 조회할 데이터 개수 설정
+        		.fetch();
 
-// 조회 결과를 PageImpl 객체로 반환하여 Page 형태로 리턴
-return new PageImpl<>(results, pageable, total);
+        	// 조회 결과를 PageImpl 객체로 반환하여 Page 형태로 리턴
+        return new PageImpl<>(results, pageable, total);
 		
-//		return jpaQueryFactory.select(Projections.bean(
-//									  ImgDTO.class, 
-//									  product.pro_id, 
-//									  product.pro_name, 
-//									  product.pro_des, 
-//									  product.pro_price, 
-//									  product.pro_stock,
-//									  product.pro_creat,
-//									  code1.code_name.as("pro_cate"),
-//									  code2.code_name.as("cate_brand"), 
-//									  code3.code_name.as("cate_piece"), 
-//									  code4.code_name.as("pro_state_cd"),
-//									  img.pro_imgs.as("pro_imgs")))
-//							  .from(product)
-//							  .leftJoin(code1)
-//							  .on(product.pro_cate.eq(code1.code_id))
-//							  .leftJoin(code2)
-//							  .on(product.cate_brand.eq(code2.code_id))
-//							  .leftJoin(code3)
-//							  .on(product.cate_piece.eq(code3.code_id))
-//							  .leftJoin(code4)
-//							  .on(product.pro_state_cd.eq(code4.code_id))
-//							  .leftJoin(img)
-//							  .on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0)))
-//							  .where(builder)
-//							  .fetchJoin()
-//							  .fetch();
+
 	}
 	
 	@Override
