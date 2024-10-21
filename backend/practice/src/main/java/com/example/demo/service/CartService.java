@@ -10,9 +10,17 @@ import com.example.demo.entity.User;
 public interface CartService {
     // 기존 메서드
     Cart addToCart(Cart cart);
+    
     List<CartDTO> getCartItemsByUserId(String userId);
+    
     User getUserByLoginId(String loginId);
+    
     void removeCartItem(CartId cartId);
+    
     Cart updateCart(Cart cart);
+    
     List<Cart> buyItems(List<CartDTO> cartDTOs);
+    
+    User userInfo(String tokenId);
+    
 }

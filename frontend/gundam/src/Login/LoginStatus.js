@@ -18,7 +18,8 @@ export function LoginProvider({ children }) {
         // if (loginCheck !== null && loginCheck.token != null) {
             setIsLoggedIn(true);
             setLoginInfo(loginCheck);
-            //alert(`** sessionStorage 로그인 확인 token=${loginCheck}`);
+            // alert(`** sessionStorage 로그인 확인 token=${loginCheck}`);
+            // console.log({loginCheck})
         }
     }, []);
 

@@ -98,7 +98,6 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 	public void reviewDelete(Review reviews) {
 		queryFactory.delete(review)
 		.where(review.rev_id.eq(reviews.getRev_id()))
-//		.where(review.order.eq(reviews.getOrder()).and(review.product.eq(reviews.getProduct())))
 		.execute();
 	}
 
