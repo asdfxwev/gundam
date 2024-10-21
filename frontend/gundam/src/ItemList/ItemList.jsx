@@ -198,7 +198,7 @@ const ItemList = () => {
 
 
 
-
+ console.log(productList)
 
     return (
         <div className='item-first'>
