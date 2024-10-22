@@ -349,30 +349,5 @@ public class UserController {
  					.body("입력하신 정보는 탈퇴 되었거나 없는정보 입니다.");
  		}
     } //login
- 	
- 	// 관리자페이지 List select
-// 	@GetMapping("/home")
-//	public void userList(String inputValue, Model model) {
-//		List<User> listResult = service.adminUserList(inputValue);
-////		log.info("관리자 페이지 user데이터 가져옴"+listResult);
-//        model.addAttribute("UserList", listResult);
-//	}
- 	
-// 	@GetMapping("/home")
-// 	public String userList(@RequestParam(required = false) String inputValue, Model model) {
-//// 	    List<UserDTO> listResult;
-// 	    List<User> listResult;
-//
-// 	    if (inputValue == null || inputValue.trim().isEmpty()) {
-// 	        listResult = service.findAllUsers(); // 모든 유저 데이터
-// 	        System.out.println("listResult = "+listResult);
-// 	    } else {
-// 	        listResult = service.searchUsers(inputValue); // 검색 결과
-// 	    }
-//
-// 	    model.addAttribute("UserList", listResult);
-// 	    return "redirect:/home";
-// 	}
- 	
 	
 } //class
