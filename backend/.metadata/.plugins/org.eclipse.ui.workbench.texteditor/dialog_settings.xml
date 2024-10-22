@@ -1,53 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-<<<<<<< HEAD
-		<item key="selection" value="과연"/>
-=======
-		<item key="selection" value="getCartItems"/>
->>>>>>> 99c96d059351dec66691ad2a889e3c3e5c06c786
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-<<<<<<< HEAD
-			<item value="과연"/>
-			<item value="userid"/>
-			<item value="전달된"/>
-			<item value="유효성검사"/>
-			<item value="getUserId"/>
-			<item value="userid = "/>
-			<item value="zz"/>
-			<item value="013.jpg"/>
-=======
-			<item value="getCartItems"/>
->>>>>>> 99c96d059351dec66691ad2a889e3c3e5c06c786
-			<item value="dd"/>
-			<item value="reviewUpdate"/>
-			<item value="orderlist"/>
-			<item value="dto"/>
-			<item value="reviewupdate"/>
-			<item value="itemPerPage"/>
-			<item value="confirm"/>
-<<<<<<< HEAD
-=======
-			<item value="imgfilename"/>
-			<item value="file1imgfilename"/>
-			<item value="file1"/>
-			<item value="file1 = "/>
-			<item value="content"/>
-			<item value="orderList"/>
-			<item value="바보쏠"/>
->>>>>>> 99c96d059351dec66691ad2a889e3c3e5c06c786
+			<item value="host"/>
+			<item value="system"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="542"/>
-		<item key="DIALOG_Y_ORIGIN" value="168"/>
+		<item key="DIALOG_X_ORIGIN" value="807"/>
+		<item key="DIALOG_Y_ORIGIN" value="268"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

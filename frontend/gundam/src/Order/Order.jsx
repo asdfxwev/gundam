@@ -180,7 +180,6 @@ const Order = () => {
             // order_id: selectedOrderId,
             // pro_id: selectedProId
         };
-        console.log(data);
 
         try {
             await axios.post(`${API_BASE_URL}/product/productReviewDelete`, { rev_id });
@@ -189,7 +188,6 @@ const Order = () => {
             console.error('리뷰 삭제 중 에러가 발생했습니다: ', error.response ? error.response.data : error.message);
         }
     };
-    console.log(orderList)
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentOrderList = orderList.slice(indexOfFirstItem, indexOfLastItem);
