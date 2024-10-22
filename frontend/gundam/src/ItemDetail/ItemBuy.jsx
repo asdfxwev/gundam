@@ -61,9 +61,6 @@ const ItemBuy = () => {
     const formatNumber = (number) => number.toLocaleString('ko-KR');
 
     const user_id = JSON.parse(sessionStorage.getItem('userInfo')).user_id;
-    // console.log("item = " + item);
-    // console.log("imgList = " + imgList);
-    // console.log("count = " + count);
 
     useEffect(() => {
         if (item && count) {
@@ -81,7 +78,6 @@ const ItemBuy = () => {
     //             const response = await axios.get(`${API_BASE_URL}/cart/user`, {
     //                 params: { user_id } // 쿼리 파라미터로 user_id 전달
     //             });
-    //             console.log(response.data);
     //             setUserDetails(response.data);
     //         } catch (error) {
     //             console.error('사용자 정보 로드 중 오류 발생:', error);
@@ -95,7 +91,6 @@ const ItemBuy = () => {
         const fetchData = async () => {
             try {
                 const tokenId = JSON.parse(sessionStorage.getItem('loginInfo'))
-                console.log(tokenId)
                 const response = await axios.get(`${API_BASE_URL}/cart/user`, {
                     params: { tokenId } // 쿼리 파라미터로 user_id 전달
                 })
@@ -150,9 +145,7 @@ const ItemBuy = () => {
         try {
             // 유저의 주문 정보 생성
             const orderCountResponse = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
-            console.log('ordercountresponse : ', orderCountResponse);
             const orderCount = orderCountResponse.data.length;
-            console.log('ordercount : ', orderCount);
             // 체크된 아이템만 포함
             const allItemsToBuy = checkedTrueItems.length > 0 ? checkedTrueItems : [];
 
@@ -186,7 +179,6 @@ const ItemBuy = () => {
                 }))
             };
 
-            console.log('orderdto : ', orderDto);
             // 주문 정보를 백엔드로 전송
             await axios.post(`${API_BASE_URL}/api/orders`, orderDto);
             alert('결제가 완료되었습니다.');

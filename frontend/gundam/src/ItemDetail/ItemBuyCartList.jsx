@@ -7,7 +7,6 @@ import { API_BASE_URL } from "../service/app-config";
 
 // CartItem 컴포넌트
 const CartItem = ({ item, onQuantityChange, onCheckboxChange, isChecked }) => {
-    console.log(item);
     const handleQuantityChange = (newQuantity) => {
         if (newQuantity < 1) {
             alert("수량은 1개 이상이어야 합니다.");
@@ -97,9 +96,7 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${API_BASE_URL}/cart/${user_id}`);
-                console.log('responser ?', response);
                 const cartData = response.data || [];
-                console.log('cartdata ?', cartData);
                 // 장바구니에 initialItem 추가 및 수량 업데이트 처리
                 const updatedItems = [...cartData];
                 if (initialItem && initialCount) {
@@ -118,9 +115,6 @@ const ItemBuyCartList = ({ setTotal, setTotalQuantity, setCheckedTrueItems, init
                         updatedItems[existingIndex].cart_quantity += count;
                     } else {
                         const img = imgList.filter(item => item.pro_num === 0);
-                        console.log(img);
-                        console.log(img[0]);
-                        console.log(img[0].pro_imgs);
                         const pro_imgs = img && img.pro_imgs ? img.pro_imgs : ''; // img가 존재하고 pro_imgs가 있으면 값 가져옴
                         updatedItems.push({
                             ...item,
