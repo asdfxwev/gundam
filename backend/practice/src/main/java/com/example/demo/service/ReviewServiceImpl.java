@@ -111,15 +111,9 @@ public class ReviewServiceImpl implements ReviewService {
 	@Transactional
 	@Override
 	public void reviewDelete(ReviewDTO dto) {
-		System.out.println("dto = " +dto);
-//        Product product = productRepository.findById(dto.getPro_id()).orElseThrow(() -> new IllegalArgumentException("Invalid pro_id"));
-//        Orders orders = orderRepository.findById(dto.getOrder_id()).orElseThrow(() -> new IllegalArgumentException("Invalid order_id"));
         Review reviews = Review.builder()
-//                .product(product)
-//                .order(orders)
         		.rev_id(dto.getRev_id())
                 .build();
-        
         
         reDSLRepository.reviewDelete(reviews);
 		

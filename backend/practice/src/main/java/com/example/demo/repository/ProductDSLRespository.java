@@ -14,10 +14,7 @@ public interface ProductDSLRespository {
 	Page<ImgDTO> joinDSL(String inputValue, Pageable pageable);
 	
 	List<ImgDTO> joinDSLpage(int itemsPerPage, int currentPage, String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price);
-	
-	
-	
-	
+
 	Product selectOneDSL(String proId);
 	
 	Long update(Product productEntity, String proId);
@@ -27,8 +24,5 @@ public interface ProductDSLRespository {
 	Long countAllProduct(String inputValue, List<String> proCate, List<String> cateBrand, List<String> catePiece, List<String> proStateCd, int price);
 	
 	void updateStock(Oritems oritems);
-	
-//	int findbyproStock(String proId);
-	
-	
+
 }

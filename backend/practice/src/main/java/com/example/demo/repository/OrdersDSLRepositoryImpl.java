@@ -132,13 +132,7 @@ public class OrdersDSLRepositoryImpl implements OrdersDSLRepository {
         if (cate_piece != null && !cate_piece.isEmpty()) {
         	builder.and(product.cate_piece.in(cate_piece));
         }
-        
-		/*
-		 * if (gender != null && !gender.isEmpty() ) { if ( gender.equals("남")) {
-		 * builder.and(user.gender.eq("1").and(user.gender.eq("3"))); } else
-		 * if(gender.equals("여")) {
-		 * builder.and(user.gender.eq("2").and(user.gender.eq("4"))); } }
-		 */
+
     	
     	return queryFactory.select(Projections.bean(OrderStatisticDTO.class,
     			product.pro_name.as("proName"),user.gender.as("gender"), oritems.oritem_quan.castToNum(Integer.class).sum().as("totalQuantity")))

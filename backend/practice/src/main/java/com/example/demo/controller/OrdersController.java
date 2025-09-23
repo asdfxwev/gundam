@@ -22,23 +22,11 @@ import java.util.Map;
 public class OrdersController {
 
     private final OrdersService ordersService;
-
-//    @GetMapping
-//    public ResponseEntity<List<OrdersDTO>> getOrders(
-//            @RequestParam(required = false) String userId,
-//            @RequestParam(required = false) String orderStatus) {
-//        List<OrdersDTO> orders = ordersService.getOrders(userId, orderStatus);
-//        return ResponseEntity.ok(orders);
-//    }
-
     @PostMapping
     public ResponseEntity<String> createOrder(
     		@RequestBody OrdersDTO orderDto
-//    		@RequestBody OrderRequestDTO orderDto
     		) {
         // 주문 생성 시 입력 데이터 확인을 위한 로그 출력
-        
-        
         ordersService.createOrder(orderDto);
         return ResponseEntity.ok("Order created successfully");
     }
@@ -52,14 +40,9 @@ public class OrdersController {
 
     @PostMapping("/orderList")
     public ResponseEntity<?> orderList(@RequestBody UserDTO dto){
-//    	System.out.println("userid = "+dto.getUser_id());
     	
     	Map<String, Object> list = ordersService.orderList(dto.getUser_id());
-//    	System.out.println(list);
     	
     	return ResponseEntity.ok(list);
     }
-    
-    
-    
 }

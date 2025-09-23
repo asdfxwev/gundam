@@ -10,39 +10,6 @@ import org.springframework.data.domain.Pageable;
 
 import lombok.Data;
 
-// PageList 결과 처리 DTO
-// JPA를 사용하는 Repository에서는 Page 처리결과를 Page<Entity> Type으로 return하기 때문에
-// 서비스 계층에서 이를 처리할 수 있도록 하는 DTO ㅋ ㅡㄹ래스 필요
-
-// 주요 기능
-// - Page<Entity> 객체들을 DTO 객체로 변환해서 List에 담아줌
-// - 화면출력을 위한 페이지 정보들 구성
-
-//-------------------------------------------------
-
-// Function <T, R> 
-// T type 입력받아 R type return
-// FunctionalInterface ( java01, j17_Lamda 참고 )
-
-// Collection 계층도
-// Collection (i) -> List (i) -> ArrayList (c)  
-// Collections
-// - Collection 들의 WrapperClass
-// - Collection 과 관련된 편리한 메서드를 제공 -> Collections.sort(List<T> list)
-
-// interface Collector
-// 스트림의 collect() 메서드에서 사용될 메서드를 정의해놓은 인터페이스
-// 이를 구현한 클래스가 Collectors 임.
-// - toList(), toSet(), toMap(), toCollection()... 
-// https://blog.naver.com/writer0713/221806454412
-
-// IntStream
-// Java 8에서 추가된 Stream Interface의 한 종류
-// int 형식의 요소들을 처리하기 위한 메소드들을 제공하며, 
-// int 배열의 요소를 합산하거나, 필터링하거나, 매핑하는 기능을 지원한다.
-// 기본자료형 int 형식의 연산에 최적화 되어있어 성능적으로 이점을 가진다.
-
-//-------------------------------------------------
 
 @Data
 public class PageResultDTO<DTO, EN> { // ~DTO, Entity

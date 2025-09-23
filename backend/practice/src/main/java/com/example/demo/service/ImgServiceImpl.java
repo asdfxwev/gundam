@@ -74,51 +74,14 @@ public class ImgServiceImpl implements ImgService {
 	public ImgDTO selectProduct(String proId) {
 		return idslrepository.selectProduct(proId);
 	}
-	
-//	@Override
-//    public Img findByPrIomgs(String proImgs, String proId) {
-//        return idslrepository.findByPrIomgs(proImgs, proId);
-//    }
-	
-//	@Override
-//	public Img findByProNumAndProductId(Integer proNum, String pro_id) {
-//		// TODO Auto-generated method stub
-//		return irepository.findByProNumAndProductId(proNum, pro_id);
-//	}
+
 	
 	@Override
 	public void deleteImagesByIds(List<Long> imgId, HttpServletRequest request, String proId) {
 		for (Long img : imgId) {
 			irepository.deleteById(img);
 		}
-		
-//	    // 파일 삭제
-//	    String realPath = request.getServletContext().getRealPath("/") + "resources\\"+proId+"\\";
-//	    File dir = new File(realPath);
-//	    
-//	    
-//	    if (dir.exists() && dir.isDirectory()) {
-//	        File[] files = dir.listFiles(); // 디렉터리 내의 파일과 디렉터리 목록 가져오기
-//
-//	        // 파일 및 하위 디렉터리 삭제
-//	        if (files != null) {
-//	            for (File file : files) {
-//	                if (file.isDirectory()) {
-//	                    // 하위 디렉터리가 있을 경우 재귀적으로 삭제
-//	                    for (File subFile : file.listFiles()) {
-//	                        boolean deleted = subFile.delete();
-//	                    }
-//	                }
-//	                boolean deleted = file.delete(); // 파일 삭제
-//	            }
-//	        }
-//
-//	        // 최종적으로 디렉터리 삭제
-//	        boolean dirDeleted = dir.delete();
-//	    } else {
-//	        log.info("Directory does not exist or is not a directory.");
-//	    }
-		
+
 	}
 	
 	@Transactional

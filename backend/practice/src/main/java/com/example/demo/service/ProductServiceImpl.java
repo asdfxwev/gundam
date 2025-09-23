@@ -35,10 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Page<ImgDTO> joinDSL(String inputValue, Pageable pageable) {
-		
 
-//		pageMaker.setTotalRowsCount(service.totalRowsCount(cri));
-		
 		return pdslRepository.joinDSL(inputValue, pageable);
 	}
 	
@@ -90,17 +87,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public Product selectOne(String proId) {
-		/*
-		Optional<Product> result = prepository.findById(proId);
-		if (result.isPresent()) {
-			return result.get();
-		}else {
-			return null;
-			
-		}
-		*/
+
 		return pdslRepository.selectOneDSL(proId);
-		
+
 	}
 	
 	@Override

@@ -19,13 +19,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Transactional
 	@Query("UPDATE User u SET u.password = :password, u.retry = 0 WHERE u.user_id = :user_id")
 	void updatePassword(@Param("user_id") String user_id, @Param("password") String password);
-	
-	// => NativeQuery 적용
-	//@Modifying
-	//@Transactional
-	//@Query(nativeQuery = true, 
-	//		value = "Update User set password=:password where login_id=:login_id")
-	//void updatePassword2(@Param("login_id") String login_id, @Param("password") String password);
+
 	
 	// 로그인, ID중복체크
 	@Query("SELECT u FROM User u WHERE u.login_id = :login_id")
@@ -50,11 +44,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	// login_id 찾기
 	@Query("SELECT u.login_id FROM User u WHERE u.user_name=:user_name AND u.phone_num=:phone_num")
 	String findloginid(@Param("user_name") String user_name, @Param("phone_num") String phone_num);
-	
-	// admin userList
-//	@Query("SELECT u FROM User u "
-//			+ "WHERE u.login_id like concat('%',:inputValue,'%') OR u.user_name like concat('%',:inputValue,'%')")
-//	List<User> adminUserList(@Param("inputValue") String inputValue);
+
 	
 	// 전체 사용자 조회 쿼리
 //	@Query("SELECT new com.example.demo.dto.UserDTO(u) FROM User u")
@@ -62,11 +52,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 	List<User> findAllUsers();
 	
 	// 조건검색 쿼리
-//	@Query("SELECT new com.example.demo.dto.UserDTO(u) FROM User u "
-//			+ "WHERE u.user_name LIKE %:inputValue% OR u.login_id LIKE %:inputValue%")
 	@Query("SELECT u FROM User u "
 			+ "WHERE u.user_name LIKE %:inputValue% OR u.login_id LIKE %:inputValue%")
-//			+ "WHERE u.login_id concat(%:inputValue%) OR u.user_name like concat(%:inputValue%)")
 	List<User> searchUsers(@Param("inputValue") String inputValue);
 
 }

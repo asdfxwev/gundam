@@ -75,10 +75,6 @@ public class AdiminProductController {
 		model.addAttribute("codestate",coservice.codeStateOne());
 	}
 
-//	@GetMapping("productJoinList")
-//	public void productJoinList(Model model) {
-//		model.addAttribute("productJoinList", pservice.joinDSL());
-//	}
 
 	@PostMapping("/productInsert")
 	public String productInsert(HttpServletRequest request, Model model, Product productEntity, Img imgEntity,
@@ -86,8 +82,6 @@ public class AdiminProductController {
 		
 		// p.k 설정
 		List<String> proIds = pservice.findAllProIds();
-		// log.info("asdf"+proIds);// asdf[PO00000001, PO00000002, PO00000003,
-		// PO00000004, PO00000005, PO00000006]
 		String proIdsString = proIds.stream().map(id -> id.substring(2)) // 각 항목에서 "PO" 두 글자를 제거
 				.map(Integer::parseInt) // 문자열을 int로 변환
 				.max(Comparator.naturalOrder()) // 최대값 찾기
@@ -104,10 +98,7 @@ public class AdiminProductController {
 			// imgEntity.setPro_id(productEntity.getPro_id());
 
 		} else {
-
 			productEntity.setPro_id("PO" + String.format("%08d", '1'));
-			// imgEntity.setPro_id(productEntity.getPro_id());
-			
 		}
 		
 		// 날짜 타입 string으로 바꾸기
@@ -116,11 +107,9 @@ public class AdiminProductController {
         String formattedDateTime = currentTime.format(formatter);
         
         productEntity.setPro_creat(formattedDateTime);
-		
 
         // 이미지 파일 경로
 		String realPath = request.getServletContext().getRealPath("/");
-		
 		
 		realPath += "resources\\productImg\\"+productEntity.getPro_id()+"\\";
 
@@ -144,9 +133,7 @@ public class AdiminProductController {
 			file2 = proImg.getOriginalFilename();
 			
 		}
-		
-		
-		//prosImgs = imgEntity.getPros_imgs();
+
 		try {
 			pservice.save(productEntity);
 			imgEntity.setPro_id(productEntity);
@@ -168,14 +155,7 @@ public class AdiminProductController {
 						String imgFileName = realPath + img.getOriginalFilename();
 						img.transferTo(new File(imgFileName));
 						
-						
-						/*
-						계속 업데이트 되어 새롭게 엔터티 생성 후 
-						imgEntity.setPro_id(productEntity);
-						imgEntity.setPro_imgs(img.getOriginalFilename());
-						imgEntity.setPro_num(imageNumber);
-						iservice.save(imgEntity);
-						*/
+
 	                    Img newImgEntity = new Img();
 	                    newImgEntity.setPro_id(productEntity);  // Foreign key 설정
 	                    newImgEntity.setPro_imgs(img.getOriginalFilename()); // 이미지 파일 이름 설정
@@ -183,16 +163,12 @@ public class AdiminProductController {
 
 	                    // 새로운 객체 저장 (Insert)
 	                    iservice.save(newImgEntity);
-						
-						
 						imageNumber++;
 					}
 				}
 			}
-			
 			// product_name duplicate 검사
 			return "redirect:/adminproduct/productList";
-
 		} catch (Exception e) {
 			log.info("errorMessage : " + e.getMessage());
 			return "redirect:/adminproduct/productInsert";
@@ -210,7 +186,6 @@ public class AdiminProductController {
 		model.addAttribute("codestate",coservice.codeStateOne());
 		model.addAttribute("imgall", iservice.selectOne(proId));
 		model.addAttribute("imgnum",iservice.imgNumOne(proId));
-		//model.addAttribute("imgnumzero",iservice.imgNumZero(proId));
 	}
 	
 	@PostMapping("productModify")
@@ -229,12 +204,10 @@ public class AdiminProductController {
         productEntity.setPro_creat(formattedDateTime);
         
 		productEntity.setPro_id(proId);
-       
-		
+
 	    try {
 	        // Save product entity
 	        pservice.save(productEntity);
-	        
 	        if (proNums != null && !proNums.isEmpty() && proImgsList != null && !proImgsList.isEmpty()) {
 	            for (int i = 0; i < proNums.size(); i++) {
 	                // proNums와 proImgsList가 매칭되는지 확인
@@ -248,15 +221,12 @@ public class AdiminProductController {
 	                }
 	            }
 	        }
-	        
-	        
 	        // 추가이미지 
 			String realPath = request.getServletContext().getRealPath("/") + "resources\\productImg\\"+productEntity.getPro_id()+"\\";
 			File files = new File(realPath);
 			if (!files.exists()) {
 				files.mkdir();
 			}
-			
 	        if (prosImgs != null && !prosImgs.isEmpty() && proNums != null && !proNums.isEmpty()) {
 				for (MultipartFile img : prosImgs) {
 					System.out.println("11");
@@ -299,23 +269,11 @@ public class AdiminProductController {
 		
 	}
 	
-//	@PostMapping("/deleteImages")
-//	public String deleteSelectedImages(@RequestParam("img_id") List<Long> imgId, @RequestParam String proId, HttpServletRequest request) {
-//		System.out.println("gd");
-//	    // 선택된 이미지 삭제 로직
-//		iservice.deleteImagesByIds(imgId, request, proId);
-//	    
-//	    // 삭제 후 상품 수정 페이지로 리다이렉트
-//	    return "redirect:/adminproduct/productModify?proId=" + proId;
-//	}
-	
 	@PostMapping("deleteImage")
 	public void deleteImage(@RequestBody Map<String, List<Map<String, String>>> requestData, HttpServletRequest request) {
 		System.out.println("requestData = " +requestData);
 		iservice.deleteImage(requestData, request);
 	}
-
-	
 
 	@GetMapping("/productDelete")
 	public String productDelete(@RequestParam(value = "proId") String proId, HttpServletRequest request) {
@@ -324,12 +282,10 @@ public class AdiminProductController {
 	    // 상품 삭제
 	    pservice.deleteById(proId);
 	    
-	    
 	    // 파일 삭제
 	    String realPath = request.getServletContext().getRealPath("/") + "resources\\productImg\\"+proId+"\\";
 	    File dir = new File(realPath);
-	    
-	    
+
 	    if (dir.exists() && dir.isDirectory()) {
 	        File[] files = dir.listFiles(); // 디렉터리 내의 파일과 디렉터리 목록 가져오기
 
@@ -354,8 +310,4 @@ public class AdiminProductController {
 	    
 	    return "redirect:/adminproduct/productList";
 	}
-	
-	
-	
-	
 }

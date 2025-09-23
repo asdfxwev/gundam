@@ -8,9 +8,6 @@ import com.querydsl.core.Tuple;
 
 @Repository
 public interface OrdersItemDSLRepository {
-	
 	List<String> searchOrderId(String proId);
 	List<OrderItemDTO> findItemsByOrderId(String orderId);
-//	void insertOrderItems(OrderItemDTO dto);
-
 }

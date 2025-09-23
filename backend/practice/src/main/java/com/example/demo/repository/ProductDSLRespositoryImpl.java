@@ -357,13 +357,4 @@ public class ProductDSLRespositoryImpl implements ProductDSLRespository {
 	    }
 	}
 
-	
-//	@Override
-//	public int findbyproStock(String proId) {
-//		return jpaQueryFactory.select(product.pro_stock)
-//				.from(product)
-//				.where(product.pro_id.eq(proId))
-//				.fetchOne();
-//	}
-
 }

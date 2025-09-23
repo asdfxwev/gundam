@@ -35,7 +35,4 @@ public class OrdersItemDSLRepositoryImpl implements OrdersItemDSLRepository {
             .where(oritems.order_id.order_id.eq(orderId))
             .fetch();
     }
-    
-    
-    
 }

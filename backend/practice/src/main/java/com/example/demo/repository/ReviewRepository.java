@@ -9,6 +9,4 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	Review save(ReviewDTO dto);
 
-//	Review save(ReviewDTO dto);
-
 }

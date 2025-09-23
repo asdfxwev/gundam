@@ -78,40 +78,7 @@ public class ImgDSLRepositoryImpl implements ImgDSLRepository {
 	
 	@Override
 	public ImgDTO selectProduct(String proId) {
-//		QCode code1 = new QCode("code1");  
-//		QCode code2 = new QCode("code2");  
-//		QCode code3 = new QCode("code3");  
-//		QCode code4 = new QCode("code4");
-//		
-//
-//		return  jpaQueryFactory.select(Projections.bean(
-//				ImgDTO.class, 
-//				product.pro_id, 
-//				product.pro_name, 
-//				product.pro_des, 
-//				product.pro_price, 
-//				product.pro_stock,
-//				product.pro_creat,
-//				code1.code_name.as("pro_cate"),
-//				code2.code_name.as("cate_brand"), 
-//				code3.code_name.as("cate_piece"), 
-//				code4.code_name.as("pro_state_cd"),
-//				img.pro_imgs.as("pro_imgs")))
-//				.from(img)
-//				.leftJoin(code1)
-//				.on(product.pro_cate.eq(code1.code_id))	
-//				.leftJoin(code2)
-//				.on(product.cate_brand.eq(code2.code_id))
-//				.leftJoin(code3)
-//				.on(product.cate_piece.eq(code3.code_id))
-//				.leftJoin(code4)
-//				.on(product.pro_state_cd.eq(code4.code_id))
-//				.leftJoin(img)
-//				.on(product.pro_id.eq(img.pro_id.pro_id).and(img.pro_num.eq(0))) 
-//				.where(product.pro_id.eq(proId))
-//				.fetchOne();
-		
-		 QCode code1 = QCode.code;  
+		 QCode code1 = QCode.code;
 		    QCode code2 = new QCode("code2");
 		    QCode code3 = new QCode("code3");
 		    QCode code4 = new QCode("code4");

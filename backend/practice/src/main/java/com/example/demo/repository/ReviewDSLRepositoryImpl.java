@@ -26,24 +26,7 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 					.where(review.user.user_id.eq(userId).and(review.product.pro_id.eq(proId)))
 					.fetch();
 		}
-	
-//	@Override
-//	public List<Review> selectList(String proId) {
-//		return queryFactory.select(Projections.bean(
-//				Review.class,
-//				review.rev_id,
-//				review.rev_title,
-//				review.rev_com,
-//				review.rev_rating,
-//				review.rev_creat,
-//				review.rev_answer,
-//				review.rev_answer_creat
-//				))
-//				.from(review)
-//				.where(review.product.pro_id.eq(proId))
-//				.orderBy(review.rev_creat.desc())
-//				.fetch();
-//	}
+
 	@Override
 	public List<Review> selectList(String proId) {
 		return queryFactory.selectFrom(review)
@@ -75,14 +58,7 @@ public class ReviewDSLRepositoryImpl implements ReviewDSLRepository {
 				.where(review.user.user_id.eq(userId))
 				.fetch();
 	}
-	
-//	@Override
-//	public void reviewUpdate(Review review) {
-//		 queryFactory.update(review)
-//				.set(review.getRev_rating(), review.getRev_rating())
-//				.set(review.revtitle)
-//				.execute();
-//	}
+
 	@Override
 	public void reviewUpdate(Review reviews) {
 		queryFactory.update(review)

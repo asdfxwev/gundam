@@ -86,8 +86,6 @@ public class ProductController {
 		System.out.println("productList"+pservice.selectOne(proId));
 		list.put("reviewList", reservice.selectList(proId));
 		System.out.println("reviewList"+reservice.selectList(proId));
-//		Product product = pservice.selectOne(proId);
-//		System.out.println("product = "+product);
 		return ResponseEntity.ok(list);
 	}
 	

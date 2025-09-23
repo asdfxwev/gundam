@@ -34,7 +34,6 @@ public class UserDSLRepositoryImpl implements UserDSLRepository {
 				user.phone_num,
 				user.user_cd,
 				user.retry))
-//				code.code_name.as("user_cd"))
 				.from(user).leftJoin(code)
 				.on(user.user_cd.eq(code.code_id))
 				.fetch();
@@ -60,7 +59,6 @@ public class UserDSLRepositoryImpl implements UserDSLRepository {
 				user.phone_num,
 				user.user_cd,
 				user.retry))
-//				code.code_name.as("user_cd")))
 				.from(user).leftJoin(code)
 				.on(user.user_cd.eq(code.code_id))
 				.where(user.user_name.contains(inputValue).or(user.login_id.contains(inputValue)))
@@ -75,6 +73,4 @@ public class UserDSLRepositoryImpl implements UserDSLRepository {
     	.where(user.user_id.eq(user_id))
         .execute();
     }
-	
-
 }

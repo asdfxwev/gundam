@@ -64,18 +64,7 @@ public class UserServiceImpl implements UserService {
 		if (entity.getRetry() == null) {
 	        entity.setRetry(0);
 	    }
-		
-		//입력받은 생년월일(yyyy-mm-dd)을 yymmdd형태로 저장
-		//yymmdd 형태로 변환할 포맷터 정의
-	    //DateTimeFormatter birth_format = DateTimeFormatter.ofPattern("yyMMdd");
-	    
-        //String birth = entity.getBirth();
 
-		// String을 LocalDate로 변환
-        //LocalDate birthDate = LocalDate.parse(birth);
-		
-        //entity.setBirth(birthDate.format(birth_format));
-		
 		return urepository.save(entity);
 	}
 	
@@ -105,12 +94,7 @@ public class UserServiceImpl implements UserService {
 	public String findloginid(String user_name, String phone_num) {
 		return urepository.findloginid(user_name, phone_num);
 	}
-	
-//	@Override
-//	public List<User> findAllUsers() {
-////		return urepository.findAllUsers();
-//		return udslrepository.findAllUsers();
-//	}
+
 	
 	@Override
 	public List<User> findAllUsers() {

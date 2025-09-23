@@ -53,16 +53,13 @@ public class AdiminUserController {
  			service.updateUserCd(user_id, user_cd);
  	        
  			redirectAttributes.addFlashAttribute("message", "권한 정보가 수정되었습니다.");
-// 	        model.addAttribute("message", "사용자 정보가 성공적으로 수정되었습니다.");
 
  		} catch (Exception e) {
  	        
  	        redirectAttributes.addFlashAttribute("message", "권한 정보 수정중 오류가발생했습니다. 다시 시도해주세요.");
-// 	        model.addAttribute("message", "사용자 정보 수정에 실패했습니다.");
  	    
  		}
- 		
-// 		return "/home";
+
  		return "redirect:/adminuser/home";
 	}
 

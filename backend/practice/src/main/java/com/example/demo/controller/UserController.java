@@ -69,36 +69,7 @@ public class UserController {
         return service.getUserId(login_id);
     }
 //     token 값을 받아서 login_id return 받고 selectOne으로 정보를 가져와서 보냄
-//    @PostMapping("/token_info")
-//	public ResponseEntity<?> getUserInfo(@RequestHeader("Authorization") String token) {
-//    	log.info("전달된 토큰 값 ==>> "+token);
-//    	
-//        String login_id = tokenProvider.validateAndGetUserId(token.substring(7));
-//        //String login_id = tokenProvider.validateAndGetUserId(token);
-//        
-//        log.info("토큰으로 꺼내온 login_id 값 ==>> "+login_id);
-//        
-//        User entity = service.selectOne(login_id);
-//        
-//        if( entity != null ) {
-//        	
-//        	UserDTO userDTO = UserDTO.builder()
-//    				.token(token)
-//		    		.user_id(entity.getUser_id())
-//					.login_id(entity.getLogin_id())
-//					.user_name(entity.getUser_name())
-//					.user_cd(entity.getUser_cd())
-//					.build();
-//        	
-// 			return ResponseEntity.ok(userDTO);
-// 			
-// 		} else {
-// 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-// 					.body("사용자 정보를 찾을수없습니다.");
-// 		}
-//    }
-    
-    
+
     // user_id로 user정보 return
     @PostMapping("/user_info")
 	public ResponseEntity<?> UserInfo(@RequestBody User entity) {
@@ -106,22 +77,7 @@ public class UserController {
         entity = service.UserInfo(entity.getUser_id());
       
         if( entity != null ) {
-      	
-//      	UserDTO userDTO = UserDTO.builder()
-//      			.user_id(entity.getUser_id())
-//				.login_id(entity.getLogin_id())
-//				.user_name(entity.getUser_name())
-//				.email(entity.getEmail())
-//				.birth(entity.getBirth())
-//				.gender(entity.getGender())
-//				.phone_num(entity.getPhone_num())
-//				.postcode(entity.getPostcode())
-//				.address(entity.getAddress())
-//				.dtl_address(entity.getDtl_address())
-//				.user_cd(entity.getUser_cd())
-//				.build();
-      	
-//			return ResponseEntity.ok(userDTO);
+
 			return ResponseEntity.ok(entity);
 			
 		} else {
@@ -169,7 +125,6 @@ public class UserController {
     		service.save(entity);
     		
     		log.info("로그인 성공 => " + HttpStatus.OK);
-//    		return ResponseEntity.ok(userDTO);
     		return ResponseEntity.ok(token);	// 세션스토리지에서 토큰만 사용할때
     		
     		

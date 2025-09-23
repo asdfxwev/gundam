@@ -46,16 +46,12 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
                 .where(cart.user_id.eq(userId))
                 .fetch();
     }
-
-
     // userId와 같은 login_id를 가진 User 엔티티를 조회하는 메서드
     public User findUserByLoginId(String loginId) {
         return jpaQueryFactory.selectFrom(user)
                 .where(user.user_id.eq(loginId)) 
                 .fetchOne();
     }
-    
-    
     @Override
     public void deleteCart(Cart carts) {
     	System.out.println("carts = "+carts);
@@ -63,7 +59,4 @@ public class CartDSLRepositoryImpl implements CartDSLRepository {
     	.where(cart.user_id.eq(carts.getUser_id()).and(cart.pro_id.eq(carts.getPro_id())))
     	.execute();
     }
-    
-    
-    
 }

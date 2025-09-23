@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface OrdersService {
-//    List<OrdersDTO> getOrders(String userId, String orderStatus);
     void createOrder(OrdersDTO ordersDTO);    
     List<String> searchOrderId(String userId);
     List<String> getOrderStatusCodes();
