@@ -44,7 +44,6 @@ public class UserController {
     // => Session 객체는 각 User별로 관리됨 
     @GetMapping("/check-server")
     public ResponseEntity<?> checkLogin(HttpSession session) {
-        log.info("** React_SpringBoot Connection 확인 중 **");
         return ResponseEntity.ok()
                 .body(Map.of("checkLogin", "Login_확인하지않음",
                              "checkData", "** Port:8080 **"     
@@ -63,7 +62,6 @@ public class UserController {
     // token 값으로 user_id return
     @PostMapping("/token_info")
 	public String getUserId(@RequestHeader("Authorization") String token) {
-    	log.info("전달된 토큰 값 ==>> "+token);
         String login_id = tokenProvider.validateAndGetUserId(token.substring(7));
         
         return service.getUserId(login_id);
@@ -73,7 +71,6 @@ public class UserController {
     // user_id로 user정보 return
     @PostMapping("/user_info")
 	public ResponseEntity<?> UserInfo(@RequestBody User entity) {
-    	log.info("전달된 user_id 값 ==>> "+entity.getUser_id());
         entity = service.UserInfo(entity.getUser_id());
       
         if( entity != null ) {

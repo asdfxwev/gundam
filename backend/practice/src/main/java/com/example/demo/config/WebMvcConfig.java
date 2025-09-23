@@ -62,37 +62,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.maxAge(MAX_AGE_SECS);
 	} //addCorsMappings
 	
-	//배포용
-//	@Override
-//	public void addCorsMappings(CorsRegistry registry) {
-//		// 모든 경로에 대해 적용
-//		
-//		registry.addMapping("/**")
-//				.allowedOrigins("http://52.79.188.83",
-//						"http://52.79.188.83:3000"
-//						,"http://sbbuckets.s3-website.us-east-2.amazonaws.com"
-//						)
-//				.allowedMethods("*")
-//				//.allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
-//				.allowedHeaders("*")
-//				.allowCredentials(true)
-//				.maxAge(MAX_AGE_SECS);
-//	} //addCorsMappings
-	
-	
-	//승삼씨
-//	@Override
-//	public void addCorsMappings(CorsRegistry registry) {
-//		// 모든 경로에 대해
-//		registry.addMapping("/**")
-//		// Origin이 http:localhost:3000에 대해
-////				.allowedOrigins("http://localhost:3000")
-//				// 탄력적 ip주소 할당해주기
-//				.allowedOrigins("http://localhost:3000",
-//						"http://dbrghl-bucket.s3-website.ap-northeast-2.amazonaws.com/")
-//				// GET, POST, PUT, PATCH, DELETE, OPTIONS 메서드를 허용한다.
-//				.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*")
-//				.allowCredentials(true).maxAge(MAX_AGE_SECS);
-//	}
 	
 } //class
